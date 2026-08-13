@@ -60,7 +60,7 @@
                 <h3>{{ $aboutContent['mission_title'] }}</h3><p>{{ $aboutContent['mission_text'] }}</p>
             </article>
             <article class="about-purpose-card about-purpose-card--vision" data-about-reveal>
-                <span class="about-purpose-card__label">02 · Vision</span><div class="about-purpose-card__icon" aria-hidden="true">â—Ž</div>
+                <span class="about-purpose-card__label">02 · Vision</span><div class="about-purpose-card__icon" aria-hidden="true">&odot;</div>
                 <h3>{{ $aboutContent['vision_title'] }}</h3><p>{{ $aboutContent['vision_text'] }}</p>
             </article>
         </div>
@@ -74,7 +74,7 @@
             <h2>{{ $aboutContent['faith_heading'] }}</h2><p>{{ $aboutContent['faith_text'] }}</p>
         </div>
         <blockquote class="about-verse" data-about-reveal>
-            <span class="about-verse__quote" aria-hidden="true">â€œ</span>
+            <span class="about-verse__quote" aria-hidden="true">&ldquo;</span>
             <p>{{ $aboutContent['verse_text'] }}</p><cite>{{ $aboutContent['verse_reference'] }}</cite>
         </blockquote>
     </div>

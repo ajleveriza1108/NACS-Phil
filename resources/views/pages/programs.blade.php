@@ -53,7 +53,7 @@
                 @elseif($prefix === 'elementary')
                     <span>123</span>
                 @else
-                    <span>âˆž</span>
+                    <span>&infin;</span>
                 @endif
             </div>
             <div class="programs-program__level">{{ $programsContent[$prefix.'_levels'] }}</div>
@@ -105,7 +105,7 @@
             <p>{{ $programsContent['faith_text'] }}</p>
         </div>
         <blockquote class="programs-verse" data-programs-reveal>
-            <span aria-hidden="true">â€œ</span>
+            <span aria-hidden="true">&ldquo;</span>
             <p>{{ $programsContent['verse_text'] }}</p>
             <cite>{{ $programsContent['verse_reference'] }}</cite>
         </blockquote>

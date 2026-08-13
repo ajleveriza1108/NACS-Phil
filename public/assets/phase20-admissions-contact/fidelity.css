@@ -1,0 +1,550 @@
+/* NACS-Phil Phase 20 — Admissions + Contact Mockup Fidelity
+   Loads after Phase 18 site-wide consistency on Admissions and Contact only. */
+
+.admissions-phase4,
+.contact-phase8{
+  --p20-navy:#031a39;
+  --p20-navy-2:#052b55;
+  --p20-blue:#07376f;
+  --p20-gold:#e4ae43;
+  --p20-gold-soft:#f2c969;
+  --p20-ivory:#fffaf0;
+  --p20-paper:#fffdf8;
+  --p20-line:#dce6ef;
+  --p20-muted:#657b8e;
+  --p20-shadow:0 14px 38px rgba(3,26,57,.10);
+  --p20-shadow-soft:0 8px 24px rgba(3,26,57,.07);
+}
+
+/* Admissions hero */
+.admissions-phase4 .admissions-hero{
+  background:
+    radial-gradient(circle at 78% 14%,rgba(228,174,67,.16),transparent 25rem),
+    radial-gradient(circle at 10% 20%,rgba(49,118,180,.08),transparent 22rem),
+    linear-gradient(105deg,#fffdf8 0%,#fbfcfe 55%,#edf4f9 100%)!important;
+  border-bottom:1px solid #e3ebf2!important;
+}
+.admissions-phase4 .admissions-hero__inner{
+  min-height:clamp(500px,42vw,650px)!important;
+  grid-template-columns:minmax(0,.92fr) minmax(430px,1.08fr)!important;
+  gap:clamp(34px,5vw,74px)!important;
+  padding-block:clamp(54px,5vw,78px) clamp(96px,7vw,118px)!important;
+}
+.admissions-phase4 .admissions-pill{
+  min-height:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  padding:0 0 0 34px!important;
+  color:#a66e0c!important;
+  font-size:11px!important;
+  letter-spacing:.035em!important;
+  position:relative!important;
+}
+.admissions-phase4 .admissions-pill::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:24px;
+  height:2px;
+  border-radius:999px;
+  background:var(--p20-gold);
+  transform:translateY(-50%);
+}
+.admissions-phase4 .admissions-hero h1{
+  margin-top:16px!important;
+  color:var(--p20-navy)!important;
+  font-size:clamp(42px,4.6vw,70px)!important;
+  line-height:1.01!important;
+}
+.admissions-phase4 .admissions-hero h1 span{
+  color:var(--p20-navy)!important;
+}
+.admissions-phase4 .admissions-hero__copy>p{
+  color:#61778a!important;
+  font-size:clamp(15px,1.1vw,18px)!important;
+  line-height:1.72!important;
+}
+.admissions-phase4 .admissions-hero__visual-frame{
+  border-radius:22px!important;
+  border:1px solid rgba(5,43,85,.10)!important;
+  background:#eef4f8!important;
+  box-shadow:0 24px 60px rgba(3,26,57,.14)!important;
+}
+.admissions-phase4 .admissions-hero__visual-frame>img{
+  aspect-ratio:1.45/1!important;
+}
+.admissions-phase4 .admissions-hero__status{
+  border-radius:12px!important;
+  background:rgba(3,26,57,.90)!important;
+}
+.admissions-phase4 .admissions-hero__status strong{
+  color:#fff!important;
+}
+.admissions-phase4 .admissions-hero__status small{
+  color:#d1e0ec!important;
+}
+
+.admissions-phase4 .admissions-info-strip{
+  margin-top:-48px!important;
+  border-radius:16px!important;
+  border-color:var(--p20-line)!important;
+  background:#fff!important;
+  box-shadow:var(--p20-shadow)!important;
+}
+.admissions-phase4 .admissions-info-strip article{
+  min-height:100px!important;
+  border-color:var(--p20-line)!important;
+}
+.admissions-phase4 .admissions-info-strip article>span{
+  color:#b27812!important;
+}
+.admissions-phase4 .admissions-info-strip strong{
+  color:var(--p20-navy-2)!important;
+}
+.admissions-phase4 .admissions-info-strip small{
+  color:var(--p20-muted)!important;
+}
+
+/* Admissions sections */
+.admissions-phase4 .admissions-section{
+  padding-block:clamp(62px,6vw,92px)!important;
+}
+.admissions-phase4 .admissions-section--soft{
+  background:linear-gradient(180deg,#f8fafc,#f3f7fa)!important;
+  border-color:#e8eef3!important;
+}
+.admissions-phase4 .admissions-kicker{
+  color:#9c690e!important;
+}
+.admissions-phase4 .admissions-kicker::after{
+  background:var(--p20-gold)!important;
+}
+.admissions-phase4 .admissions-welcome h2,
+.admissions-phase4 .admissions-section-head h2,
+.admissions-phase4 .admissions-faq h2,
+.admissions-phase4 .admissions-privacy h2{
+  color:var(--p20-navy-2)!important;
+}
+.admissions-phase4 .admissions-welcome p,
+.admissions-phase4 .admissions-section-head>p{
+  color:var(--p20-muted)!important;
+}
+.admissions-phase4 .admissions-steps{
+  gap:14px!important;
+}
+.admissions-phase4 .admissions-steps article{
+  min-height:260px!important;
+  border-color:var(--p20-line)!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  box-shadow:var(--p20-shadow-soft)!important;
+}
+.admissions-phase4 .admissions-steps__icon{
+  background:linear-gradient(145deg,var(--p20-navy-2),var(--p20-blue))!important;
+}
+.admissions-phase4 .admissions-steps h3{
+  color:var(--p20-navy-2)!important;
+}
+.admissions-phase4 .admissions-steps p{
+  color:var(--p20-muted)!important;
+}
+.admissions-phase4 .admissions-requirements article{
+  border-color:var(--p20-line)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  box-shadow:var(--p20-shadow-soft)!important;
+}
+.admissions-phase4 .admissions-requirements article>span{
+  background:#fff7e5!important;
+  color:#a66e0c!important;
+}
+.admissions-phase4 .admissions-requirements h3{
+  color:var(--p20-navy-2)!important;
+}
+.admissions-phase4 .admissions-requirements p{
+  color:var(--p20-muted)!important;
+}
+.admissions-phase4 .admissions-note{
+  border-color:#ead49d!important;
+  background:var(--p20-ivory)!important;
+}
+.admissions-phase4 .admissions-note p{
+  color:#725a2b!important;
+}
+
+/* Critical dark contrast contract */
+.admissions-phase4 .admissions-dates{
+  background:
+    radial-gradient(circle at 82% 0,rgba(18,94,164,.31),transparent 27rem),
+    linear-gradient(135deg,#031a39,#052b55 65%,#07376f)!important;
+  color:#fff!important;
+}
+.admissions-phase4 .admissions-dates h1,
+.admissions-phase4 .admissions-dates h2,
+.admissions-phase4 .admissions-dates h3,
+.admissions-phase4 .admissions-dates strong{
+  color:#fff!important;
+}
+.admissions-phase4 .admissions-dates p,
+.admissions-phase4 .admissions-dates small{
+  color:#d2e1ec!important;
+}
+.admissions-phase4 .admissions-dates .admissions-kicker{
+  color:var(--p20-gold-soft)!important;
+}
+.admissions-phase4 .admissions-dates__cards article{
+  border-color:rgba(255,255,255,.18)!important;
+  border-radius:16px!important;
+  background:rgba(255,255,255,.08)!important;
+}
+.admissions-phase4 .admissions-dates__cards span{
+  color:var(--p20-gold-soft)!important;
+}
+.admissions-phase4 .admissions-dates__cards strong{
+  color:#fff!important;
+}
+
+.admissions-phase4 .admissions-faq details{
+  border-color:var(--p20-line)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  box-shadow:0 5px 18px rgba(3,26,57,.04)!important;
+}
+.admissions-phase4 .admissions-faq summary{
+  color:var(--p20-navy-2)!important;
+}
+.admissions-phase4 .admissions-faq summary b{
+  color:#a66e0c!important;
+}
+.admissions-phase4 .admissions-faq details p{
+  color:var(--p20-muted)!important;
+}
+.admissions-phase4 .admissions-privacy__card{
+  border-color:var(--p20-line)!important;
+  border-radius:18px!important;
+  background:linear-gradient(135deg,#fffdf8,#f7fafc)!important;
+  box-shadow:var(--p20-shadow-soft)!important;
+}
+.admissions-phase4 .admissions-privacy__icon{
+  background:linear-gradient(145deg,var(--p20-navy-2),var(--p20-blue))!important;
+  color:#fff!important;
+}
+
+/* Both final admissions CTAs retain the same approved language */
+.admissions-phase4 .admissions-final-cta{
+  border-radius:22px!important;
+  background:
+    radial-gradient(circle at 82% 0,rgba(21,102,176,.28),transparent 24rem),
+    linear-gradient(135deg,#031a39,#052b55)!important;
+  box-shadow:var(--p20-shadow)!important;
+}
+.admissions-phase4 .admissions-final-cta h1,
+.admissions-phase4 .admissions-final-cta h2,
+.admissions-phase4 .admissions-final-cta h3,
+.admissions-phase4 .admissions-final-cta strong{
+  color:#fff!important;
+}
+.admissions-phase4 .admissions-final-cta p{
+  color:#ceddea!important;
+}
+.admissions-phase4 .admissions-final-cta .admissions-kicker{
+  color:var(--p20-gold-soft)!important;
+}
+.admissions-phase4 .admissions-button--primary{
+  background:linear-gradient(135deg,#07376f,#031f46)!important;
+  color:#fff!important;
+}
+.admissions-phase4 .admissions-button--secondary{
+  border-color:#d7bd7d!important;
+  background:#fff!important;
+  color:var(--p20-navy-2)!important;
+}
+.admissions-phase4 .admissions-button--gold{
+  background:linear-gradient(135deg,#f2c969,#e4ae43)!important;
+  color:#10284a!important;
+}
+.admissions-phase4 .admissions-button--glass{
+  border-color:rgba(255,255,255,.28)!important;
+  background:rgba(255,255,255,.08)!important;
+  color:#fff!important;
+}
+
+/* CONTACT hero */
+.contact-phase8 .contact-hero{
+  background:
+    radial-gradient(circle at 78% 14%,rgba(228,174,67,.16),transparent 25rem),
+    radial-gradient(circle at 10% 20%,rgba(49,118,180,.08),transparent 22rem),
+    linear-gradient(105deg,#fffdf8 0%,#fbfcfe 55%,#edf4f9 100%)!important;
+  border-bottom:1px solid #e3ebf2!important;
+}
+.contact-phase8 .contact-hero__inner{
+  min-height:clamp(500px,42vw,650px)!important;
+  grid-template-columns:minmax(0,.92fr) minmax(430px,1.08fr)!important;
+  gap:clamp(34px,5vw,74px)!important;
+  padding-block:clamp(54px,5vw,78px)!important;
+}
+.contact-phase8 .contact-pill{
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  padding:0 0 0 34px!important;
+  color:#a66e0c!important;
+  font-size:11px!important;
+  letter-spacing:.035em!important;
+  position:relative!important;
+}
+.contact-phase8 .contact-pill::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:24px;
+  height:2px;
+  border-radius:999px;
+  background:var(--p20-gold);
+  transform:translateY(-50%);
+}
+.contact-phase8 .contact-hero h1{
+  margin-top:16px!important;
+  color:var(--p20-navy)!important;
+  font-size:clamp(42px,4.6vw,70px)!important;
+  line-height:1.01!important;
+}
+.contact-phase8 .contact-hero h1 span{
+  color:var(--p20-navy)!important;
+}
+.contact-phase8 .contact-hero p{
+  color:#61778a!important;
+  font-size:clamp(15px,1.1vw,18px)!important;
+  line-height:1.72!important;
+}
+.contact-phase8 .contact-visual{
+  border-radius:22px!important;
+  border:1px solid rgba(5,43,85,.10)!important;
+  background:#eef4f8!important;
+  box-shadow:0 24px 60px rgba(3,26,57,.14)!important;
+}
+.contact-phase8 .contact-visual img{
+  aspect-ratio:1.45/1!important;
+}
+.contact-phase8 .contact-button--primary{
+  background:linear-gradient(135deg,#07376f,#031f46)!important;
+  color:#fff!important;
+}
+.contact-phase8 .contact-button--secondary{
+  border-color:#d7bd7d!important;
+  background:#fff!important;
+  color:var(--p20-navy-2)!important;
+}
+
+/* Contact information + form */
+.contact-phase8 .contact-section{
+  padding-block:clamp(62px,6vw,92px)!important;
+  background:linear-gradient(180deg,#fffdf8,#fff 34%,#f8fafc)!important;
+}
+.contact-phase8 .contact-main-grid{
+  grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr)!important;
+  gap:clamp(30px,4vw,58px)!important;
+}
+.contact-phase8 .contact-kicker{
+  color:#9c690e!important;
+}
+.contact-phase8 .contact-info h2,
+.contact-phase8 .contact-form-card h2{
+  color:var(--p20-navy-2)!important;
+}
+.contact-phase8 .contact-info__lead,
+.contact-phase8 .contact-form-card__lead{
+  color:var(--p20-muted)!important;
+}
+.contact-phase8 .contact-details{
+  gap:9px!important;
+}
+.contact-phase8 .contact-details>div{
+  border-color:var(--p20-line)!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  box-shadow:0 5px 16px rgba(3,26,57,.04)!important;
+}
+.contact-phase8 .contact-details dt{
+  color:#9c690e!important;
+}
+.contact-phase8 .contact-details dd{
+  color:var(--p20-navy-2)!important;
+}
+.contact-phase8 .contact-social-link{
+  color:var(--p20-blue)!important;
+}
+.contact-phase8 .contact-privacy-card{
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:18px!important;
+  background:
+    radial-gradient(circle at 80% 0,rgba(20,100,175,.28),transparent 15rem),
+    linear-gradient(135deg,#031a39,#052b55)!important;
+  box-shadow:var(--p20-shadow)!important;
+}
+.contact-phase8 .contact-privacy-card>span{
+  color:var(--p20-gold-soft)!important;
+}
+.contact-phase8 .contact-privacy-card h3,
+.contact-phase8 .contact-privacy-card strong{
+  color:#fff!important;
+}
+.contact-phase8 .contact-privacy-card p{
+  color:#d1e0ec!important;
+}
+.contact-phase8 .contact-privacy-card a{
+  color:var(--p20-gold-soft)!important;
+}
+
+.contact-phase8 .contact-form-card{
+  border-color:var(--p20-line)!important;
+  border-radius:22px!important;
+  background:#fff!important;
+  box-shadow:var(--p20-shadow)!important;
+}
+.contact-phase8 .contact-field label{
+  color:#294258!important;
+}
+.contact-phase8 .contact-field label b{
+  color:#9c690e!important;
+}
+.contact-phase8 .contact-field label span,
+.contact-phase8 .contact-label-row>span{
+  color:#8093a3!important;
+}
+.contact-phase8 .contact-field input,
+.contact-phase8 .contact-field select,
+.contact-phase8 .contact-field textarea{
+  border-color:#ccd9e4!important;
+  border-radius:10px!important;
+  background:#fbfdff!important;
+  color:#102b4a!important;
+}
+.contact-phase8 .contact-field input:focus,
+.contact-phase8 .contact-field select:focus,
+.contact-phase8 .contact-field textarea:focus{
+  border-color:#0b5b9c!important;
+  background:#fff!important;
+  box-shadow:0 0 0 4px rgba(11,91,156,.11)!important;
+}
+.contact-phase8 .contact-consent{
+  border:1px solid #e2eaf0!important;
+  border-radius:12px!important;
+  background:#f6f9fb!important;
+  color:#52697d!important;
+}
+.contact-phase8 .contact-consent a{
+  color:var(--p20-blue)!important;
+}
+.contact-phase8 .contact-submit-row small{
+  color:#7d90a0!important;
+}
+.contact-phase8 .contact-alert{
+  border-radius:12px!important;
+}
+.contact-phase8 .contact-alert--success{
+  border-color:#b6dcc9!important;
+  background:#f0faf4!important;
+  color:#245d3f!important;
+}
+.contact-phase8 .contact-alert--error{
+  border-color:#ebc5c5!important;
+  background:#fff5f5!important;
+  color:#7b3333!important;
+}
+
+/* Responsive fidelity */
+@media(max-width:1180px){
+  .admissions-phase4 .admissions-hero__inner,
+  .contact-phase8 .contact-hero__inner{
+    grid-template-columns:minmax(0,1fr) minmax(380px,.92fr)!important;
+  }
+}
+@media(max-width:1024px){
+  .admissions-phase4 .admissions-hero__inner,
+  .contact-phase8 .contact-hero__inner{
+    grid-template-columns:1fr!important;
+  }
+  .admissions-phase4 .admissions-info-strip{
+    grid-template-columns:repeat(2,1fr)!important;
+  }
+  .contact-phase8 .contact-main-grid{
+    grid-template-columns:1fr!important;
+  }
+  .contact-phase8 .contact-info{
+    position:static!important;
+  }
+}
+@media(max-width:760px){
+  .admissions-phase4 .admissions-hero__inner,
+  .contact-phase8 .contact-hero__inner{
+    padding-top:38px!important;
+    padding-bottom:74px!important;
+  }
+  .admissions-phase4 .admissions-hero h1,
+  .contact-phase8 .contact-hero h1{
+    font-size:clamp(36px,11vw,48px)!important;
+  }
+  .admissions-phase4 .admissions-info-strip{
+    grid-template-columns:1fr!important;
+    margin-top:-32px!important;
+  }
+  .admissions-phase4 .admissions-info-strip article{
+    border-right:0!important;
+    border-bottom:1px solid var(--p20-line)!important;
+  }
+  .admissions-phase4 .admissions-info-strip article:last-child{
+    border-bottom:0!important;
+  }
+  .admissions-phase4 .admissions-steps,
+  .admissions-phase4 .admissions-requirements{
+    grid-template-columns:1fr!important;
+  }
+  .admissions-phase4 .admissions-dates__grid{
+    grid-template-columns:1fr!important;
+  }
+  .admissions-phase4 .admissions-section-head{
+    grid-template-columns:1fr!important;
+  }
+  .admissions-phase4 .admissions-hero__actions,
+  .admissions-phase4 .admissions-final-cta__actions,
+  .contact-phase8 .contact-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+  .admissions-phase4 .admissions-hero__actions a,
+  .admissions-phase4 .admissions-final-cta__actions a,
+  .contact-phase8 .contact-actions a{
+    width:100%!important;
+  }
+  .contact-phase8 .contact-form{
+    grid-template-columns:1fr!important;
+  }
+}
+@media(max-width:480px){
+  .contact-phase8 .contact-form-card{
+    border-radius:18px!important;
+    padding:20px 16px!important;
+  }
+  .contact-phase8 .contact-details>div{
+    padding:14px!important;
+  }
+}
+@media(max-width:380px){
+  .admissions-phase4 .admissions-section,
+  .contact-phase8 .contact-section{
+    padding-block:48px!important;
+  }
+  .admissions-phase4 .admissions-steps article{
+    padding:19px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .admissions-phase4 .admissions-button:hover,
+  .contact-phase8 .contact-button:hover{
+    transform:none!important;
+  }
+}

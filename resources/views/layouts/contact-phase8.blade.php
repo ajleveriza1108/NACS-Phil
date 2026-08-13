@@ -9,6 +9,7 @@
     @include('partials.seo-meta')
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/site.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase20-admissions-contact/fidelity.css') }}">
 </head>
 <body class="contact-phase8">
 @include('partials.public-header', ['mainId' => 'contact-main'])

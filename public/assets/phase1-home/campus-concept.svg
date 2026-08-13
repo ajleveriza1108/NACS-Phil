@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">NACS-Phil campus concept illustration</title>
+  <desc id="desc">A stylized modern Christian school campus used only as a temporary visual placeholder.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#edf7fd"/>
+      <stop offset=".55" stop-color="#b9ddf2"/>
+      <stop offset="1" stop-color="#82b9d6"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b4f78"/>
+      <stop offset="1" stop-color="#0a2948"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfcfd"/>
+      <stop offset="1" stop-color="#dce4ea"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b9ccb4"/>
+      <stop offset="1" stop-color="#688b71"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#082b50" flood-opacity=".22"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="760" fill="url(#sky)"/>
+  <circle cx="1040" cy="105" r="56" fill="#fff" opacity=".72"/>
+  <g fill="#fff" opacity=".72">
+    <ellipse cx="860" cy="125" rx="90" ry="28"/>
+    <ellipse cx="930" cy="126" rx="64" ry="21"/>
+    <ellipse cx="710" cy="95" rx="70" ry="22"/>
+  </g>
+
+  <path d="M0 525C210 486 372 501 560 528c186 27 420 19 720-38v270H0Z" fill="url(#ground)"/>
+  <path d="M0 603c250-18 492-8 705 24 219 32 403 25 575-14v147H0Z" fill="#e4e7e9"/>
+  <path d="M0 642c282-20 548-2 792 27 188 23 350 17 488-7v98H0Z" fill="#c8ced2"/>
+
+  <g filter="url(#shadow)">
+    <rect x="225" y="275" width="515" height="278" rx="7" fill="url(#wall)"/>
+    <rect x="730" y="219" width="298" height="334" rx="6" fill="#d7dadd"/>
+    <rect x="803" y="188" width="177" height="365" rx="6" fill="#343e48"/>
+    <rect x="1013" y="285" width="267" height="268" rx="6" fill="url(#wall)"/>
+
+    <g fill="url(#glass)">
+      <rect x="255" y="315" width="90" height="70" rx="2"/>
+      <rect x="365" y="315" width="90" height="70" rx="2"/>
+      <rect x="475" y="315" width="90" height="70" rx="2"/>
+      <rect x="585" y="315" width="115" height="70" rx="2"/>
+      <rect x="255" y="409" width="90" height="75" rx="2"/>
+      <rect x="365" y="409" width="90" height="75" rx="2"/>
+      <rect x="475" y="409" width="90" height="75" rx="2"/>
+      <rect x="585" y="409" width="115" height="75" rx="2"/>
+      <rect x="750" y="286" width="35" height="210" rx="2"/>
+      <rect x="998" y="305" width="34" height="190" rx="2"/>
+      <rect x="1040" y="324" width="84" height="70" rx="2"/>
+      <rect x="1144" y="324" width="90" height="70" rx="2"/>
+      <rect x="1040" y="414" width="84" height="70" rx="2"/>
+      <rect x="1144" y="414" width="90" height="70" rx="2"/>
+    </g>
+
+    <g fill="#f7f9fa">
+      <rect x="215" y="298" width="535" height="15"/>
+      <rect x="215" y="391" width="535" height="15"/>
+      <rect x="247" y="293" width="12" height="245"/>
+      <rect x="351" y="293" width="12" height="245"/>
+      <rect x="461" y="293" width="12" height="245"/>
+      <rect x="571" y="293" width="12" height="245"/>
+      <rect x="704" y="293" width="12" height="245"/>
+      <rect x="1030" y="304" width="12" height="230"/>
+      <rect x="1128" y="304" width="12" height="230"/>
+      <rect x="1237" y="304" width="12" height="230"/>
+    </g>
+
+    <rect x="823" y="304" width="137" height="196" rx="3" fill="#172b3d"/>
+    <rect x="866" y="326" width="49" height="134" rx="2" fill="#704f3b"/>
+    <rect x="886" y="341" width="9" height="101" rx="2" fill="#fff"/>
+    <rect x="857" y="381" width="67" height="9" rx="2" fill="#fff"/>
+    <text x="891" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#ffffff">NACS-PHIL</text>
+
+    <rect x="370" y="520" width="690" height="34" rx="4" fill="#f5f7f8"/>
+    <rect x="415" y="543" width="600" height="16" rx="4" fill="#b6bdc2"/>
+  </g>
+
+  <g>
+    <g transform="translate(155 460)">
+      <rect x="-5" y="34" width="10" height="70" fill="#705238"/>
+      <circle cx="0" cy="15" r="53" fill="#467c55"/>
+      <circle cx="-25" cy="22" r="38" fill="#5b9366"/>
+      <circle cx="27" cy="28" r="36" fill="#3f754d"/>
+    </g>
+    <g transform="translate(1090 485)">
+      <rect x="-5" y="30" width="10" height="62" fill="#705238"/>
+      <circle cx="0" cy="10" r="47" fill="#4a8157"/>
+      <circle cx="-27" cy="21" r="30" fill="#65956e"/>
+      <circle cx="25" cy="18" r="33" fill="#397249"/>
+    </g>
+  </g>
+
+  <g fill="#264963">
+    <circle cx="671" cy="570" r="9"/>
+    <rect x="664" y="579" width="14" height="34" rx="5"/>
+    <path d="m667 610-11 31h9l9-27 8 27h9l-11-31Z"/>
+    <circle cx="710" cy="568" r="9"/>
+    <rect x="703" y="577" width="14" height="35" rx="5"/>
+    <path d="m706 609-10 31h9l8-27 9 27h9l-11-31Z"/>
+  </g>
+
+  <rect x="24" y="24" width="295" height="42" rx="21" fill="#082b50" opacity=".82"/>
+  <circle cx="48" cy="45" r="7" fill="#e6c368"/>
+  <text x="66" y="51" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">CONCEPT VISUAL - REPLACE WITH APPROVED PHOTO</text>
+</svg>

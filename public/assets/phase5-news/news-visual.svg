@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">NACS-Phil news and announcements concept</title>
+  <desc id="desc">A modern abstract collection of school announcement cards, notices, and connected community updates.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#edf7fc"/><stop offset=".55" stop-color="#b2d5e7"/><stop offset="1" stop-color="#568fb6"/></linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#061d3b"/><stop offset="1" stop-color="#0b477e"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#052748" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <circle cx="1010" cy="120" r="235" fill="#fff" opacity=".16"/>
+  <g opacity=".23" stroke="#fff"><path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200M0 750H1200"/><path d="M150 0V900M300 0V900M450 0V900M600 0V900M750 0V900M900 0V900M1050 0V900"/></g>
+  <g filter="url(#shadow)">
+    <rect x="160" y="210" width="360" height="430" rx="32" fill="#fff" fill-opacity=".92"/>
+    <rect x="570" y="170" width="470" height="240" rx="32" fill="url(#navy)"/>
+    <rect x="570" y="445" width="220" height="200" rx="28" fill="#f0d77f"/>
+    <rect x="820" y="445" width="220" height="200" rx="28" fill="#fff" fill-opacity=".9"/>
+  </g>
+  <rect x="200" y="250" width="280" height="150" rx="22" fill="#dceef8"/>
+  <circle cx="340" cy="325" r="45" fill="#0b477e" fill-opacity=".14"/>
+  <path d="M235 452h215M235 488h175M235 524h205M235 560h145" stroke="#7b91a3" stroke-width="12" stroke-linecap="round" opacity=".55"/>
+  <circle cx="635" cy="240" r="36" fill="#e6c46b"/><path d="M698 225h270M698 266h215M620 325h348" stroke="#fff" stroke-width="13" stroke-linecap="round" opacity=".85"/>
+  <path d="M610 506h135M610 542h110M610 578h142" stroke="#725316" stroke-width="11" stroke-linecap="round" opacity=".6"/>
+  <path d="M860 505h135M860 541h112M860 577h142" stroke="#577085" stroke-width="11" stroke-linecap="round" opacity=".55"/>
+  <path d="M510 325C550 310 570 300 610 282M790 550h30" stroke="#d5a63f" stroke-width="8" stroke-linecap="round"/>
+  <g transform="translate(88 66)"><rect width="380" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL Â· NEWS + ANNOUNCEMENTS</text></g>
+</svg>

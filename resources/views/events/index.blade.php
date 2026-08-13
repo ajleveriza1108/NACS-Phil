@@ -1,0 +1,5 @@
+@extends('layouts.public', ['title' => 'Events'])
+@section('content')
+<section class="bg-nacs-900 py-16 text-white"><div class="page-shell"><p class="text-sm font-bold uppercase tracking-[.2em] text-gold-400">Calendar</p><h1 class="mt-4 font-serif text-5xl font-bold">Upcoming events</h1></div></section>
+<section class="page-shell py-16"><div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">@forelse($upcomingEvents as $event)<article class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"><p class="font-bold text-gold-500">{{ $event->starts_at->format('F j, Y') }}</p><h2 class="mt-3 font-serif text-2xl font-bold text-nacs-900">{{ $event->title }}</h2><p class="mt-3 text-sm font-semibold text-gray-500">{{ $event->starts_at->format('g:i A') }}@if($event->ends_at) – {{ $event->ends_at->format('g:i A') }}@endif</p><p class="mt-2 text-sm text-gray-500">{{ $event->venue }}</p><div class="prose-safe mt-5 text-gray-600">{!! nl2br(e($event->description)) !!}</div></article>@empty<p>No upcoming public events yet.</p>@endforelse</div><div class="mt-10">{{ $upcomingEvents->links() }}</div></section>
+@endsection

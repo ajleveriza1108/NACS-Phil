@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">NACS-Phil About page concept visual</title>
+  <desc id="desc">An abstract modern illustration with a cross, open book, learning spaces, trees, and connected pathways representing Christian education and school community.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9f5fb"/><stop offset=".55" stop-color="#a8cfe4"/><stop offset="1" stop-color="#4f8db6"/></linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#061d3b"/><stop offset="1" stop-color="#0b477e"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d482"/><stop offset="1" stop-color="#c5932a"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#052748" flood-opacity=".20"/></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <circle cx="1010" cy="110" r="230" fill="#fff" opacity=".18"/>
+  <g opacity=".26" stroke="#fff"><path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200M0 750H1200"/><path d="M150 0V900M300 0V900M450 0V900M600 0V900M750 0V900M900 0V900M1050 0V900"/></g>
+  <g filter="url(#shadow)"><rect x="140" y="150" width="920" height="600" rx="42" fill="#fff" fill-opacity=".88"/><rect x="188" y="198" width="824" height="504" rx="30" fill="#f8fbfd"/></g>
+  <g transform="translate(247 265)">
+    <rect width="260" height="300" rx="28" fill="url(#navy)"/>
+    <circle cx="130" cy="82" r="54" fill="#fff" fill-opacity=".08" stroke="#fff" stroke-opacity=".20"/>
+    <rect x="119" y="36" width="22" height="110" rx="5" fill="#fff"/><rect x="84" y="73" width="92" height="22" rx="5" fill="#fff"/>
+    <path d="M56 215c45-30 94-30 148 0v50c-54-25-103-25-148 0v-50Z" fill="#fff" fill-opacity=".95"/><path d="M130 201v66" stroke="#d5a63f" stroke-width="5"/>
+    <text x="130" y="286" text-anchor="middle" fill="#d9e8f4" font-family="Arial,sans-serif" font-size="14" font-weight="700">FAITH + LEARNING</text>
+  </g>
+  <g transform="translate(545 250)">
+    <rect width="410" height="154" rx="26" fill="#e7f1f7" stroke="#c7dce9"/><circle cx="65" cy="77" r="35" fill="url(#gold)"/><path d="M51 77h28M65 63v28" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <rect x="122" y="48" width="210" height="18" rx="9" fill="#123c63" opacity=".88"/><rect x="122" y="80" width="244" height="10" rx="5" fill="#6d879c" opacity=".52"/><rect x="122" y="102" width="184" height="10" rx="5" fill="#6d879c" opacity=".36"/>
+    <rect y="182" width="195" height="178" rx="26" fill="#fff" stroke="#d8e5ee"/><rect x="215" y="182" width="195" height="178" rx="26" fill="#fff" stroke="#d8e5ee"/>
+    <circle cx="56" cy="234" r="24" fill="#0b477e" opacity=".12"/><path d="M44 236c20-21 31-21 49 0" fill="none" stroke="#0b477e" stroke-width="6" stroke-linecap="round"/>
+    <path d="M262 220h98v65h-98Z" fill="#e8f2f7" stroke="#9ebbd0"/><path d="M273 231h76M273 247h55M273 263h67" stroke="#3c6d91" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <path d="M210 670c145-95 300-103 455-35s285 55 390-42" fill="none" stroke="#d5a63f" stroke-width="9" stroke-linecap="round" opacity=".78"/>
+  <circle cx="215" cy="667" r="13" fill="#061d3b"/><circle cx="664" cy="634" r="13" fill="#061d3b"/><circle cx="1050" cy="592" r="13" fill="#061d3b"/>
+  <g transform="translate(90 65)"><rect width="360" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL Â· ABOUT PAGE CONCEPT</text></g>
+</svg>

@@ -33,7 +33,7 @@
                     @if($event->is_all_day)
                         <span>All day</span>
                     @else
-                        <span>{{ $event->starts_at->format('g:i A') }} â€“ {{ $event->ends_at->format('g:i A') }}</span>
+                        <span>{{ $event->starts_at->format('g:i A') }} &ndash; {{ $event->ends_at->format('g:i A') }}</span>
                     @endif
                     @if($event->venue)<span>{{ $event->venue }}</span>@endif
                 </div>

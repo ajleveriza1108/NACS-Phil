@@ -12,7 +12,7 @@
         @if($event->is_all_day)
             <span>All day</span>
         @else
-            <span>{{ $event->starts_at->format('g:i A') }} â€“ {{ $event->ends_at->format('g:i A') }}</span>
+            <span>{{ $event->starts_at->format('g:i A') }} &ndash; {{ $event->ends_at->format('g:i A') }}</span>
         @endif
         @if($event->venue)<span>{{ $event->venue }}</span>@endif
     </div>
@@ -30,7 +30,7 @@
     </article>
     <aside class="event-detail-aside" data-events-reveal>
         <div><span>Date</span><strong>{{ $event->starts_at->format('F j, Y') }}</strong></div>
-        <div><span>Time</span><strong>{{ $event->is_all_day ? 'All day' : $event->starts_at->format('g:i A').' â€“ '.$event->ends_at->format('g:i A') }}</strong></div>
+        <div><span>Time</span><strong>{{ $event->is_all_day ? 'All day' : $event->starts_at->format('g:i A').' &ndash; '.$event->ends_at->format('g:i A') }}</strong></div>
         <div><span>Venue</span><strong>{{ $event->venue ?: 'Contact the school' }}</strong></div>
     </aside>
 </div>

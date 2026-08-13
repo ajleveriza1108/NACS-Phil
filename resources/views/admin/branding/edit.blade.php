@@ -15,7 +15,7 @@
         <div class="p16-panel-head">
             <div><span class="cm-eyebrow">Current identity</span><h2>Logo preview</h2></div>
             <span class="p16-status {{ $hasOfficialLogo ? 'is-approved' : 'is-development' }}">
-                {{ $hasOfficialLogo ? 'Official / Approved' : 'Development Mark' }}
+                {{ $hasOfficialLogo ? 'Official / Approved Upload' : 'Official Logo / Built-in' }}
             </span>
         </div>
 
@@ -28,7 +28,7 @@
                 @if($hasOfficialLogo && $approvedAt)
                     <small>Approval recorded {{ \Illuminate\Support\Carbon::parse($approvedAt)->format('M j, Y g:i A') }}</small>
                 @else
-                    <small>This is not considered launch-ready branding.</small>
+                    <small>The enhanced official school logo is displayed. Upload and approve it here to record Launch Readiness approval.</small>
                 @endif
             </div>
         </div>

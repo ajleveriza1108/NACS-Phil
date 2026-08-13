@@ -41,7 +41,7 @@ class SchoolSetting extends Model
             return Storage::disk('public')->url($path);
         }
 
-        return asset('images/nacs-development-mark.svg');
+        return asset('assets/phase17-theme/nacs-official-logo.png');
     }
 
     public static function logoAlt(): string

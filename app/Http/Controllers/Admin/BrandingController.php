@@ -84,7 +84,7 @@ class BrandingController extends Controller
             );
         }
 
-        return back()->with('success', 'Official logo removed. The development mark is active again until an approved logo is uploaded.');
+        return back()->with('success', 'Uploaded logo removed. The enhanced bundled school logo is active; Launch Readiness remains pending until an approved upload is recorded.');
     }
 
     private function saveSetting(

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase16-branding/branding.css') }}">
     <script src="{{ asset('assets/admin-content-manager/manager.js') }}" defer></script>
     <script src="{{ asset('assets/phase13-admin/admin.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('assets/phase17-theme/admin.css') }}">
 </head>
 <body class="cm-body p13-admin">
 <a href="#admin-main" class="p13-skip">Skip to administration content</a>

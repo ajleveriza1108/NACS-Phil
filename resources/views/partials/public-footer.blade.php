@@ -7,7 +7,7 @@
                 </span>
                 <span class="nacs11-brand__copy">
                     <strong>{{ \App\Models\SchoolSetting::valueFor('short_name', config('nacs.short_name')) }}</strong>
-                    <small>Noel Academy Christian of Sariaya Philippines</small>
+                    <small>Noel Academy Christian of Sariaya Philippines, Inc.</small>
                 </span>
             </a>
             <p>{{ \App\Models\SchoolSetting::valueFor('tagline', 'Faith. Character. Excellence.') }}</p>

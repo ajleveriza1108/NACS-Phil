@@ -123,7 +123,7 @@ class Phase16OfficialBrandingTest extends TestCase
         $this->assertNull(SchoolSetting::valueFor('official_logo_path'));
     }
 
-    public function test_removing_official_logo_returns_to_development_mark(): void
+    public function test_removing_uploaded_logo_returns_to_bundled_official_logo(): void
     {
         Storage::fake('public');
 
@@ -145,7 +145,7 @@ class Phase16OfficialBrandingTest extends TestCase
 
         $this->get('/')
             ->assertOk()
-            ->assertSee('nacs-development-mark.svg', false);
+            ->assertSee('nacs-official-logo.png', false);
 
         $this->actingAs($principal)
             ->get('/admin/launch-readiness')

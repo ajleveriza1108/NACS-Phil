@@ -1,0 +1,49 @@
+/* NACS-Phil Phase 17 — Admin visual alignment */
+:root{
+  --p17-admin-navy:#031a39;
+  --p17-admin-navy2:#062c59;
+  --p17-admin-gold:#e4ae43;
+  --p17-admin-ivory:#fffaf0;
+  --p17-admin-line:#dce6ef;
+  --p17-admin-ink:#17334f;
+}
+body:has(.cm-shell),.cm-body{
+  background:linear-gradient(180deg,#f7f9fb,#eef3f7)!important;
+  color:var(--p17-admin-ink)!important;
+}
+.cm-sidebar{
+  background:
+    radial-gradient(circle at 20% 0,rgba(24,97,164,.32),transparent 24rem),
+    linear-gradient(180deg,#031a39,#062c59)!important;
+  border-right:1px solid rgba(255,255,255,.08)!important;
+}
+.cm-brand strong,.cm-brand span,.cm-sidebar a{color:#fff!important}
+.cm-sidebar a.is-active{
+  background:linear-gradient(135deg,rgba(228,174,67,.20),rgba(255,255,255,.08))!important;
+  box-shadow:inset 3px 0 0 var(--p17-admin-gold)!important;
+}
+.cm-sidebar a:hover{background:rgba(255,255,255,.08)!important}
+.cm-topbar{
+  background:rgba(255,255,255,.94)!important;
+  border-bottom:1px solid var(--p17-admin-line)!important;
+  backdrop-filter:blur(12px);
+}
+.cm-card,.cm-panel,[class*="p12-"],[class*="p13-"],[class*="p15-"],[class*="p16-"]{
+  border-color:var(--p17-admin-line)!important;
+}
+.cm-button--primary{
+  background:linear-gradient(135deg,#07376f,#031f46)!important;
+  border-color:#052d5b!important;color:#fff!important;
+}
+.cm-button--secondary{background:#fff!important;color:#07376f!important;border-color:#cbd8e3!important}
+.cm-eyebrow{color:#9b690e!important}
+.cm-main h1,.cm-main h2,.cm-main h3{color:#052b55!important}
+.cm-main input,.cm-main select,.cm-main textarea{
+  border-radius:10px!important;border-color:#ccd9e4!important;
+}
+@media(max-width:780px){
+  .cm-main{padding-inline:14px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}
+}

@@ -7,6 +7,7 @@
 <script src="{{ asset('assets/phase7-gallery/gallery.js') }}" defer></script><script src="{{ asset('assets/phase11-unified/public-theme.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('assets/phase12-school/backend-public.css') }}">
     @include('partials.seo-meta')
+    <link rel="stylesheet" href="{{ asset('assets/phase17-theme/site.css') }}">
 </head>
 <body class="gallery-phase7">
 @include('partials.public-header', ['mainId' => 'gallery-main'])

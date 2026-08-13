@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase12-school/backend-public.css') }}">
     @include('partials.seo-meta')
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/site.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
 </head>
 <body class="events-phase6">
 @include('partials.public-header', ['mainId' => 'events-main'])

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase9-admin/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase12-school/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase13-admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase15-launch/launch.css') }}">
     <script src="{{ asset('assets/admin-content-manager/manager.js') }}" defer></script>
     <script src="{{ asset('assets/phase13-admin/admin.js') }}" defer></script>
 </head>
@@ -92,6 +93,7 @@
                     <a href="{{ route('admin.contact-content.edit') }}" @class(['is-active' => request()->routeIs('admin.contact-content.*')])><span class="cm-nav-icon">C</span><span>Contact Page</span></a>
                     <a href="{{ route('admin.settings.edit') }}" @class(['is-active' => request()->routeIs('admin.settings.*')])><span class="cm-nav-icon">S</span><span>School Settings</span></a>
                     <a href="{{ route('admin.seo.edit') }}" @class(['is-active' => request()->routeIs('admin.seo.*')])><span class="cm-nav-icon">O</span><span>SEO &amp; Sharing</span></a>
+                    <a href="{{ route('admin.launch-readiness') }}" @class(['is-active' => request()->routeIs('admin.launch-readiness')])><span class="cm-nav-icon">L</span><span>Launch Readiness</span></a>
                     <a href="{{ route('admin.trash.index') }}" @class(['is-active' => request()->routeIs('admin.trash.*')])><span class="cm-nav-icon">T</span><span>Trash</span></a>
                     <a href="{{ route('admin.audit.index') }}" @class(['is-active' => request()->routeIs('admin.audit.*')])><span class="cm-nav-icon">H</span><span>Audit History</span></a>
                 </nav>

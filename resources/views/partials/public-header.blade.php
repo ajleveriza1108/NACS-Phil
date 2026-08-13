@@ -20,12 +20,14 @@
 </div>
 @endif
 
+@if(!app()->environment('production'))
 <div class="nacs11-preview">
     <div class="nacs11-shell nacs11-preview__inner">
         <span class="nacs11-preview__dot" aria-hidden="true"></span>
         <span>Development preview &mdash; official school content and photographs remain subject to authorized school approval before public launch.</span>
     </div>
 </div>
+@endif
 
 <header class="nacs11-header" data-nacs11-header>
     <div class="nacs11-shell nacs11-header__inner">

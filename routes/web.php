@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\FacultyProfileController as AdminFacultyProfileCo
 use App\Http\Controllers\Admin\GalleryContentController as AdminGalleryContentController;
 use App\Http\Controllers\Admin\GalleryItemController as AdminGalleryItemController;
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
+use App\Http\Controllers\Admin\LaunchReadinessController as AdminLaunchReadinessController;
 use App\Http\Controllers\Admin\MediaAssetController as AdminMediaAssetController;
 use App\Http\Controllers\Admin\NewsContentController as AdminNewsContentController;
 use App\Http\Controllers\Admin\ProgramsContentController as AdminProgramsContentController;
@@ -152,6 +153,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
         Route::get('/seo', [AdminSeoSettingController::class, 'edit'])->name('seo.edit');
         Route::patch('/seo', [AdminSeoSettingController::class, 'update'])->name('seo.update');
+        Route::get('/launch-readiness', AdminLaunchReadinessController::class)->name('launch-readiness');
         Route::get('/school-settings', [AdminSchoolSettingController::class, 'edit'])->name('settings.edit');
         Route::patch('/school-settings', [AdminSchoolSettingController::class, 'update'])->name('settings.update');
     });

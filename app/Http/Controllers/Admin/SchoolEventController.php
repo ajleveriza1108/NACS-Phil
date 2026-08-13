@@ -45,7 +45,7 @@ class SchoolEventController extends Controller
     {
         $event->delete();
 
-        return redirect()->route('admin.events.index')->with('success', 'Event deleted.');
+        return redirect()->route('admin.events.index')->with('success', 'Event moved to Trash.');
     }
 
     private function validated(Request $request, ?SchoolEvent $event = null): array

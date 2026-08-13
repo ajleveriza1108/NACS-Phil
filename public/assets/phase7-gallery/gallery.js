@@ -1,0 +1,12 @@
+(()=>{"use strict";
+const h=document.querySelector("[data-g-header]"),b=document.querySelector("[data-g-menu]"),m=document.querySelector("[data-g-mobile]");
+const sh=()=>h&&h.classList.toggle("shadow",scrollY>16);sh();addEventListener("scroll",sh,{passive:true});
+if(b&&m){const c=()=>{b.setAttribute("aria-expanded","false");m.hidden=true};b.addEventListener("click",()=>{const x=b.getAttribute("aria-expanded")==="true";b.setAttribute("aria-expanded",x?"false":"true");m.hidden=x});m.addEventListener("click",e=>{if(e.target.closest("a"))c()});addEventListener("resize",()=>{if(innerWidth>1024)c()})}
+const rs=[...document.querySelectorAll("[data-g-reveal]")];if(matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver"in window))rs.forEach(n=>n.classList.add("show"));else{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");io.unobserve(e.target)}}),{threshold:.1});rs.forEach(n=>io.observe(n))}
+const lb=document.querySelector("[data-g-lightbox]"),ops=[...document.querySelectorAll("[data-g-open]")];if(!lb||!ops.length)return;
+const im=lb.querySelector("[data-g-image]"),t=lb.querySelector("[data-g-title]"),cat=lb.querySelector("[data-g-category]"),cap=lb.querySelector("[data-g-caption]"),cr=lb.querySelector("[data-g-credit]"),cl=lb.querySelector("[data-g-close]"),pr=lb.querySelector("[data-g-prev]"),nx=lb.querySelector("[data-g-next]");let i=0,last=null;
+const render=n=>{i=(n+ops.length)%ops.length;const o=ops[i];im.src=o.dataset.image||"";im.alt=o.dataset.alt||"";t.textContent=o.dataset.title||"";cat.textContent=o.dataset.category||"";cap.textContent=o.dataset.caption||"";cr.textContent=o.dataset.credit||""};
+const open=n=>{last=document.activeElement;render(n);lb.hidden=false;document.body.classList.add("lock");cl.focus()};
+const close=()=>{lb.hidden=true;document.body.classList.remove("lock");im.src="";if(last&&last.focus)last.focus()};
+ops.forEach((o,n)=>o.addEventListener("click",()=>open(n)));cl.addEventListener("click",close);pr.addEventListener("click",()=>render(i-1));nx.addEventListener("click",()=>render(i+1));lb.addEventListener("click",e=>{if(e.target===lb)close()});document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")render(i-1);if(e.key==="ArrowRight")render(i+1)});
+})();

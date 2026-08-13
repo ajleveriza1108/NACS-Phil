@@ -15,6 +15,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'role',
+        'is_active',
         'email_verified_at',
     ];
 
@@ -29,6 +31,58 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'is_active' => 'boolean',
         ];
+    }
+
+    public function staffRole(): ?string
+    {
+        if ($this->is_admin !== true) {
+            return null;
+        }
+
+        return $this->role ?: 'super_admin';
+    }
+
+    public function staffRoleLabel(): string
+    {
+        return match ($this->staffRole()) {
+            'super_admin' => 'Super Admin',
+            'principal' => 'Principal / School Admin',
+            'teacher' => 'Teacher / Content Editor',
+            default => 'Not authorized',
+        };
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->staffRole() === 'super_admin';
+    }
+
+    public function isPrincipal(): bool
+    {
+        return $this->staffRole() === 'principal';
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->staffRole() === 'teacher';
+    }
+
+    public function canManageSchoolSettings(): bool
+    {
+        return $this->is_active !== false
+            && in_array($this->staffRole(), ['super_admin', 'principal'], true);
+    }
+
+    public function canManageStaff(): bool
+    {
+        return $this->is_active !== false && $this->isSuperAdmin();
+    }
+
+    public function canPostDailyContent(): bool
+    {
+        return $this->is_active !== false
+            && in_array($this->staffRole(), ['super_admin', 'principal', 'teacher'], true);
     }
 }

@@ -1,5 +1,33 @@
-@extends('layouts.public', ['title' => 'Gallery'])
+@php($galleryContent=\App\Models\SiteContent::valuesFor('gallery',\App\Support\GalleryContent::defaults()))
+@extends('layouts.gallery-phase7')
+@section('title','Gallery')
 @section('content')
-<section class="bg-nacs-900 py-16 text-white"><div class="page-shell"><p class="text-sm font-bold uppercase tracking-[.2em] text-gold-400">School life</p><h1 class="mt-4 font-serif text-5xl font-bold">Approved photo gallery</h1><p class="mt-5 max-w-3xl text-emerald-100">Only images marked published with recorded consent confirmation can appear here.</p></div></section>
-<section class="page-shell py-16"><div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">@forelse($galleryItems as $item)<figure class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"><img src="{{ Storage::url($item->image_path) }}" alt="{{ $item->alt_text }}" class="aspect-[4/3] w-full object-cover"><figcaption class="p-5"><p class="text-xs font-bold uppercase tracking-wider text-nacs-600">{{ $item->category }}</p><h2 class="mt-2 font-serif text-xl font-bold text-nacs-900">{{ $item->title }}</h2>@if($item->caption)<p class="mt-2 text-sm leading-6 text-gray-600">{{ $item->caption }}</p>@endif</figcaption></figure>@empty<div class="rounded-2xl bg-nacs-50 p-8 text-gray-700 sm:col-span-2 lg:col-span-3"><h2 class="font-serif text-2xl font-bold text-nacs-900">No approved images yet</h2><p class="mt-3 leading-7">Upload original school-approved images in the administrator dashboard. Facebook photographs are not imported automatically.</p></div>@endforelse</div><div class="mt-10">{{ $galleryItems->links() }}</div></section>
+<section class="g-hero"><div class="g-shell g-hero-inner">
+<div data-g-reveal><span class="g-pill">{{ $galleryContent['hero_badge'] }}</span><h1>{{ $galleryContent['hero_heading'] }} <em>{{ $galleryContent['hero_highlight'] }}</em></h1><p>{{ $galleryContent['hero_lead'] }}</p><div class="g-actions"><a class="g-btn primary" href="#photos">Explore Gallery &darr;</a><a class="g-btn secondary" href="{{ route('privacy') }}">Photo Privacy &rarr;</a></div></div>
+<div class="g-visual" data-g-reveal><img src="{{ asset('assets/phase7-gallery/gallery-visual.svg') }}" alt="Abstract school photo gallery illustration."></div>
+</div></section>
+<section id="photos" class="g-section"><div class="g-shell">
+<div class="g-section-head" data-g-reveal><div><span>Approved Photographs</span><h2>{{ $galleryContent['listing_heading'] }}</h2></div><p>{{ $galleryContent['listing_text'] }}</p></div>
+@if($galleryCategories->isNotEmpty())
+<nav class="g-filters" aria-label="Gallery categories" data-g-reveal>
+<a href="{{ route('gallery.index') }}" @class(['active'=>$activeCategory===''])>All</a>
+@foreach($galleryCategories as $category)
+<a href="{{ route('gallery.index',['category'=>$category]) }}" @class(['active'=>$activeCategory===$category])>{{ $category }}</a>
+@endforeach
+</nav>
+@endif
+<div class="g-grid">
+@forelse($galleryItems as $item)
+<figure class="g-card" data-g-reveal>
+<button type="button" class="g-image" data-g-open data-image="{{ Storage::url($item->image_path) }}" data-alt="{{ $item->alt_text }}" data-title="{{ $item->title }}" data-category="{{ $item->category }}" data-caption="{{ $item->caption ?? '' }}" data-credit="{{ $item->photographer_credit ? 'Photo credit: '.$item->photographer_credit : '' }}" aria-label="Open {{ $item->title }} in image viewer">
+<img src="{{ Storage::url($item->image_path) }}" alt="{{ $item->alt_text }}" loading="lazy"><i>+</i></button>
+<figcaption><div class="g-meta"><span>{{ $item->category }}</span>@if($item->taken_at)<small>{{ $item->taken_at->format('M Y') }}</small>@endif</div><h3>{{ $item->title }}</h3>@if($item->caption)<p>{{ $item->caption }}</p>@endif @if($item->photographer_credit)<small>Photo credit: {{ $item->photographer_credit }}</small>@endif</figcaption>
+</figure>
+@empty
+<div class="g-empty" data-g-reveal><b>P</b><h3>{{ $galleryContent['empty_heading'] }}</h3><p>{{ $galleryContent['empty_text'] }}</p></div>
+@endforelse
+</div>
+<div class="g-pages">{{ $galleryItems->links() }}</div>
+</div></section>
+<section class="g-section g-privacy-section"><div class="g-shell"><div class="g-privacy" data-g-reveal><div><span>Responsible Publishing</span><h2>{{ $galleryContent['privacy_heading'] }}</h2><p>{{ $galleryContent['privacy_text'] }}</p></div><a class="g-btn gold" href="{{ route('privacy') }}">{{ $galleryContent['privacy_button'] }} &rarr;</a></div></div></section>
 @endsection

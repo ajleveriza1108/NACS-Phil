@@ -7,6 +7,7 @@
     <title>{{ isset($title) ? $title . ' | ' : '' }}NACS-Phil Content Manager</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('assets/admin-content-manager/manager.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase9-admin/admin.css') }}">
     <script src="{{ asset('assets/admin-content-manager/manager.js') }}" defer></script>
 </head>
 <body class="cm-body">
@@ -17,7 +18,6 @@
                 <img src="{{ asset('images/nacs-development-mark.svg') }}" alt="" width="48" height="48">
                 <span><strong>NACS-Phil</strong><small>Content Manager</small></span>
             </a>
-
             <button type="button" class="cm-sidebar-close" data-cm-close aria-label="Close menu">&times;</button>
         </div>
 
@@ -37,34 +37,39 @@
             </a>
         </nav>
 
+        @if(auth()->user()->canManageSchoolSettings())
         <p class="cm-sidebar-label">Website</p>
-        <nav class="cm-nav">
-            <a href="{{ route('admin.website-content.edit') }}" @class(['is-active' => request()->routeIs('admin.website-content.*')])>
-                <span class="cm-nav-icon">W</span><span>Edit Homepage</span>
-            </a>
-            <a href="{{ route('admin.about-content.edit') }}" @class(['is-active' => request()->routeIs('admin.about-content.*')])>
-                <span class="cm-nav-icon">A</span><span>Edit About</span>
-            </a>
-<a href="{{ route('admin.programs-content.edit') }}" @class(['is-active' => request()->routeIs('admin.programs-content.*')])>
-                <span class="cm-nav-icon">P</span><span>Edit Programs</span>
-            </a>
-<a href="{{ route('admin.admissions-content.edit') }}" @class(['is-active' => request()->routeIs('admin.admissions-content.*')])>
-                <span class="cm-nav-icon">D</span><span>Edit Admissions</span>
-            </a>
-<a href="{{ route('admin.news-content.edit') }}" @class(['is-active' => request()->routeIs('admin.news-content.*')])>
-                <span class="cm-nav-icon">N</span><span>Edit News Page</span>
-            </a>
-            <a href="{{ route('admin.inquiries.index') }}" @class(['is-active' => request()->routeIs('admin.inquiries.*')])>
-                <span class="cm-nav-icon">I</span><span>Inquiries</span>
-            </a>
+        <nav class="cm-nav" aria-label="Website settings">
+            <a href="{{ route('admin.website-content.edit') }}" @class(['is-active' => request()->routeIs('admin.website-content.*')])><span class="cm-nav-icon">W</span><span>Edit Homepage</span></a>
+            <a href="{{ route('admin.about-content.edit') }}" @class(['is-active' => request()->routeIs('admin.about-content.*')])><span class="cm-nav-icon">A</span><span>Edit About</span></a>
+            <a href="{{ route('admin.programs-content.edit') }}" @class(['is-active' => request()->routeIs('admin.programs-content.*')])><span class="cm-nav-icon">P</span><span>Edit Programs</span></a>
+            <a href="{{ route('admin.admissions-content.edit') }}" @class(['is-active' => request()->routeIs('admin.admissions-content.*')])><span class="cm-nav-icon">D</span><span>Edit Admissions</span></a>
+            <a href="{{ route('admin.news-content.edit') }}" @class(['is-active' => request()->routeIs('admin.news-content.*')])><span class="cm-nav-icon">N</span><span>Edit News Page</span></a>
+            <a href="{{ route('admin.events-content.edit') }}" @class(['is-active' => request()->routeIs('admin.events-content.*')])><span class="cm-nav-icon">E</span><span>Edit Events Page</span></a>
+            <a href="{{ route('admin.gallery-content.edit') }}" @class(['is-active' => request()->routeIs('admin.gallery-content.*')])><span class="cm-nav-icon">G</span><span>Edit Gallery Page</span></a>
+            <a href="{{ route('admin.contact-content.edit') }}" @class(['is-active' => request()->routeIs('admin.contact-content.*')])><span class="cm-nav-icon">C</span><span>Edit Contact Page</span></a>
+            <a href="{{ route('admin.inquiries.index') }}" @class(['is-active' => request()->routeIs('admin.inquiries.*')])><span class="cm-nav-icon">I</span><span>Inquiries</span></a>
+            <a href="{{ route('admin.trash.index') }}" @class(['is-active' => request()->routeIs('admin.trash.*')])><span class="cm-nav-icon">T</span><span>Trash</span></a>
+            <a href="{{ route('admin.audit.index') }}" @class(['is-active' => request()->routeIs('admin.audit.*')])><span class="cm-nav-icon">H</span><span>Audit History</span></a>
+
             @if(\Illuminate\Support\Facades\Route::has('admin.admissions.index'))
-                <a href="{{ route('admin.admissions.index') }}" @class(['is-active' => request()->routeIs('admin.admissions.*')])>
-                    <span class="cm-nav-icon">A</span><span>Applications</span>
-                </a>
+                <a href="{{ route('admin.admissions.index') }}" @class(['is-active' => request()->routeIs('admin.admissions.*')])><span class="cm-nav-icon">A</span><span>Applications</span></a>
             @endif
         </nav>
+        @endif
+
+        @if(auth()->user()->canManageStaff())
+        <p class="cm-sidebar-label">Administration</p>
+        <nav class="cm-nav" aria-label="Administration">
+            <a href="{{ route('admin.staff.index') }}" @class(['is-active' => request()->routeIs('admin.staff.*')])><span class="cm-nav-icon">S</span><span>Staff Accounts</span></a>
+        </nav>
+        @endif
 
         <div class="cm-sidebar__bottom">
+            <div class="p9-sidebar-role">
+                <strong>{{ auth()->user()->staffRoleLabel() }}</strong>
+                <small>{{ auth()->user()->email }}</small>
+            </div>
             <a href="{{ route('home') }}" target="_blank" rel="noopener" class="cm-view-site">View public website <span>&nearr;</span></a>
             <form method="POST" action="{{ route('admin.logout') }}">
                 @csrf
@@ -77,14 +82,11 @@
         <header class="cm-topbar">
             <div class="cm-topbar__left">
                 <button type="button" class="cm-menu-button" data-cm-open aria-label="Open menu"><span></span><span></span><span></span></button>
-                <div>
-                    <small>School staff area</small>
-                    <strong>{{ auth()->user()->name }}</strong>
-                </div>
+                <div><small>School staff area</small><strong>{{ auth()->user()->name }}</strong></div>
             </div>
             <div class="cm-topbar__help">
                 <span class="cm-safe-dot"></span>
-                <span>Content changes only. Design and developer settings are protected.</span>
+                <span>{{ auth()->user()->staffRoleLabel() }} access</span>
             </div>
         </header>
 
@@ -96,9 +98,7 @@
             @if($errors->any())
                 <div class="cm-alert cm-alert--error" role="alert">
                     <strong>Please check these items:</strong>
-                    <ul>
-                        @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
-                    </ul>
+                    <ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
                 </div>
             @endif
 

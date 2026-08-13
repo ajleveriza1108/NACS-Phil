@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentAudit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Announcement extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasContentAudit;
 
     protected $fillable = [
         'title', 'slug', 'excerpt', 'body', 'type', 'starts_at', 'ends_at',
@@ -51,7 +53,7 @@ class Announcement extends Model
         $slug = $base;
         $counter = 2;
 
-        while (static::query()->where('slug', $slug)->exists()) {
+        while (static::withTrashed()->where('slug', $slug)->exists()) {
             $slug = $base . '-' . $counter;
             $counter++;
         }

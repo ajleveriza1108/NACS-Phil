@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentAudit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GalleryItem extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasContentAudit;
 
     protected $fillable = [
         'title', 'category', 'image_path', 'alt_text', 'caption', 'taken_at',

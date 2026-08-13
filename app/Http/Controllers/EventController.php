@@ -16,4 +16,14 @@ class EventController extends Controller
                 ->paginate(12),
         ]);
     }
+
+    public function show(SchoolEvent $event): View
+    {
+        abort_unless(
+            $event->published_at !== null && $event->published_at->lte(now()),
+            404
+        );
+
+        return view('events.show', compact('event'));
+    }
 }

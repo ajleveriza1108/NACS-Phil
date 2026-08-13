@@ -57,10 +57,9 @@ class GalleryItemController extends Controller
 
     public function destroy(GalleryItem $galleryItem): RedirectResponse
     {
-        Storage::disk('public')->delete($galleryItem->image_path);
         $galleryItem->delete();
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Gallery item deleted.');
+        return redirect()->route('admin.gallery.index')->with('success', 'Photo moved to Trash. The image file was kept for recovery.');
     }
 
     private function validated(Request $request, bool $imageRequired): array

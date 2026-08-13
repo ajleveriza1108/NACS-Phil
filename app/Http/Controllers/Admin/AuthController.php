@@ -30,13 +30,15 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        if ($request->user()?->is_admin !== true) {
+        $user = $request->user();
+
+        if ($user?->is_admin !== true || $user?->is_active === false) {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
             return back()->withErrors([
-                'email' => 'This account is not authorized for school administration.',
+                'email' => 'This staff account is not currently authorized for school administration.',
             ])->onlyInput('email');
         }
 

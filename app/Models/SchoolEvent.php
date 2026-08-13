@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentAudit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class SchoolEvent extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasContentAudit;
 
     protected $fillable = [
         'title', 'slug', 'description', 'venue', 'starts_at', 'ends_at',
@@ -33,10 +35,12 @@ class SchoolEvent extends Model
                 $base = Str::slug($event->title) ?: 'event';
                 $slug = $base;
                 $counter = 2;
-                while (static::query()->where('slug', $slug)->exists()) {
+
+                while (static::withTrashed()->where('slug', $slug)->exists()) {
                     $slug = $base . '-' . $counter;
                     $counter++;
                 }
+
                 $event->slug = $slug;
             }
         });

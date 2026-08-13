@@ -145,4 +145,20 @@
         </div>
     </div>
 </section>
+
+<section class="admissions-section admissions-section--soft">
+    <div class="admissions-shell">
+        <div class="admissions-final-cta" data-admissions-reveal>
+            <div>
+                <span class="admissions-kicker admissions-kicker--gold">Private Admissions Portal</span>
+                <h2>Apply or check an existing preliminary application.</h2>
+                <p>Families receive a private reference and access code. Final admission remains subject to official school review.</p>
+            </div>
+            <div class="admissions-final-cta__actions">
+                <a class="admissions-button admissions-button--gold" href="{{ route('admissions.apply') }}">Start Application <span aria-hidden="true">&rarr;</span></a>
+                <a class="admissions-button admissions-button--glass" href="{{ route('admissions.track') }}">Track Application</a>
+            </div>
+        </div>
+    </div>
+</section>
 @endsection

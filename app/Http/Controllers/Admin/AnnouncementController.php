@@ -47,7 +47,7 @@ class AnnouncementController extends Controller
     {
         $announcement->delete();
 
-        return redirect()->route('admin.announcements.index')->with('success', 'Announcement deleted.');
+        return redirect()->route('admin.announcements.index')->with('success', 'Announcement moved to Trash.');
     }
 
     private function validated(Request $request, ?Announcement $announcement = null): array

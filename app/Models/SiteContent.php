@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentAudit;
 use Illuminate\Database\Eloquent\Model;
 
 class SiteContent extends Model
 {
+    use HasContentAudit;
+
     protected $fillable = [
         'page',
         'key',

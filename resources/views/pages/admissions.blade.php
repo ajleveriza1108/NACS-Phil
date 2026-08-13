@@ -120,7 +120,7 @@
 
 <section class="admissions-section admissions-privacy">
     <div class="admissions-shell admissions-privacy__card" data-admissions-reveal>
-        <div class="admissions-privacy__icon" aria-hidden="true">âœ“</div>
+        <div class="admissions-privacy__icon" aria-hidden="true">✓</div>
         <div>
             <span class="admissions-kicker">Privacy Reminder</span>
             <h2>{{ $admissionsContent['privacy_heading'] }}</h2>

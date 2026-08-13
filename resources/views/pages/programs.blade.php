@@ -67,7 +67,7 @@
 
             <div class="programs-feature-grid">
                 @foreach([1,2,3,4] as $number)
-                    <div><span aria-hidden="true">âœ“</span><strong>{{ $programsContent[$prefix.'_feature_'.$number] }}</strong></div>
+                    <div><span aria-hidden="true">✓</span><strong>{{ $programsContent[$prefix.'_feature_'.$number] }}</strong></div>
                 @endforeach
             </div>
 

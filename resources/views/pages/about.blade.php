@@ -17,7 +17,7 @@
         <div class="about-hero__visual" data-about-reveal>
             <div class="about-hero__visual-frame">
                 <img src="{{ asset('assets/phase2-about/about-visual.svg') }}" alt="Abstract concept illustration representing Christian education, learning, community, and growth at NACS-Phil.">
-                <div class="about-hero__visual-label"><i aria-hidden="true"></i><span>Faith Â· Learning Â· Community</span></div>
+                <div class="about-hero__visual-label"><i aria-hidden="true"></i><span>Faith · Learning · Community</span></div>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
             <span class="about-kicker">{{ $aboutContent['story_kicker'] }}</span>
             <h2>{{ $aboutContent['story_heading'] }}</h2>
             <div class="about-rich-text">{!! nl2br(e($aboutContent['story_body'])) !!}</div>
-            <div class="about-approval-note"><span aria-hidden="true">âœ“</span><p>{{ $aboutContent['story_note'] }}</p></div>
+            <div class="about-approval-note"><span aria-hidden="true">✓</span><p>{{ $aboutContent['story_note'] }}</p></div>
         </div>
         <aside class="about-story__visual" data-about-reveal>
             <div class="about-story__cross" aria-hidden="true"><span></span><i></i></div>
@@ -56,11 +56,11 @@
         </div>
         <div class="about-purpose-grid">
             <article class="about-purpose-card" data-about-reveal>
-                <span class="about-purpose-card__label">01 Â· Mission</span><div class="about-purpose-card__icon" aria-hidden="true">+</div>
+                <span class="about-purpose-card__label">01 · Mission</span><div class="about-purpose-card__icon" aria-hidden="true">+</div>
                 <h3>{{ $aboutContent['mission_title'] }}</h3><p>{{ $aboutContent['mission_text'] }}</p>
             </article>
             <article class="about-purpose-card about-purpose-card--vision" data-about-reveal>
-                <span class="about-purpose-card__label">02 Â· Vision</span><div class="about-purpose-card__icon" aria-hidden="true">â—Ž</div>
+                <span class="about-purpose-card__label">02 · Vision</span><div class="about-purpose-card__icon" aria-hidden="true">â—Ž</div>
                 <h3>{{ $aboutContent['vision_title'] }}</h3><p>{{ $aboutContent['vision_text'] }}</p>
             </article>
         </div>

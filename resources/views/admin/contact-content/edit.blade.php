@@ -51,7 +51,7 @@
                 <label class="cm-field"><span>Email</span><input name="email" type="email" value="{{ old('email',$content['email']) }}" maxlength="150" placeholder="Leave blank until verified"></label>
             </div>
             <label class="cm-field"><span>Facebook URL</span><input name="facebook_url" type="url" value="{{ old('facebook_url',$content['facebook_url']) }}" maxlength="500"></label>
-            <label class="cm-field"><span>Office hours</span><input name="office_hours" value="{{ old('office_hours',$content['office_hours']) }}" maxlength="300" placeholder="Optional â€” enter only verified hours"></label>
+            <label class="cm-field"><span>Office hours</span><input name="office_hours" value="{{ old('office_hours',$content['office_hours']) }}" maxlength="300" placeholder="Optional — enter only verified hours"></label>
         </div>
     </section>
 
@@ -66,7 +66,7 @@
     </section>
 
     <div class="cm-save-bar">
-        <div><strong>Ready to save?</strong><small>This changes Contact page settings onlyâ€”not submitted inquiries.</small></div>
+        <div><strong>Ready to save?</strong><small>This changes Contact page settings only—not submitted inquiries.</small></div>
         <button type="submit" class="cm-button cm-button--primary">Save Contact Page</button>
     </div>
 </form>

@@ -10,7 +10,10 @@ class AnnouncementController extends Controller
     public function index(): View
     {
         return view('announcements.index', [
-            'announcements' => Announcement::published()->latest('published_at')->paginate(9),
+            'announcements' => Announcement::published()
+                ->orderByDesc('is_pinned')
+                ->latest('published_at')
+                ->paginate(9),
         ]);
     }
 

@@ -14,7 +14,7 @@
             @if($announcement->is_featured)<b>Homepage</b>@endif
         </div>
         <div class="cm-content-item__body">
-            <small>{{ ucfirst($announcement->type) }} Â· Updated {{ $announcement->updated_at->diffForHumans() }}</small>
+            <small>{{ ucfirst($announcement->type) }} · Updated {{ $announcement->updated_at->diffForHumans() }}</small>
             <h2>{{ $announcement->title }}</h2>
             @if($announcement->excerpt)<p>{{ $announcement->excerpt }}</p>@endif
         </div>

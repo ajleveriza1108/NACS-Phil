@@ -61,7 +61,7 @@
     </section>
 
     <div class="cm-save-bar">
-        <div><strong>Ready to save?</strong><small>This changes News page labels onlyâ€”not announcement records.</small></div>
+        <div><strong>Ready to save?</strong><small>This changes News page labels only—not announcement records.</small></div>
         <button type="submit" class="cm-button cm-button--primary">Save News Page</button>
     </div>
 </form>

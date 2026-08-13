@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureStaffRole;
 use App\Http\Middleware\EnsureAdmissionAccess;
@@ -19,6 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'staff_role' => EnsureStaffRole::class,
             'admission.access' => EnsureAdmissionAccess::class,
         ]);
+
+        $middleware->append(AddSecurityHeaders::class);
 
         $middleware->redirectGuestsTo(fn (): string => route('admin.login'));
     })

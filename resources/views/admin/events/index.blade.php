@@ -11,7 +11,7 @@
     <article class="cm-content-item">
         <div class="cm-date-tile"><small>{{ $event->starts_at->format('M') }}</small><strong>{{ $event->starts_at->format('d') }}</strong></div>
         <div class="cm-content-item__body">
-            <small>{{ $event->published_at ? 'Published' : 'Draft' }} Â· {{ $event->starts_at->format('M j, Y g:i A') }}</small>
+            <small>{{ $event->published_at ? 'Published' : 'Draft' }} · {{ $event->starts_at->format('M j, Y g:i A') }}</small>
             <h2>{{ $event->title }}</h2>
             <p>{{ $event->venue ?: 'Venue not specified' }}</p>
         </div>

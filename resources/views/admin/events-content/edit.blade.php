@@ -53,7 +53,7 @@
     </section>
 
     <div class="cm-save-bar">
-        <div><strong>Ready to save?</strong><small>This changes Events page labels onlyâ€”not event records.</small></div>
+        <div><strong>Ready to save?</strong><small>This changes Events page labels only—not event records.</small></div>
         <button type="submit" class="cm-button cm-button--primary">Save Events Page</button>
     </div>
 </form>

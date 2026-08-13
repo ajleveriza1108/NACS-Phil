@@ -32,14 +32,10 @@ class StaffController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email:rfc', 'max:150', 'unique:users,email'],
-            'role' => ['required', Rule::in(['principal', 'teacher'])],
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(12)->letters()->mixedCase()->numbers(),
-            ],
+            'name' => ['required','string','max:100'],
+            'email' => ['required','email:rfc','max:150','unique:users,email'],
+            'role' => ['required', Rule::in(['principal','teacher'])],
+            'password' => ['required','confirmed', Password::min(12)->letters()->mixedCase()->numbers()],
         ]);
 
         User::create([
@@ -50,10 +46,11 @@ class StaffController extends Controller
             'role' => $data['role'],
             'is_active' => true,
             'email_verified_at' => now(),
+            'password_changed_at' => now(),
+            'force_password_reset' => $request->boolean('force_password_reset'),
         ]);
 
-        return redirect()->route('admin.staff.index')
-            ->with('success', 'Staff account created.');
+        return redirect()->route('admin.staff.index')->with('success', 'Staff account created.');
     }
 
     public function edit(User $staff): View
@@ -68,20 +65,12 @@ class StaffController extends Controller
         $this->ensureEditable($staff);
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'email' => [
-                'required',
-                'email:rfc',
-                'max:150',
-                Rule::unique('users', 'email')->ignore($staff->id),
-            ],
-            'role' => ['required', Rule::in(['principal', 'teacher'])],
-            'is_active' => ['nullable', 'boolean'],
-            'password' => [
-                'nullable',
-                'confirmed',
-                Password::min(12)->letters()->mixedCase()->numbers(),
-            ],
+            'name' => ['required','string','max:100'],
+            'email' => ['required','email:rfc','max:150', Rule::unique('users','email')->ignore($staff->id)],
+            'role' => ['required', Rule::in(['principal','teacher'])],
+            'is_active' => ['nullable','boolean'],
+            'force_password_reset' => ['nullable','boolean'],
+            'password' => ['nullable','confirmed', Password::min(12)->letters()->mixedCase()->numbers()],
         ]);
 
         $update = [
@@ -89,17 +78,33 @@ class StaffController extends Controller
             'email' => strtolower($data['email']),
             'role' => $data['role'],
             'is_active' => $request->boolean('is_active'),
+            'force_password_reset' => $request->boolean('force_password_reset'),
             'is_admin' => true,
         ];
 
         if (! empty($data['password'])) {
             $update['password'] = Hash::make($data['password']);
+            $update['password_changed_at'] = now();
         }
 
         $staff->update($update);
 
-        return redirect()->route('admin.staff.index')
-            ->with('success', 'Staff account updated.');
+        return redirect()->route('admin.staff.index')->with('success', 'Staff account and security flags updated.');
+    }
+
+
+    public function resetTwoFactor(User $staff): RedirectResponse
+    {
+        $this->ensureEditable($staff);
+
+        $staff->forceFill([
+            'two_factor_secret' => null,
+            'two_factor_enabled_at' => null,
+            'two_factor_recovery_codes' => null,
+            'force_password_reset' => true,
+        ])->save();
+
+        return back()->with('success', 'Two-factor authentication reset. Require the staff member to verify identity and re-enroll.');
     }
 
     private function ensureEditable(User $staff): void

@@ -11,18 +11,13 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'is_admin',
-        'role',
-        'is_active',
-        'email_verified_at',
+        'name','email','password','is_admin','role','is_active','email_verified_at',
+        'last_login_at','last_login_ip_hash','failed_login_count','locked_until',
+        'password_changed_at','force_password_reset','two_factor_secret','two_factor_enabled_at','two_factor_recovery_codes',
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password','remember_token','two_factor_secret','two_factor_recovery_codes','last_login_ip_hash',
     ];
 
     protected function casts(): array
@@ -32,6 +27,14 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'is_active' => 'boolean',
+            'last_login_at' => 'datetime',
+            'locked_until' => 'datetime',
+            'password_changed_at' => 'datetime',
+            'force_password_reset' => 'boolean',
+            'two_factor_secret' => 'encrypted',
+            'two_factor_enabled_at' => 'datetime',
+            'two_factor_recovery_codes' => 'array',
+            'failed_login_count' => 'integer',
         ];
     }
 
@@ -84,5 +87,20 @@ class User extends Authenticatable
     {
         return $this->is_active !== false
             && in_array($this->staffRole(), ['super_admin', 'principal', 'teacher'], true);
+    }
+
+    public function requiresTwoFactorRecommendation(): bool
+    {
+        return in_array($this->staffRole(), ['super_admin', 'principal'], true);
+    }
+
+    public function twoFactorEnabled(): bool
+    {
+        return filled($this->two_factor_secret) && filled($this->two_factor_enabled_at);
+    }
+
+    public function isTemporarilyLocked(): bool
+    {
+        return $this->locked_until?->isFuture() ?? false;
     }
 }

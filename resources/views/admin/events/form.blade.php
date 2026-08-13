@@ -1,37 +1,15 @@
 @php($editing = isset($event))
 @extends('admin.layouts.app', ['title' => $editing ? 'Edit Event' : 'Add School Event'])
-
 @section('content')
-<section class="cm-page-head">
-    <div><a class="cm-back-link" href="{{ route('admin.events.index') }}">&larr; Events</a><span class="cm-eyebrow">School calendar</span><h1>{{ $editing ? 'Edit Event' : 'Add School Event' }}</h1><p>Add the same information you would place on a school event announcement.</p></div>
-</section>
-
-<form method="POST" action="{{ $editing ? route('admin.events.update', $event) : route('admin.events.store') }}" class="cm-compose" data-cm-form>
-    @csrf
-    @if($editing) @method('PUT') @endif
-
-    <label class="cm-field cm-field--large"><span>Event name</span><input name="title" value="{{ old('title', $event->title ?? '') }}" maxlength="180" required placeholder="Example: Parent Orientation"></label>
-    <label class="cm-field"><span>What should families know?</span><textarea name="description" rows="9" maxlength="30000" required>{{ old('description', $event->description ?? '') }}</textarea></label>
-    <label class="cm-field"><span>Venue / location</span><input name="venue" value="{{ old('venue', $event->venue ?? '') }}" maxlength="180" placeholder="Example: School Activity Hall"></label>
-
-    <div class="cm-two">
-        <label class="cm-field"><span>Starts</span><input type="datetime-local" name="starts_at" value="{{ old('starts_at', isset($event) ? $event->starts_at->format('Y-m-d\TH:i') : '') }}" required></label>
-        <label class="cm-field"><span>Ends</span><input type="datetime-local" name="ends_at" value="{{ old('ends_at', isset($event) ? $event->ends_at->format('Y-m-d\TH:i') : '') }}" required></label>
-    </div>
-
-    <div class="cm-publish-box">
-        <label class="cm-check"><input type="checkbox" name="is_all_day" value="1" @checked(old('is_all_day', $event->is_all_day ?? false))><span><strong>All-day event</strong><small>Use this when a precise time is not needed.</small></span></label>
-        <label class="cm-check"><input type="checkbox" name="is_published" value="1" @checked(old('is_published', isset($event) && filled($event->published_at)))><span><strong>Publish now</strong><small>Turn off to save as a draft.</small></span></label>
-    </div>
-
-    <details class="cm-advanced">
-        <summary>Optional registration link</summary>
-        <label class="cm-field"><span>Registration webpage</span><input type="url" name="registration_url" value="{{ old('registration_url', $event->registration_url ?? '') }}" maxlength="500" placeholder="https://..."></label>
-    </details>
-
-    <div class="cm-compose-actions">
-        <a href="{{ route('admin.events.index') }}" class="cm-button cm-button--secondary">Cancel</a>
-        <button class="cm-button cm-button--primary">{{ $editing ? 'Save Changes' : 'Save Event' }}</button>
-    </div>
+<section class="cm-page-head"><div><a class="cm-back-link" href="{{ route('admin.events.index') }}">&larr; Events</a><span class="cm-eyebrow">School events</span><h1>{{ $editing ? 'Edit Event' : 'Add School Event' }}</h1><p>Teachers can submit events for leadership review. Academic calendar dates belong in the Academic Calendar module.</p></div></section>
+<form method="POST" action="{{ $editing ? route('admin.events.update',$event) : route('admin.events.store') }}" class="cm-compose">@csrf @if($editing) @method('PUT') @endif
+<label class="cm-field"><span>Event Name</span><input name="title" required maxlength="180" value="{{ old('title',$event->title ?? '') }}"></label>
+<label class="cm-field"><span>Description</span><textarea name="description" rows="9" required maxlength="30000">{{ old('description',$event->description ?? '') }}</textarea></label>
+<label class="cm-field"><span>Venue</span><input name="venue" maxlength="180" value="{{ old('venue',$event->venue ?? '') }}"></label>
+<div class="cm-two"><label class="cm-field"><span>Starts</span><input type="datetime-local" name="starts_at" required value="{{ old('starts_at',isset($event)?$event->starts_at->format('Y-m-d\TH:i'):'') }}"></label><label class="cm-field"><span>Ends</span><input type="datetime-local" name="ends_at" required value="{{ old('ends_at',isset($event)?$event->ends_at->format('Y-m-d\TH:i'):'') }}"></label></div>
+<div class="cm-two"><label class="cm-field"><span>Publish At</span><input type="datetime-local" name="publish_at" value="{{ old('publish_at',isset($event) && $event->scheduled_publish_at ? $event->scheduled_publish_at->format('Y-m-d\TH:i'):'') }}"></label><label class="cm-field"><span>Registration URL</span><input type="url" name="registration_url" maxlength="500" value="{{ old('registration_url',$event->registration_url ?? '') }}"></label></div>
+<div class="cm-publish-box"><label class="cm-check"><input type="checkbox" name="is_all_day" value="1" @checked(old('is_all_day',$event->is_all_day ?? false))><span><strong>All-day Event</strong></span></label>@if(!auth()->user()->isTeacher())<label class="cm-check"><input type="checkbox" name="is_published" value="1" @checked(old('is_published',isset($event) && $event->workflow_status==='published'))><span><strong>Publish / Schedule</strong></span></label>@endif</div>
+@if(isset($event) && $event->review_notes)<div class="cm-alert"><strong>Review note:</strong> {{ $event->review_notes }}</div>@endif
+<div class="cm-compose-actions"><a class="cm-button cm-button--secondary" href="{{ route('admin.events.index') }}">Cancel</a>@if(auth()->user()->isTeacher())<button name="action" value="save" class="cm-button cm-button--secondary">Save Draft</button><button name="action" value="submit_review" class="cm-button cm-button--primary">Submit for Review</button>@else<button class="cm-button cm-button--primary">Save Event</button>@endif</div>
 </form>
 @endsection

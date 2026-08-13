@@ -17,10 +17,12 @@ class HomeController extends Controller
             'homeContent' => SiteContent::valuesFor('home', HomeContent::defaults()),
             'featuredAnnouncement' => Announcement::published()
                 ->where('is_featured', true)
+                ->orderByDesc('is_pinned')
                 ->orderBy('sort_order')
                 ->latest('published_at')
                 ->first(),
             'announcements' => Announcement::published()
+                ->orderByDesc('is_pinned')
                 ->orderBy('sort_order')
                 ->latest('published_at')
                 ->limit(3)

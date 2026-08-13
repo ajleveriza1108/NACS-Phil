@@ -14,8 +14,9 @@ class SchoolEvent extends Model
     use HasFactory, SoftDeletes, HasContentAudit;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'venue', 'starts_at', 'ends_at',
-        'is_all_day', 'published_at', 'registration_url',
+        'title','slug','description','venue','starts_at','ends_at','is_all_day',
+        'published_at','registration_url','workflow_status','submitted_for_review_at',
+        'reviewed_at','reviewed_by_user_id','review_notes','scheduled_publish_at',
     ];
 
     protected function casts(): array
@@ -24,6 +25,9 @@ class SchoolEvent extends Model
             'starts_at' => 'datetime',
             'ends_at' => 'datetime',
             'published_at' => 'datetime',
+            'scheduled_publish_at' => 'datetime',
+            'submitted_for_review_at' => 'datetime',
+            'reviewed_at' => 'datetime',
             'is_all_day' => 'boolean',
         ];
     }
@@ -37,8 +41,7 @@ class SchoolEvent extends Model
                 $counter = 2;
 
                 while (static::withTrashed()->where('slug', $slug)->exists()) {
-                    $slug = $base . '-' . $counter;
-                    $counter++;
+                    $slug = $base.'-'.$counter++;
                 }
 
                 $event->slug = $slug;
@@ -48,6 +51,9 @@ class SchoolEvent extends Model
 
     public function scopePublished(Builder $query): Builder
     {
-        return $query->whereNotNull('published_at')->where('published_at', '<=', now());
+        return $query
+            ->where('workflow_status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 }

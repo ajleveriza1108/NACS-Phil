@@ -1,62 +1,102 @@
-# NACS-Phil Production Deployment Checklist
+# NACS-Phil Production Deployment Checklist - Phase 14
 
-This file prepares the finished local Laravel project for later online deployment.
-It does not contain passwords, API keys, school applicant data, or hosting credentials.
+This checklist is for the tested NACS-Phil school website release candidate. It contains no passwords, API keys, applicant records, or hosting credentials.
 
-## Before deployment
-- Complete Phase 10 with all tests passing.
-- Manually review Home, About, Programs, Admissions, News, Events, Gallery, Contact, Privacy, Admin, and Admissions tracking on phone/tablet/desktop.
-- Verify official school name, address, email, phone, school year, admissions wording, and privacy wording.
-- Confirm every published student photograph has school authorization and appropriate consent.
-- Back up the local database and both public/private storage.
-- Commit only safe source code to GitHub.
+## Release gate
+Before any public deployment:
+
+- Phase 12 focused backend tests must pass.
+- Phase 13 Admin experience tests must pass.
+- Phase 14 production-hardening tests must pass.
+- The complete Laravel regression suite must pass.
+- The Vite production build must succeed from the existing locked dependencies.
+- Laravel config, route, and view caches must build successfully during the deployment rehearsal.
+- The backup and restore drill must verify matching database and storage manifests.
+- Git staging must contain no private/runtime files.
+
+## Manual school approval
+The school must review the finished site on phone, tablet, laptop, desktop, and a narrow 320px viewport. Confirm:
+
+- official school name and address
+- official contact details and office hours
+- current school year
+- admissions requirements and wording
+- mission, vision, Christian statements, and school history
+- all faculty/staff profiles
+- all downloadable documents
+- all public calendar dates
+- privacy and child-protection wording
+- authorization and appropriate consent for every published photograph of identifiable children
+
+Development placeholders must not be treated as official school statements.
 
 ## Production environment
-Create a private production `.env` on the hosting server. Do not commit it.
+Create a private production `.env` on the hosting server. Never commit it.
 
-Production values should include:
+Required production posture:
+
 - `APP_ENV=production`
 - `APP_DEBUG=false`
-- `APP_URL=https://your-final-domain`
-- a production `APP_KEY`
+- `APP_URL=https://<final-domain>`
+- a protected production `APP_KEY`
 - production database credentials
-- production session/cache settings appropriate to the host
+- `SESSION_DRIVER=database` or another host-supported persistent driver
+- `SESSION_ENCRYPT=true`
+- `SESSION_SECURE_COOKIE=true` after HTTPS is active
+- `SESSION_HTTP_ONLY=true`
+- `SESSION_SAME_SITE=lax`
+- production mail settings if outbound mail is later enabled
+
+Do not copy development passwords, access codes, or test credentials into production.
 
 ## Server requirements
-The selected host must support the PHP/Laravel version used by this project, required PHP extensions, Composer, a production database, HTTPS, writable Laravel storage/cache directories, and the ability to point the website document root to Laravel's `public` directory.
+The host must support the PHP and Laravel versions used by the tested release, the required PHP extensions, Composer for production dependency installation, a supported production database, HTTPS, writable Laravel storage/cache directories, and a document root that points to Laravel's `public` directory.
 
-## Deployment sequence
-1. Create a full backup/checkpoint.
-2. Clone or upload the approved GitHub source.
-3. Configure the private production `.env`.
-4. Install production PHP dependencies.
-5. Build or upload approved Vite assets.
+## Deployment order
+
+1. Take a verified production backup/checkpoint if replacing an existing deployment.
+2. Deploy the exact approved GitHub release source.
+3. Create the private production `.env` outside version control.
+4. Install production Composer dependencies with development dependencies excluded.
+5. Build or upload the exact approved Vite production assets.
 6. Configure the production database.
-7. Run Laravel migrations.
-8. Transfer approved public uploads.
-9. Transfer private admissions documents only through a secure server-to-server/admin process.
-10. Ensure Laravel storage/framework and bootstrap/cache are writable.
-11. Point the domain document root to `/public`.
-12. Enable HTTPS.
+7. Run pending Laravel migrations.
+8. Transfer approved public media.
+9. Transfer private school documents and admissions files only through an authorized secure process.
+10. Make `storage` and `bootstrap/cache` writable by the application process.
+11. Point the domain document root to Laravel's `public` directory.
+12. Enable HTTPS before enabling secure-only cookies.
 13. Set `APP_DEBUG=false`.
-14. Clear/cache production Laravel configuration/routes/views as appropriate.
-15. Re-test public pages, admin login, inquiries, Gallery consent protection, and Admissions access controls.
-16. Keep the local project as the development copy. Test future changes locally before deploying them.
+14. Build production configuration, route, and view caches.
+15. Verify the security response headers.
+16. Test the public website, Admin login, 2FA where enabled, inquiry workflow, content review, Gallery consent protection, school documents, and Admissions access control.
+17. Confirm backups are scheduled and restorable.
+18. Keep the local project as the development copy; test changes locally before future deployment.
 
-## Never publish
-- `.env`
-- local SQLite databases
+## Never publish or commit
+
+- `.env` or environment backups
+- SQLite databases or database sidecars
 - `.nacs-backups`
+- private school documents
 - private admissions documents
-- logs
-- private staff/applicant records
-- passwords or access codes
+- staff/applicant records exported from the database
+- application logs
+- session/cache runtime files
+- passwords, TOTP secrets, recovery codes, applicant access codes, or hosting credentials
+
+## Security headers in Phase 14
+The application applies conservative headers including `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and a restricted `Permissions-Policy`. Admin and private admissions responses are marked `no-store`. HSTS is emitted only for HTTPS production requests.
+
+A restrictive Content Security Policy is intentionally not forced in this phase because the existing application must first inventory all inline and generated frontend resources. CSP should be introduced later with report-only testing before enforcement.
 
 ## After launch
-Maintain regular backups of:
+Maintain verified backups of:
+
 - production database
-- `storage/app/public`
-- `storage/app/private`
+- approved public media
+- private school documents
+- private admissions files
 - production environment configuration stored securely outside the public web root
 
-The live website should reflect the same approved Laravel/Blade/CSS/JS GUI as the local project. Hosting changes the environment and URL; it should not require redesigning the website.
+Periodically perform a restore drill instead of assuming backups are usable.

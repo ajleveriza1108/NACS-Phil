@@ -13,8 +13,10 @@ class GalleryItem extends Model
     use HasFactory, SoftDeletes, HasContentAudit;
 
     protected $fillable = [
-        'title', 'category', 'image_path', 'alt_text', 'caption', 'taken_at',
-        'is_published', 'sort_order', 'consent_confirmed_at', 'photographer_credit',
+        'title','category','image_path','alt_text','caption','taken_at',
+        'is_published','sort_order','consent_confirmed_at','photographer_credit',
+        'workflow_status','submitted_for_review_at','reviewed_at',
+        'reviewed_by_user_id','review_notes',
     ];
 
     protected function casts(): array
@@ -24,12 +26,15 @@ class GalleryItem extends Model
             'is_published' => 'boolean',
             'sort_order' => 'integer',
             'consent_confirmed_at' => 'datetime',
+            'submitted_for_review_at' => 'datetime',
+            'reviewed_at' => 'datetime',
         ];
     }
 
     public function scopePublished(Builder $query): Builder
     {
         return $query
+            ->where('workflow_status', 'published')
             ->where('is_published', true)
             ->whereNotNull('consent_confirmed_at');
     }

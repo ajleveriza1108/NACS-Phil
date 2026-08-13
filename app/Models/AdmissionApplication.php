@@ -26,19 +26,21 @@ class AdmissionApplication extends Model
     ];
 
     public const LEVELS = [
-        'Nursery',
-        'Pre-Kindergarten',
-        'Kindergarten',
-        'Grade 1',
-        'Grade 2',
-        'Grade 3',
-        'Grade 4',
-        'Grade 5',
-        'Grade 6',
-        'Grade 7',
-        'Grade 8',
-        'Grade 9',
-        'Grade 10',
+        'Nursery','Pre-Kindergarten','Kindergarten','Grade 1','Grade 2','Grade 3',
+        'Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10',
+    ];
+
+    public const DEFAULT_CHECKLIST = [
+        'application_received' => 'Application Received',
+        'initial_review' => 'Initial Review',
+        'birth_certificate' => 'Birth Certificate Requested / Reviewed',
+        'previous_school_record' => 'Previous School Record Requested / Reviewed',
+        'assessment_scheduled' => 'Assessment Scheduled',
+        'assessment_completed' => 'Assessment Completed',
+        'interview_completed' => 'Interview Completed',
+        'requirements_complete' => 'Requirements Complete',
+        'decision_recorded' => 'Decision Recorded',
+        'enrollment_completed' => 'Enrollment Completed',
     ];
 
     protected $fillable = [
@@ -50,12 +52,7 @@ class AdmissionApplication extends Model
         'access_code_rotated_at','ip_hash','user_agent',
     ];
 
-    protected $hidden = [
-        'access_code_hash',
-        'admin_notes',
-        'ip_hash',
-        'user_agent',
-    ];
+    protected $hidden = ['access_code_hash','admin_notes','ip_hash','user_agent'];
 
     protected function casts(): array
     {
@@ -82,6 +79,36 @@ class AdmissionApplication extends Model
     public function events(): HasMany
     {
         return $this->hasMany(AdmissionEvent::class);
+    }
+
+    public function checklistItems(): HasMany
+    {
+        return $this->hasMany(AdmissionChecklistItem::class)->orderBy('sort_order');
+    }
+
+    public function ensureDefaultChecklist(): void
+    {
+        foreach (self::DEFAULT_CHECKLIST as $key => $label) {
+            $index = array_search($key, array_keys(self::DEFAULT_CHECKLIST), true);
+
+            $this->checklistItems()->firstOrCreate(
+                ['item_key' => $key],
+                [
+                    'label' => $label,
+                    'is_required' => true,
+                    'is_completed' => false,
+                    'sort_order' => is_int($index) ? $index : 0,
+                ]
+            );
+        }
+    }
+
+    public function checklistProgress(): array
+    {
+        $total = $this->checklistItems()->count();
+        $completed = $this->checklistItems()->where('is_completed', true)->count();
+
+        return compact('total', 'completed');
     }
 
     public function scopeSearch(Builder $query, ?string $term): Builder
@@ -123,7 +150,7 @@ class AdmissionApplication extends Model
     public static function createReferenceCode(): string
     {
         do {
-            $reference = 'NACS-' . now()->format('Y') . '-' . Str::upper(Str::random(8));
+            $reference = 'NACS-'.now()->format('Y').'-'.Str::upper(Str::random(8));
         } while (self::query()->where('reference_code', $reference)->exists());
 
         return $reference;

@@ -107,3 +107,14 @@ img{max-width:100%}
   html{scroll-behavior:auto}
   *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+/* Phase 16 school resources menu */
+.nacs16-resources{position:relative}
+.nacs16-resources>summary{position:relative;list-style:none;padding:29px 25px 26px 13px;color:#26394d;font:750 13px/1 Inter,ui-sans-serif,system-ui,sans-serif;cursor:pointer;user-select:none}
+.nacs16-resources>summary::-webkit-details-marker{display:none}
+.nacs16-resources>summary::before{content:"";position:absolute;right:10px;top:35px;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.nacs16-resources.is-active>summary,.nacs16-resources[open]>summary,.nacs16-resources>summary:hover{color:#072b55}
+.nacs16-resources__menu{position:absolute;top:calc(100% - 11px);right:0;width:220px;display:grid;gap:3px;border:1px solid #dce7f0;border-radius:14px;background:rgba(255,255,255,.99);padding:8px;box-shadow:0 18px 42px rgba(6,43,85,.13)}
+.nacs16-resources__menu a{min-height:42px;display:flex;align-items:center;border-radius:9px;padding:0 10px!important}
+.nacs16-resources__menu a::after{display:none!important}
+@media(max-width:1180px){.nacs16-resources>summary{padding-inline:9px 21px;font-size:12px}.nacs16-resources>summary::before{right:7px}}
+@media(max-width:1050px){.nacs16-resources{display:none}}

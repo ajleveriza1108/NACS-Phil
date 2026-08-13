@@ -33,7 +33,7 @@
     <div class="nacs11-shell nacs11-header__inner">
         <a href="{{ route('home') }}" class="nacs11-brand" aria-label="{{ config('nacs.short_name') }} home">
             <span class="nacs11-brand__mark">
-                <img src="{{ asset('images/nacs-development-mark.svg') }}" alt="" width="46" height="46">
+                <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="46" height="46">
             </span>
             <span class="nacs11-brand__copy">
                 <strong>{{ \App\Models\SchoolSetting::valueFor('short_name', config('nacs.short_name')) }}</strong>
@@ -46,7 +46,14 @@
                 @php($isActive = request()->routeIs($item['pattern']))
                 <a href="{{ route($item['route']) }}" class="{{ $isActive ? 'is-active' : '' }}" @if($isActive) aria-current="page" @endif>{{ $item['label'] }}</a>
             @endforeach
-        </nav>
+                    <details class="nacs16-resources {{ request()->routeIs('faculty.*', 'calendar.*', 'documents.*') ? 'is-active' : '' }}">
+                <summary>Resources</summary>
+                <div class="nacs16-resources__menu">
+                    <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
+                    <a href="{{ route('calendar.index') }}">Academic Calendar</a>
+                    <a href="{{ route('documents.index') }}">Documents</a>
+                </div>
+            </details></nav>
 
         <div class="nacs11-header__actions">
             <a class="nacs11-button nacs11-button--primary nacs11-header__cta" href="{{ route('admissions') }}">

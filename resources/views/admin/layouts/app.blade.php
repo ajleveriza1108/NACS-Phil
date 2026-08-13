@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase12-school/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase13-admin/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase15-launch/launch.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase16-branding/branding.css') }}">
     <script src="{{ asset('assets/admin-content-manager/manager.js') }}" defer></script>
     <script src="{{ asset('assets/phase13-admin/admin.js') }}" defer></script>
 </head>
@@ -22,7 +23,7 @@
     <aside class="cm-sidebar" data-cm-sidebar data-p13-sidebar>
         <div class="cm-sidebar__top">
             <a href="{{ route('admin.dashboard') }}" class="cm-brand" aria-label="NACS-Phil School Manager home">
-                <img src="{{ asset('images/nacs-development-mark.svg') }}" alt="" width="48" height="48">
+                <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="48" height="48">
                 <span><strong>NACS-Phil</strong><small>School Manager</small></span>
             </a>
             <button type="button" class="cm-sidebar-close" data-cm-close aria-label="Close menu">&times;</button>
@@ -92,6 +93,7 @@
                     <a href="{{ route('admin.gallery-content.edit') }}" @class(['is-active' => request()->routeIs('admin.gallery-content.*')])><span class="cm-nav-icon">G</span><span>Gallery Page</span></a>
                     <a href="{{ route('admin.contact-content.edit') }}" @class(['is-active' => request()->routeIs('admin.contact-content.*')])><span class="cm-nav-icon">C</span><span>Contact Page</span></a>
                     <a href="{{ route('admin.settings.edit') }}" @class(['is-active' => request()->routeIs('admin.settings.*')])><span class="cm-nav-icon">S</span><span>School Settings</span></a>
+                    <a href="{{ route('admin.branding.edit') }}" @class(['is-active' => request()->routeIs('admin.branding.*')])><span class="cm-nav-icon">B</span><span>Branding</span></a>
                     <a href="{{ route('admin.seo.edit') }}" @class(['is-active' => request()->routeIs('admin.seo.*')])><span class="cm-nav-icon">O</span><span>SEO &amp; Sharing</span></a>
                     <a href="{{ route('admin.launch-readiness') }}" @class(['is-active' => request()->routeIs('admin.launch-readiness')])><span class="cm-nav-icon">L</span><span>Launch Readiness</span></a>
                     <a href="{{ route('admin.trash.index') }}" @class(['is-active' => request()->routeIs('admin.trash.*')])><span class="cm-nav-icon">T</span><span>Trash</span></a>

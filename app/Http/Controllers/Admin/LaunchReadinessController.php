@@ -70,9 +70,7 @@ class LaunchReadinessController extends Controller
             ->whereNull('two_factor_enabled_at')
             ->count();
 
-        $headerPath = resource_path('views/partials/public-header.blade.php');
-        $headerSource = is_file($headerPath) ? (string) file_get_contents($headerPath) : '';
-        $developmentMarkInUse = str_contains($headerSource, 'nacs-development-mark.svg');
+        $officialBrandingApproved = SchoolSetting::officialBrandingApproved();
 
         $contentValues = SiteContent::query()
             ->pluck('value')
@@ -130,10 +128,10 @@ class LaunchReadinessController extends Controller
             ],
             [
                 'label' => 'Official logo/crest replacement',
-                'passed' => ! $developmentMarkInUse,
-                'detail' => $developmentMarkInUse
-                    ? 'The public header still references nacs-development-mark.svg. Replace it with the official approved school mark before launch.'
-                    : 'The development mark is no longer referenced by the public header.',
+                'passed' => $officialBrandingApproved,
+                'detail' => $officialBrandingApproved
+                    ? 'Official approved school logo is configured.'
+                    : 'Upload and approve the official school logo before launch.',
             ],
         ]);
 

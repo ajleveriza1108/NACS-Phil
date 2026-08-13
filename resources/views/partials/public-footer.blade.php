@@ -3,7 +3,7 @@
         <section class="nacs11-footer__brand">
             <a href="{{ route('home') }}" class="nacs11-brand nacs11-brand--footer">
                 <span class="nacs11-brand__mark">
-                    <img src="{{ asset('images/nacs-development-mark.svg') }}" alt="" width="46" height="46">
+                    <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="46" height="46">
                 </span>
                 <span class="nacs11-brand__copy">
                     <strong>{{ \App\Models\SchoolSetting::valueFor('short_name', config('nacs.short_name')) }}</strong>
@@ -47,6 +47,10 @@
 
     <div class="nacs11-shell nacs11-footer__bottom">
         <span>&copy; {{ now()->year }} {{ config('nacs.short_name') }}. All rights reserved.</span>
-        <span>Official content must be reviewed before public launch.</span>
+        @if(app()->environment('production'))
+            <span>Privacy, child protection, and responsible stewardship remain part of our public commitment.</span>
+        @else
+            <span>Official content must be reviewed before public launch.</span>
+        @endif
     </div>
 </footer>

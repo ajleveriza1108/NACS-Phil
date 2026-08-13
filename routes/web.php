@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdmissionChecklistController as AdminAdmissionChe
 use App\Http\Controllers\Admin\AdmissionsContentController as AdminAdmissionsContentController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\Admin\AuditController as AdminAuditController;
+use App\Http\Controllers\Admin\BrandingController as AdminBrandingController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\AboutContentController as AdminAboutContentController;
 use App\Http\Controllers\Admin\ContactContentController as AdminContactContentController;
@@ -153,7 +154,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
         Route::get('/seo', [AdminSeoSettingController::class, 'edit'])->name('seo.edit');
         Route::patch('/seo', [AdminSeoSettingController::class, 'update'])->name('seo.update');
-        Route::get('/launch-readiness', AdminLaunchReadinessController::class)->name('launch-readiness');
+        Route::get('/branding', [AdminBrandingController::class, 'edit'])->name('branding.edit');
+        Route::post('/branding/logo', [AdminBrandingController::class, 'store'])->name('branding.store');
+        Route::delete('/branding/logo', [AdminBrandingController::class, 'destroy'])->name('branding.destroy');        Route::get('/launch-readiness', AdminLaunchReadinessController::class)->name('launch-readiness');
         Route::get('/school-settings', [AdminSchoolSettingController::class, 'edit'])->name('settings.edit');
         Route::patch('/school-settings', [AdminSchoolSettingController::class, 'update'])->name('settings.update');
     });

@@ -6,7 +6,7 @@
         <a class="cm-back-link" href="{{ route('admin.dashboard') }}">&larr; Content Manager</a>
         <span class="cm-eyebrow">Recovery</span>
         <h1>Safe Trash</h1>
-        <p>Deleted announcements, events, photos, and Facebook media links stay recoverable here. Only the Super Admin can permanently delete them.</p>
+        <p>Soft-deleted website content stays recoverable here. Principal and Super Admin can restore items; only the Super Admin can permanently delete them.</p>
     </div>
 </section>
 
@@ -16,8 +16,16 @@ $groups = [
     ['title'=>'Events','type'=>'event','items'=>$events],
     ['title'=>'Photos','type'=>'photo','items'=>$photos],
     ['title'=>'Live & Videos','type'=>'media','items'=>$mediaItems],
+    ['title'=>'Faculty & Staff','type'=>'faculty','items'=>$facultyProfiles],
+    ['title'=>'Documents','type'=>'document','items'=>$documents],
+    ['title'=>'Academic Calendar','type'=>'calendar','items'=>$calendarEntries],
+    ['title'=>'Media Library','type'=>'asset','items'=>$mediaAssets],
 ];
 @endphp
+
+@if($errors->has('media'))
+    <div class="cm-alert cm-alert--error" role="alert">{{ $errors->first('media') }}</div>
+@endif
 
 @foreach($groups as $group)
 <section class="cm-panel cm-panel--wide p9b-trash-panel">
@@ -30,7 +38,7 @@ $groups = [
         @forelse($group['items'] as $item)
             <article>
                 <div>
-                    <strong>{{ $item->title }}</strong>
+                    <strong>{{ $item->title ?? $item->name }}</strong>
                     <small>Deleted {{ $item->deleted_at?->diffForHumans() }}</small>
                 </div>
                 <div class="p9b-trash-actions">

@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcademicCalendarEntry;
 use App\Models\Announcement;
-use App\Models\GalleryItem;
+use App\Models\FacultyProfile;
 use App\Models\FacebookMediaItem;
+use App\Models\GalleryItem;
+use App\Models\MediaAsset;
+use App\Models\SchoolDocument;
 use App\Models\SchoolEvent;
+use App\Models\SiteContent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -21,6 +26,10 @@ class TrashController extends Controller
             'events' => SchoolEvent::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
             'photos' => GalleryItem::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
             'mediaItems' => FacebookMediaItem::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
+            'facultyProfiles' => FacultyProfile::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
+            'documents' => SchoolDocument::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
+            'calendarEntries' => AcademicCalendarEntry::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
+            'mediaAssets' => MediaAsset::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
         ]);
     }
 
@@ -38,8 +47,26 @@ class TrashController extends Controller
 
         $item = $this->find($type, $id);
 
+        if ($item instanceof MediaAsset && $this->mediaAssetInUse($item)) {
+            return back()->withErrors([
+                'media' => 'This media asset is still referenced by website content and cannot be permanently deleted.',
+            ]);
+        }
+
         if ($item instanceof GalleryItem) {
             Storage::disk('public')->delete($item->image_path);
+        }
+
+        if ($item instanceof MediaAsset) {
+            Storage::disk('public')->delete($item->file_path);
+        }
+
+        if ($item instanceof SchoolDocument) {
+            Storage::build([
+                'driver' => 'local',
+                'root' => storage_path('app/private/documents'),
+                'throw' => true,
+            ])->delete($item->file_path);
         }
 
         $item->forceDelete();
@@ -54,6 +81,10 @@ class TrashController extends Controller
             'event' => SchoolEvent::class,
             'photo' => GalleryItem::class,
             'media' => FacebookMediaItem::class,
+            'faculty' => FacultyProfile::class,
+            'document' => SchoolDocument::class,
+            'calendar' => AcademicCalendarEntry::class,
+            'asset' => MediaAsset::class,
             default => abort(404),
         };
 
@@ -67,7 +98,20 @@ class TrashController extends Controller
             'event' => 'Event',
             'photo' => 'Photo',
             'media' => 'Facebook media link',
+            'faculty' => 'Faculty or staff profile',
+            'document' => 'Document',
+            'calendar' => 'Calendar entry',
+            'asset' => 'Media asset',
             default => 'Item',
         };
+    }
+
+    private function mediaAssetInUse(MediaAsset $asset): bool
+    {
+        $path = $asset->file_path;
+
+        return FacultyProfile::withTrashed()->where('photo_path', $path)->exists()
+            || GalleryItem::withTrashed()->where('image_path', $path)->exists()
+            || SiteContent::query()->where('value', $path)->exists();
     }
 }

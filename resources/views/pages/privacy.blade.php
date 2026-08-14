@@ -19,7 +19,7 @@
 
         <article class="nacs11-privacy-card">
             <span aria-hidden="true">02</span>
-            <h2>Photographs and videos</h2>
+            <h2>Photographs and school media</h2>
             <p>The gallery is designed so an image cannot appear publicly unless an administrator enables publication and records that consent and image rights were checked. The school should retain the underlying authorization records outside the public website.</p>
         </article>
 
@@ -33,6 +33,12 @@
             <span aria-hidden="true">04</span>
             <h2>Retention and requests</h2>
             <p>The school must approve a retention schedule and a clear process for families to request access, correction, or appropriate deletion of their information.</p>
+        </article>
+
+        <article class="nacs11-privacy-card nacs11-privacy-card--external">
+            <span aria-hidden="true">05</span>
+            <h2>Facebook-hosted videos and livestreams</h2>
+            <p>The Live &amp; Videos page can display public Facebook video or Facebook Live players. NACS-Phil stores the school-entered Facebook link and related page metadata, but the actual video remains hosted and streamed by Facebook. When an embedded Facebook player loads, the visitor's browser connects to Facebook, and Meta/Facebook privacy and cookie practices may apply.</p>
         </article>
 
         <article class="nacs11-privacy-card nacs11-privacy-card--wide">

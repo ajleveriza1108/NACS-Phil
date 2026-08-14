@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase22-media/media.css') }}">
     <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('assets/phase23-final-polish/polish.css') }}">
 </head>
 <body class="nacs11-public">
 @include('partials.public-header', ['mainId' => 'main-content'])

@@ -27,7 +27,7 @@
 <button class="adm9-button" type="submit">Upload requested document</button>
 </form>
 @else
-<h2>No document upload requested.</h2><p>For privacy, document upload remains unavailable until an authorized school reviewer changes the status to â€œAwaiting documents.â€</p>
+<h2>No document upload requested.</h2><p>For privacy, document upload remains unavailable until an authorized school reviewer changes the status to &ldquo;Awaiting documents.&rdquo;</p>
 @endif
 @if($application->documents->isNotEmpty())<div class="adm9-document-list">@foreach($application->documents as $document)<article><div><strong>{{ $document->typeLabel() }}</strong><small>{{ $document->original_name }} &middot; {{ $document->formattedSize() }}</small></div><span>{{ $document->is_verified ? 'Verified' : 'Pending review' }}</span>@if(!$document->is_verified && $document->uploaded_by==='applicant')<form method="POST" action="{{ route('admissions.documents.destroy',[$application,$document]) }}">@csrf @method('DELETE')<button type="submit" class="adm9-text-danger">Remove</button></form>@endif</article>@endforeach</div>@endif
 </section>

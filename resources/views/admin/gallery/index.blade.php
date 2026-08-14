@@ -24,7 +24,7 @@
         </div>
     </article>
 @empty
-    <div class="cm-empty cm-empty--large">No gallery photos yet. Click â€œUpload Photoâ€ when an approved image is ready.</div>
+    <div class="cm-empty cm-empty--large">No gallery photos yet. Click &ldquo;Upload Photo&rdquo; when an approved image is ready.</div>
 @endforelse
 </div>
 <div class="cm-pagination">{{ $items->links() }}</div>

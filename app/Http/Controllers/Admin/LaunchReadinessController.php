@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
+use App\Models\FacebookMediaItem;
 use App\Models\FacultyProfile;
 use App\Models\GalleryItem;
 use App\Models\SchoolDocument;
@@ -11,7 +12,6 @@ use App\Models\SchoolEvent;
 use App\Models\SchoolSetting;
 use App\Models\SiteContent;
 use App\Models\User;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class LaunchReadinessController extends Controller
@@ -50,6 +50,7 @@ class LaunchReadinessController extends Controller
         ]);
 
         $publishedFaculty = FacultyProfile::query()->where('is_published', true)->count();
+
         $pendingReviews =
             Announcement::query()->where('workflow_status', 'pending_review')->count()
             + SchoolEvent::query()->where('workflow_status', 'pending_review')->count()
@@ -58,6 +59,13 @@ class LaunchReadinessController extends Controller
         $unsafePublishedGallery = GalleryItem::query()
             ->where('is_published', true)
             ->whereNull('consent_confirmed_at')
+            ->count();
+
+        $unsafePublishedFacebookMedia = FacebookMediaItem::query()
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->whereNull('public_confirmed_at')
             ->count();
 
         $activeLeadershipWithoutTwoFactor = User::query()
@@ -120,6 +128,13 @@ class LaunchReadinessController extends Controller
                     : "{$unsafePublishedGallery} published photo(s) require attention.",
             ],
             [
+                'label' => 'Facebook media public/embed confirmation',
+                'passed' => $unsafePublishedFacebookMedia === 0,
+                'detail' => $unsafePublishedFacebookMedia === 0
+                    ? 'Published Facebook video/live entries have recorded Public/embed confirmation.'
+                    : "{$unsafePublishedFacebookMedia} published Facebook media item(s) require Public/embed confirmation.",
+            ],
+            [
                 'label' => 'Development placeholder scan',
                 'passed' => $placeholderHits === 0,
                 'detail' => $placeholderHits === 0
@@ -146,12 +161,12 @@ class LaunchReadinessController extends Controller
             [
                 'label' => 'Production security middleware',
                 'passed' => class_exists(\App\Http\Middleware\AddSecurityHeaders::class),
-                'detail' => 'Phase 14 response hardening is installed.',
+                'detail' => 'Response hardening, sensitive-page no-store rules, and browser security headers are installed.',
             ],
             [
                 'label' => 'Private runtime data excluded from Git',
                 'passed' => true,
-                'detail' => 'Phase 14 Git privacy guards and .gitignore rules remain part of the release process.',
+                'detail' => 'Git privacy guards and .gitignore rules remain part of the release process.',
             ],
         ]);
 
@@ -201,13 +216,15 @@ class LaunchReadinessController extends Controller
                 ->where('published_at', '<=', now())
                 ->count(),
             'manualChecks' => [
-                'Review the complete website at 320px, phone, tablet, laptop, desktop, and ultrawide sizes.',
+                'Review the complete website at 320px, 360px phone, tablet portrait/landscape, laptop, desktop, and ultrawide sizes.',
                 'Confirm official Mission, Vision, Christian statements, school history, admissions wording, and school-year dates.',
                 'Confirm every identifiable child photograph has the school authorization and appropriate consent record.',
                 'Confirm downloadable files are current, authorized, and safe for public release.',
                 'Complete a disposable admissions application from submission through staff review and family tracking.',
                 'Complete a Teacher draft -> Principal review -> public publication simulation.',
                 'Confirm the official school logo/crest and branding assets are approved for public use.',
+                'Open one real public Facebook recorded video and one Facebook Live/replay link on phone and desktop; confirm preview, inline playback, and the Watch on Facebook fallback.',
+                'Have the school review the Privacy & Child Protection wording, including the Facebook-hosted media disclosure, before production launch.',
             ],
         ]);
     }

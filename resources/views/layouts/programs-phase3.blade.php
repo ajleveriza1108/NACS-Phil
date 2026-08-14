@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/site.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase19-about-programs/fidelity.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
 </head>
 <body class="programs-phase3">
 @include('partials.public-header', ['mainId' => 'programs-main'])

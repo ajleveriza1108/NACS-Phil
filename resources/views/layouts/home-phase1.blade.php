@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/site.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase18-home/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
 </head>
 <body class="nacs-home-phase1">
     @include('partials.public-header', ['mainId' => 'main-content'])

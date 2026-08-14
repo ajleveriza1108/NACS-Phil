@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase22-media/media.css') }}">
     <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
 </head>
 <body class="cm-body p13-admin">
 <a href="#admin-main" class="p13-skip">Skip to administration content</a>

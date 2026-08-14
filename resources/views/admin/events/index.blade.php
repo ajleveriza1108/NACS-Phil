@@ -24,7 +24,7 @@
         </div>
     </article>
 @empty
-    <div class="cm-empty cm-empty--large">No events yet. Click â€œAdd Eventâ€ to create the first one.</div>
+    <div class="cm-empty cm-empty--large">No events yet. Click &ldquo;Add Event&rdquo; to create the first one.</div>
 @endforelse
 </div>
 <div class="cm-pagination">{{ $events->links() }}</div>

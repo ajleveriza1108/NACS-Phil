@@ -161,7 +161,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::patch('/seo', [AdminSeoSettingController::class, 'update'])->name('seo.update');
         Route::get('/branding', [AdminBrandingController::class, 'edit'])->name('branding.edit');
         Route::post('/branding/logo', [AdminBrandingController::class, 'store'])->name('branding.store');
-        Route::delete('/branding/logo', [AdminBrandingController::class, 'destroy'])->name('branding.destroy');        Route::get('/launch-readiness', AdminLaunchReadinessController::class)->name('launch-readiness');
+        Route::delete('/branding/logo', [AdminBrandingController::class, 'destroy'])->name('branding.destroy');
+        Route::get('/launch-readiness', AdminLaunchReadinessController::class)->name('launch-readiness');
         Route::get('/school-settings', [AdminSchoolSettingController::class, 'edit'])->name('settings.edit');
         Route::patch('/school-settings', [AdminSchoolSettingController::class, 'update'])->name('settings.update');
     });

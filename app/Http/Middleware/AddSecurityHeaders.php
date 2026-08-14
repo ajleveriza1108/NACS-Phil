@@ -17,6 +17,8 @@ class AddSecurityHeaders
             'X-Frame-Options' => 'SAMEORIGIN',
             'Referrer-Policy' => 'strict-origin-when-cross-origin',
             'Permissions-Policy' => 'camera=(), microphone=(), geolocation=()',
+            'X-Permitted-Cross-Domain-Policies' => 'none',
+            'Content-Security-Policy' => "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; form-action 'self'",
         ];
 
         foreach ($headers as $name => $value) {
@@ -35,6 +37,10 @@ class AddSecurityHeaders
         if (
             $request->is('admin')
             || $request->is('admin/*')
+            || $request->is('admissions/apply')
+            || $request->is('admissions/apply/*')
+            || $request->is('admissions/track')
+            || $request->is('admissions/track/*')
             || $request->is('admissions/status/*')
             || $request->is('admissions/receipt/*')
         ) {

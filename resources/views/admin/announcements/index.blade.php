@@ -27,7 +27,7 @@
         </div>
     </article>
 @empty
-    <div class="cm-empty cm-empty--large">No announcements yet. Click â€œPost Announcementâ€ to create the first one.</div>
+    <div class="cm-empty cm-empty--large">No announcements yet. Click &ldquo;Post Announcement&rdquo; to create the first one.</div>
 @endforelse
 </div>
 <div class="cm-pagination">{{ $announcements->links() }}</div>

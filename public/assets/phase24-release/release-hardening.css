@@ -1,0 +1,127 @@
+/* NACS-Phil Phase 24 — Final Release Hardening
+   Conservative cross-site accessibility, focus, media sizing, and overflow guards. */
+
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  overflow-x:clip;
+  scroll-padding-top:96px;
+}
+
+body{
+  min-width:320px;
+}
+
+img,
+video,
+canvas{
+  max-width:100%;
+  height:auto;
+}
+
+svg,
+iframe{
+  max-width:100%;
+}
+
+main,
+section,
+article,
+aside,
+nav,
+form,
+fieldset,
+[class*="grid"],
+[class*="shell"]{
+  min-width:0;
+}
+
+input,
+select,
+textarea,
+button{
+  max-width:100%;
+}
+
+textarea{
+  resize:vertical;
+}
+
+pre{
+  max-width:100%;
+  overflow-x:auto;
+}
+
+code,
+pre,
+.adm9-code strong,
+.p22-admin-list__main>small{
+  overflow-wrap:anywhere;
+}
+
+details>summary{
+  cursor:pointer;
+}
+
+a,
+button,
+summary,
+input,
+select,
+textarea{
+  touch-action:manipulation;
+}
+
+:where(a,button,summary,input,select,textarea,[role="button"],[tabindex]):focus-visible{
+  outline:3px solid #f2c969!important;
+  outline-offset:3px!important;
+}
+
+.nacs11-skip:focus,
+.p13-skip:focus{
+  z-index:10000!important;
+}
+
+@supports not (overflow:clip){
+  html{
+    overflow-x:hidden;
+  }
+}
+
+@media(max-width:520px){
+  .nacs11-brand,
+  .nacs11-brand__copy,
+  .nacs11-header__actions,
+  .cm-topbar__left,
+  .p13-topbar-actions{
+    min-width:0!important;
+  }
+
+  .nacs11-brand__copy small,
+  .nacs11-brand__copy strong{
+    overflow-wrap:anywhere;
+  }
+}
+
+@media(max-width:380px){
+  .nacs11-button,
+  .adm9-button,
+  .cm-button{
+    min-height:44px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{
+    scroll-behavior:auto!important;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}

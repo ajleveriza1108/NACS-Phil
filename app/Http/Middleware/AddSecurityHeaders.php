@@ -12,13 +12,71 @@ class AddSecurityHeaders
     {
         $response = $next($request);
 
+        $scriptSources = [
+            "'self'",
+            'https://challenges.cloudflare.com',
+        ];
+
+        $styleSources = [
+            "'self'",
+            "'unsafe-inline'",
+        ];
+
+        $imageSources = [
+            "'self'",
+            'data:',
+            'https:',
+        ];
+
+        $fontSources = [
+            "'self'",
+            'data:',
+        ];
+
+        $connectSources = [
+            "'self'",
+            'https://challenges.cloudflare.com',
+        ];
+
+        if (app()->environment(['local', 'testing'])) {
+            foreach (['http://localhost:*', 'http://127.0.0.1:*'] as $localOrigin) {
+                $scriptSources[] = $localOrigin;
+                $styleSources[] = $localOrigin;
+                $imageSources[] = $localOrigin;
+                $fontSources[] = $localOrigin;
+                $connectSources[] = $localOrigin;
+            }
+
+            $connectSources[] = 'ws://localhost:*';
+            $connectSources[] = 'ws://127.0.0.1:*';
+        }
+
+        $csp = [
+            "default-src 'self'",
+            "base-uri 'self'",
+            "object-src 'none'",
+            "frame-ancestors 'self'",
+            "form-action 'self'",
+            'script-src '.implode(' ', $scriptSources),
+            'style-src '.implode(' ', $styleSources),
+            'img-src '.implode(' ', $imageSources),
+            'font-src '.implode(' ', $fontSources),
+            'connect-src '.implode(' ', $connectSources),
+            "frame-src 'self' https://challenges.cloudflare.com https://www.facebook.com",
+            "media-src 'self' blob:",
+        ];
+
+        if ($request->isSecure() && app()->environment('production')) {
+            $csp[] = 'upgrade-insecure-requests';
+        }
+
         $headers = [
             'X-Content-Type-Options' => 'nosniff',
             'X-Frame-Options' => 'SAMEORIGIN',
             'Referrer-Policy' => 'strict-origin-when-cross-origin',
             'Permissions-Policy' => 'camera=(), microphone=(), geolocation=()',
             'X-Permitted-Cross-Domain-Policies' => 'none',
-            'Content-Security-Policy' => "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; form-action 'self'",
+            'Content-Security-Policy' => implode('; ', $csp),
         ];
 
         foreach ($headers as $name => $value) {

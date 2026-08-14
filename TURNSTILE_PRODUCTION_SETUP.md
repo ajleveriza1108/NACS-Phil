@@ -1,4 +1,4 @@
-# NACS-Phil Turnstile Production Setup — Phase 29
+# NACS-Phil Turnstile Production Setup - Phase 29
 
 Phase 29 prepares adaptive anti-bot protection for the public forms that accept information or credentials.
 
@@ -47,14 +47,14 @@ TURNSTILE_EXPECTED_HOSTNAME=
 
 This preserves current local development and the existing Laravel test suite.
 
-For a deliberate local browser test, Cloudflare provides official test credentials. Use the current values from Cloudflare's Turnstile testing documentation rather than putting production credentials on localhost.
+For a deliberate local browser test, use Cloudflare's current official testing credentials rather than production credentials on localhost.
 
 ## Production setup
 
 When the final domain is known:
 
 1. Create a Turnstile widget in the Cloudflare dashboard.
-2. Choose **Managed** widget mode.
+2. Choose Managed widget mode.
 3. Allow only the real production hostname(s).
 4. Do not allow `localhost` or `127.0.0.1` on the production widget.
 5. Put the real site key and secret only in the production server `.env`.
@@ -104,15 +104,29 @@ Turnstile does not replace:
 
 It adds an adaptive bot-abuse layer on top of them.
 
-## CSP
+## CSP after Phase 33
 
-The current NACS-Phil Content Security Policy does not define restrictive `script-src`, `frame-src`, or `connect-src` directives, so the Turnstile widget can load without weakening the existing CSP.
+Phase 33 adds explicit CSP directives. NACS-Phil permits Turnstile only from:
 
-If a future phase adds those directives, explicitly allow the Turnstile origin required by Cloudflare's current documentation.
+```text
+https://challenges.cloudflare.com
+```
+
+for the required script, frame, and connection directives.
+
+The public Facebook player is permitted only from:
+
+```text
+https://www.facebook.com
+```
+
+for `frame-src`.
+
+Do not broaden `script-src` or `frame-src` to wildcard origins merely to solve a deployment problem.
 
 ## Privacy
 
-The Privacy page discloses that protected forms may contact Cloudflare Turnstile for anti-bot verification. The school's final public privacy notice still requires school/privacy-counsel review before launch.
+The Privacy page discloses that protected forms may contact Cloudflare Turnstile for anti-bot verification. The school's final public privacy notice still requires school/privacy review before launch.
 
 ## Final browser checks
 

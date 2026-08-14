@@ -1,0 +1,11 @@
+{
+  "phase": 33,
+  "checks": {
+    "database_backup_created": false,
+    "database_restore_tested": false,
+    "private_files_backup_created": false,
+    "private_files_restore_tested": false,
+    "public_media_restore_tested": false,
+    "offsite_copy_confirmed": false
+  }
+}

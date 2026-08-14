@@ -1,0 +1,11 @@
+{
+  "phase": 30,
+  "checks": {
+    "public_content_reviewed": false,
+    "staff_accounts_reviewed": false,
+    "private_family_data_reviewed": false,
+    "private_documents_reviewed": false,
+    "target_database_plan_approved": false,
+    "source_database_not_committed": false
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "phase": 32,
+  "checks": {
+    "phone_320": false,
+    "phone_standard": false,
+    "tablet_portrait": false,
+    "tablet_landscape": false,
+    "laptop": false,
+    "desktop": false,
+    "ultrawide": false,
+    "header_navigation": false,
+    "resources_menu": false,
+    "gallery_lightbox": false,
+    "facebook_playback": false,
+    "contact_inquiry": false,
+    "admissions_apply": false,
+    "admissions_track": false,
+    "turnstile_desktop_mobile": false,
+    "admin_login_2fa": false,
+    "admin_crud_safe_trash": false,
+    "uploads_downloads": false,
+    "keyboard_focus_reduced_motion": false,
+    "no_crop_overflow": false
+  }
+}

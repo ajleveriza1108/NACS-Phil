@@ -55,3 +55,6 @@ yarn-error.log
 !/storage/app/public/.gitignore
 /storage/app/admissions/*
 !/storage/app/admissions/.gitignore
+/.nacs-data-migration-decision.json
+/.nacs-browser-acceptance.json
+/.nacs-recovery-verification.json

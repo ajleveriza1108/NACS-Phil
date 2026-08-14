@@ -46,12 +46,13 @@
                 @php($isActive = request()->routeIs($item['pattern']))
                 <a href="{{ route($item['route']) }}" class="{{ $isActive ? 'is-active' : '' }}" @if($isActive) aria-current="page" @endif>{{ $item['label'] }}</a>
             @endforeach
-                    <details class="nacs16-resources {{ request()->routeIs('faculty.*', 'calendar.*', 'documents.*') ? 'is-active' : '' }}">
+                    <details class="nacs16-resources {{ request()->routeIs('faculty.*', 'calendar.*', 'documents.*', 'media.*') ? 'is-active' : '' }}">
                 <summary>Resources</summary>
                 <div class="nacs16-resources__menu">
                     <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
                     <a href="{{ route('calendar.index') }}">Academic Calendar</a>
                     <a href="{{ route('documents.index') }}">Documents</a>
+                    <a href="{{ route('media.index') }}">Live &amp; Videos</a>
                 </div>
             </details></nav>
 
@@ -75,6 +76,7 @@
             <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
             <a href="{{ route('calendar.index') }}">Academic Calendar</a>
             <a href="{{ route('documents.index') }}">Documents</a>
+            <a href="{{ route('media.index') }}">Live &amp; Videos</a>
             <a class="nacs11-button nacs11-button--primary" href="{{ route('admissions') }}">Enroll Now <span aria-hidden="true">&rarr;</span></a>
         </div>
     </nav>

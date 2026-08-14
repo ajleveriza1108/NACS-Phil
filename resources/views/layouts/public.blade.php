@@ -11,6 +11,8 @@
     @include('partials.seo-meta')
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/site.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase22-media/media.css') }}">
+    <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
 </head>
 <body class="nacs11-public">
 @include('partials.public-header', ['mainId' => 'main-content'])

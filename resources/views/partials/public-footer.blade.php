@@ -33,6 +33,7 @@
                 <a href="{{ route('announcements.index') }}">News</a>
                 <a href="{{ route('events.index') }}">Events</a>
                 <a href="{{ route('gallery.index') }}">Gallery</a>
+                <a href="{{ route('media.index') }}">Live &amp; Videos</a>
                 <a href="{{ route('privacy') }}">Privacy</a>
             </div>
         </section>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\GalleryItem;
+use App\Models\FacebookMediaItem;
 use App\Models\SchoolEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
@@ -19,6 +20,7 @@ class TrashController extends Controller
             'announcements' => Announcement::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
             'events' => SchoolEvent::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
             'photos' => GalleryItem::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
+            'mediaItems' => FacebookMediaItem::onlyTrashed()->latest('deleted_at')->limit(100)->get(),
         ]);
     }
 
@@ -51,6 +53,7 @@ class TrashController extends Controller
             'announcement' => Announcement::class,
             'event' => SchoolEvent::class,
             'photo' => GalleryItem::class,
+            'media' => FacebookMediaItem::class,
             default => abort(404),
         };
 
@@ -63,6 +66,7 @@ class TrashController extends Controller
             'announcement' => 'Announcement',
             'event' => 'Event',
             'photo' => 'Photo',
+            'media' => 'Facebook media link',
             default => 'Item',
         };
     }

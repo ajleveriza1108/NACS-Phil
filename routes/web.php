@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\EventsContentController as AdminEventsContentCont
 use App\Http\Controllers\Admin\FacultyProfileController as AdminFacultyProfileController;
 use App\Http\Controllers\Admin\GalleryContentController as AdminGalleryContentController;
 use App\Http\Controllers\Admin\GalleryItemController as AdminGalleryItemController;
+use App\Http\Controllers\Admin\FacebookMediaController as AdminFacebookMediaController;
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
 use App\Http\Controllers\Admin\LaunchReadinessController as AdminLaunchReadinessController;
 use App\Http\Controllers\Admin\MediaAssetController as AdminMediaAssetController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\FacebookMediaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\PublicDocumentController;
@@ -63,6 +65,7 @@ Route::get('/announcements/{announcement:slug}', [AnnouncementController::class,
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event:slug}', [EventController::class, 'show'])->name('events.show');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/media', [FacebookMediaController::class, 'index'])->name('media.index');
 Route::post('/inquiries', [InquiryController::class, 'store'])->middleware('throttle:5,10')->name('inquiries.store');
 
 Route::get('/admissions/apply', [AdmissionApplicationController::class, 'create'])->name('admissions.apply');
@@ -108,6 +111,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/media/create', [AdminMediaAssetController::class, 'create'])->name('media.create');
     Route::post('/media', [AdminMediaAssetController::class, 'store'])->name('media.store');
     Route::delete('/media/{medium}', [AdminMediaAssetController::class, 'destroy'])->name('media.destroy');
+
+    Route::resource('facebook-media', AdminFacebookMediaController::class)->except('show');
 
     Route::middleware('staff_role:super_admin,principal')->group(function (): void {
         Route::get('/trash', [AdminTrashController::class, 'index'])->name('trash.index');

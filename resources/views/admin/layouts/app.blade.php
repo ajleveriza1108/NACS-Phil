@@ -16,6 +16,8 @@
     <script src="{{ asset('assets/admin-content-manager/manager.js') }}" defer></script>
     <script src="{{ asset('assets/phase13-admin/admin.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('assets/phase17-theme/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase22-media/media.css') }}">
+    <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
 </head>
 <body class="cm-body p13-admin">
 <a href="#admin-main" class="p13-skip">Skip to administration content</a>
@@ -51,6 +53,9 @@
                 </a>
                 <a href="{{ route('admin.events.index') }}" @class(['is-active' => request()->routeIs('admin.events.*')])>
                     <span class="cm-nav-icon">E</span><span>Events</span>
+                </a>
+                <a href="{{ route('admin.facebook-media.index') }}" @class(['is-active' => request()->routeIs('admin.facebook-media.*')])>
+                    <span class="cm-nav-icon">V</span><span>Live &amp; Videos</span>
                 </a>
                 <a href="{{ route('admin.gallery.index') }}" @class(['is-active' => request()->routeIs('admin.gallery.*')])>
                     <span class="cm-nav-icon">P</span><span>Photos</span>

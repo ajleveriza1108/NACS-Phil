@@ -6,7 +6,7 @@
         <a class="cm-back-link" href="{{ route('admin.dashboard') }}">&larr; Content Manager</a>
         <span class="cm-eyebrow">Recovery</span>
         <h1>Safe Trash</h1>
-        <p>Deleted announcements, events, and photos stay recoverable here. Only the Super Admin can permanently delete them.</p>
+        <p>Deleted announcements, events, photos, and Facebook media links stay recoverable here. Only the Super Admin can permanently delete them.</p>
     </div>
 </section>
 
@@ -15,6 +15,7 @@ $groups = [
     ['title'=>'Announcements','type'=>'announcement','items'=>$announcements],
     ['title'=>'Events','type'=>'event','items'=>$events],
     ['title'=>'Photos','type'=>'photo','items'=>$photos],
+    ['title'=>'Live & Videos','type'=>'media','items'=>$mediaItems],
 ];
 @endphp
 

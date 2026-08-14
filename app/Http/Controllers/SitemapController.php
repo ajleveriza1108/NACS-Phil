@@ -21,6 +21,7 @@ class SitemapController extends Controller
             route('announcements.index'),
             route('events.index'),
             route('gallery.index'),
+            route('media.index'),
             route('contact'),
             route('privacy'),
         ]);

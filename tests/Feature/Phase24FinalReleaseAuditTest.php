@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class Phase24FinalReleaseAuditTest extends TestCase
@@ -102,14 +103,18 @@ class Phase24FinalReleaseAuditTest extends TestCase
 
     public function test_sensitive_write_routes_retain_throttling_contracts(): void
     {
-        $routes = file_get_contents(base_path('routes/web.php'));
+        foreach ([
+            'inquiries.store' => 'throttle:5,10',
+            'admissions.apply.store' => 'throttle:3,60',
+            'admissions.track.authenticate' => 'throttle:5,10',
+            'admissions.documents.store' => 'throttle:5,60',
+            'admin.login.store' => 'throttle:5,1',
+        ] as $routeName => $requiredThrottle) {
+            $route = Route::getRoutes()->getByName($routeName);
 
-        $this->assertIsString($routes);
-        $this->assertStringContainsString("middleware('throttle:5,10')->name('inquiries.store')", $routes);
-        $this->assertStringContainsString("middleware('throttle:3,60')->name('admissions.apply.store')", $routes);
-        $this->assertStringContainsString("middleware('throttle:5,10')->name('admissions.track.authenticate')", $routes);
-        $this->assertStringContainsString("middleware('throttle:5,60')->name('admissions.documents.store')", $routes);
-        $this->assertStringContainsString("middleware('throttle:5,1')->name('admin.login.store')", $routes);
+            $this->assertNotNull($route, $routeName);
+            $this->assertContains($requiredThrottle, $route->gatherMiddleware(), $routeName);
+        }
     }
 
     public function test_navigation_resources_are_not_duplicated_and_accessibility_shell_is_present(): void
@@ -142,8 +147,8 @@ class Phase24FinalReleaseAuditTest extends TestCase
     public function test_public_blade_views_have_no_known_mojibake_or_replacement_characters(): void
     {
         $badSequences = [
-            "\xC3\xA2", // UTF-8 bytes for mojibake prefix "â"
-            "\xC3\x82", // UTF-8 bytes for mojibake prefix "Â"
+            "\xC3\xA2", // UTF-8 bytes for mojibake prefix "├ó"
+            "\xC3\x82", // UTF-8 bytes for mojibake prefix "├é"
             "\xEF\xBF\xBD", // Unicode replacement character
         ];
 

@@ -8,6 +8,7 @@
 <form method="POST" action="{{ route('admissions.track.authenticate') }}" class="adm9-card adm9-form">@csrf
 <label><span>Application reference *</span><input name="reference_code" value="{{ old('reference_code') }}" maxlength="32" autocomplete="off" required></label>
 <label><span>Private access code *</span><input name="access_code" maxlength="30" autocomplete="off" required></label>
+@include('partials.turnstile', ['action' => 'admissions_track'])
 <button class="adm9-button" type="submit">Open application status &rarr;</button>
 </form>
 </div></section>

@@ -66,13 +66,13 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event:slug}', [EventController::class, 'show'])->name('events.show');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/media', [FacebookMediaController::class, 'index'])->name('media.index');
-Route::post('/inquiries', [InquiryController::class, 'store'])->middleware('throttle:5,10')->name('inquiries.store');
+Route::post('/inquiries', [InquiryController::class, 'store'])->middleware(['throttle:5,10', 'turnstile:inquiry'])->name('inquiries.store');
 
 Route::get('/admissions/apply', [AdmissionApplicationController::class, 'create'])->name('admissions.apply');
-Route::post('/admissions/apply', [AdmissionApplicationController::class, 'store'])->middleware('throttle:3,60')->name('admissions.apply.store');
+Route::post('/admissions/apply', [AdmissionApplicationController::class, 'store'])->middleware(['throttle:3,60', 'turnstile:admissions_apply'])->name('admissions.apply.store');
 Route::get('/admissions/receipt/{application}', [AdmissionApplicationController::class, 'receipt'])->name('admissions.receipt');
 Route::get('/admissions/track', [AdmissionApplicationController::class, 'track'])->name('admissions.track');
-Route::post('/admissions/track', [AdmissionApplicationController::class, 'authenticate'])->middleware('throttle:5,10')->name('admissions.track.authenticate');
+Route::post('/admissions/track', [AdmissionApplicationController::class, 'authenticate'])->middleware(['throttle:5,10', 'turnstile:admissions_track'])->name('admissions.track.authenticate');
 Route::post('/admissions/track/logout', [AdmissionApplicationController::class, 'logout'])->name('admissions.track.logout');
 
 Route::middleware('admission.access')->group(function (): void {
@@ -83,7 +83,7 @@ Route::middleware('admission.access')->group(function (): void {
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/admin/login', [AdminAuthController::class, 'create'])->name('admin.login');
-    Route::post('/admin/login', [AdminAuthController::class, 'store'])->middleware('throttle:5,1')->name('admin.login.store');
+    Route::post('/admin/login', [AdminAuthController::class, 'store'])->middleware(['throttle:5,1', 'turnstile:admin_login'])->name('admin.login.store');
     Route::get('/admin/two-factor', [AdminSecurityController::class, 'challenge'])->name('admin.two-factor.challenge');
     Route::post('/admin/two-factor', [AdminSecurityController::class, 'verifyChallenge'])
         ->middleware('throttle:10,1')

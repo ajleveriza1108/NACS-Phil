@@ -24,6 +24,7 @@
             <label class="block"><span class="text-sm font-bold">Email address</span><input type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-nacs-600 focus:outline-none focus:ring-2 focus:ring-nacs-100"></label>
             <label class="block"><span class="text-sm font-bold">Password</span><input type="password" name="password" required autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-nacs-600 focus:outline-none focus:ring-2 focus:ring-nacs-100"></label>
             <label class="flex items-center gap-3 text-sm"><input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-slate-300"> Keep me signed in on this private computer</label>
+            @include('partials.turnstile', ['action' => 'admin_login'])
             <button class="w-full rounded-xl bg-nacs-700 px-5 py-3 font-bold text-white hover:bg-nacs-800">Sign in</button>
         </form>
         <a href="{{ route('home') }}" class="mt-6 block text-center text-sm font-semibold text-nacs-700 hover:underline">Return to public website</a>

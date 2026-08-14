@@ -21,6 +21,7 @@
 <div class="adm9-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 <label class="adm9-check"><input type="checkbox" name="privacy_consent" value="1" required @checked(old('privacy_consent'))><span>I consent to the school using this information to review and respond to this admissions application. I have read the <a href="{{ route('privacy') }}">privacy information</a>.</span></label>
 <label class="adm9-check"><input type="checkbox" name="application_consent" value="1" required @checked(old('application_consent'))><span>I understand this is a preliminary application and does not guarantee acceptance or enrollment.</span></label>
+@include('partials.turnstile', ['action' => 'admissions_apply'])
 <button class="adm9-button" type="submit">Submit preliminary application &rarr;</button>
 </form>
 </div></section>

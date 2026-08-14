@@ -41,6 +41,12 @@
             <p>The Live &amp; Videos page can display public Facebook video or Facebook Live players. NACS-Phil stores the school-entered Facebook link and related page metadata, but the actual video remains hosted and streamed by Facebook. When an embedded Facebook player loads, the visitor's browser connects to Facebook, and Meta/Facebook privacy and cookie practices may apply.</p>
         </article>
 
+        <article class="nacs11-privacy-card nacs11-privacy-card--external">
+            <span aria-hidden="true">06</span>
+            <h2>Adaptive anti-bot verification</h2>
+            <p>Protected forms may use Cloudflare Turnstile to distinguish normal visitors from automated abuse. The verification is designed to run automatically when possible and request human interaction only when needed. When enabled on the live website, the visitor's browser connects to Cloudflare for this anti-bot check, and Cloudflare's applicable privacy practices may apply.</p>
+        </article>
+
         <article class="nacs11-privacy-card nacs11-privacy-card--wide">
             <span aria-hidden="true">!</span>
             <h2>Admissions documents stay private</h2>

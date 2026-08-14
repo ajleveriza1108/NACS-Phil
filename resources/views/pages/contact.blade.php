@@ -123,6 +123,8 @@
                 <span>I consent to the school using the information above to respond to this inquiry. I will not submit sensitive student documents through this form. Read the <a href="{{ route('privacy') }}">privacy notice</a>.</span>
             </label>
 
+            @include('partials.turnstile', ['action' => 'inquiry'])
+
             <div class="contact-submit-row">
                 <button type="submit" class="contact-button contact-button--primary">Send Inquiry <span aria-hidden="true">&rarr;</span></button>
                 <small>Your message is stored in the school's inquiry system for authorized staff review.</small>

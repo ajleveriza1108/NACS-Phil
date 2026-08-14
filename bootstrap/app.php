@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\VerifyTurnstile;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureStaffRole;
 use App\Http\Middleware\EnsureAdmissionAccess;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => EnsureUserIsAdmin::class,
             'staff_role' => EnsureStaffRole::class,
             'admission.access' => EnsureAdmissionAccess::class,
+            'turnstile' => VerifyTurnstile::class,
         ]);
 
         $middleware->append(AddSecurityHeaders::class);

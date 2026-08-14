@@ -15,6 +15,10 @@ final class ProductionReadiness
         $sessionDriver = (string) config('session.driver');
         $sameSite = strtolower((string) config('session.same_site'));
         $cacheStore = (string) config('cache.default');
+        $turnstileEnabled = config('services.turnstile.enabled') === true;
+        $turnstileSiteKey = trim((string) config('services.turnstile.site_key'));
+        $turnstileSecretKey = trim((string) config('services.turnstile.secret_key'));
+        $turnstileHostname = trim((string) config('services.turnstile.expected_hostname'));
 
         $privateStorage = storage_path('app/private');
         $publicStorage = storage_path('app/public');
@@ -98,6 +102,36 @@ final class ProductionReadiness
                 $cacheStore !== '' && $cacheStore !== 'array',
                 true,
                 'Use a persistent production cache store such as database or Redis.'
+            ),
+            $this->check(
+                'turnstile_enabled',
+                'Adaptive anti-bot protection enabled',
+                $turnstileEnabled,
+                true,
+                'TURNSTILE_ENABLED=true is required on the live NACS-Phil website.'
+            ),
+            $this->check(
+                'turnstile_site_key',
+                'Turnstile site key configured',
+                $turnstileSiteKey !== '' && ! str_contains($turnstileSiteKey, 'YOUR_CLOUDFLARE'),
+                true,
+                'Configure the real production Turnstile site key.'
+            ),
+            $this->check(
+                'turnstile_secret_key',
+                'Turnstile secret key configured',
+                $turnstileSecretKey !== '' && ! str_contains($turnstileSecretKey, 'YOUR_CLOUDFLARE'),
+                true,
+                'Configure the Turnstile secret only in the production server environment.'
+            ),
+            $this->check(
+                'turnstile_hostname',
+                'Turnstile production hostname configured',
+                $turnstileHostname !== ''
+                    && ! str_contains($turnstileHostname, 'YOUR-FINAL-DOMAIN')
+                    && ! str_contains($turnstileHostname, '://'),
+                true,
+                'Set TURNSTILE_EXPECTED_HOSTNAME to the exact final hostname without a URL scheme.'
             ),
             $this->check(
                 'private_storage',

@@ -34,6 +34,7 @@
                 <a href="{{ route('events.index') }}">Events</a>
                 <a href="{{ route('gallery.index') }}">Gallery</a>
                 <a href="{{ route('media.index') }}">Media Hub</a>
+                <a href="{{ route('portal.login') }}">Student &amp; Parent Portal</a>
                 <a href="{{ route('privacy') }}">Privacy</a>
             </div>
         </section>

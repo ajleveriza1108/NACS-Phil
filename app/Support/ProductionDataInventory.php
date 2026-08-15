@@ -34,9 +34,17 @@ final class ProductionDataInventory
             'admission_documents',
             'admission_checklist_items',
             'admission_events',
+            'students',
+            'student_teacher_assignments',
+            'student_grades',
+            'student_attendances',
+            'student_guardians',
+            'student_documents',
+            'student_financial_entries',
         ],
         'audit_records' => [
             'content_audits',
+            'student_record_audits',
         ],
         'runtime_only' => [
             'migrations',

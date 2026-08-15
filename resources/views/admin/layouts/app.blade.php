@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/phase22-media/media.css') }}">
     <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase41-sis/sis.css') }}">
 </head>
 <body class="cm-body p13-admin">
 <a href="#admin-main" class="p13-skip">Skip to administration content</a>
@@ -48,6 +49,11 @@
             <nav class="cm-nav" aria-label="Daily work">
                 <a href="{{ route('admin.dashboard') }}" @class(['is-active' => request()->routeIs('admin.dashboard')])>
                     <span class="cm-nav-icon">H</span><span>Dashboard</span>
+                </a>
+                <a href="{{ route('admin.students.index') }}" @class(['is-active' => request()->routeIs('admin.students.*')])>
+
+                    <span class="cm-nav-icon">S</span><span>Student Records</span>
+
                 </a>
                 <a href="{{ route('admin.announcements.index') }}" @class(['is-active' => request()->routeIs('admin.announcements.*')])>
                     <span class="cm-nav-icon">N</span><span>Announcements</span>

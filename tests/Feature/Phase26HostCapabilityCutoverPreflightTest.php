@@ -90,12 +90,12 @@ class Phase26HostCapabilityCutoverPreflightTest extends TestCase
         $this->assertStringContainsString('Once the actual provider and domain are known', $guide);
     }
 
-    public function test_composer_runtime_requirement_still_requires_php_eight_three(): void
+    public function test_composer_runtime_requirement_matches_php_eight_four_one_baseline(): void
     {
         $composer = json_decode((string) file_get_contents(base_path('composer.json')), true);
 
         $this->assertIsArray($composer);
-        $this->assertSame('^8.3', $composer['require']['php'] ?? null);
+        $this->assertSame('^8.4.1', $composer['require']['php'] ?? null);
         $this->assertSame('^13.8', $composer['require']['laravel/framework'] ?? null);
     }
 }

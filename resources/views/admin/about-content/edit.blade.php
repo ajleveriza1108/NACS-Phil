@@ -11,7 +11,7 @@
     <a href="{{ route('about') }}" target="_blank" rel="noopener" class="cm-button cm-button--secondary">Preview About Page &nearr;</a>
 </section>
 
-<form method="POST" action="{{ route('admin.about-content.update') }}" class="cm-editor" data-cm-form>
+<form method="POST" enctype="multipart/form-data" action="{{ route('admin.about-content.update') }}" class="cm-editor" data-cm-form>
     @csrf
     @method('PATCH')
 
@@ -24,6 +24,11 @@
                 <label class="cm-field"><span>Highlighted words</span><input name="hero_highlight" value="{{ old('hero_highlight', $content['hero_highlight']) }}" maxlength="140" required></label>
             </div>
             <label class="cm-field"><span>Introduction</span><textarea name="hero_lead" rows="4" maxlength="700" required>{{ old('hero_lead', $content['hero_lead']) }}</textarea></label>
+            @if(!empty($content['hero_image_path']))
+                <img src="{{ Storage::disk('public')->url($content['hero_image_path']) }}" alt="Current About page hero" class="cm-photo-preview">
+            @endif
+            <label class="cm-field"><span>Hero image (optional)</span><input type="file" name="hero_image" accept="image/jpeg,image/png,image/webp"><small>Upload a replacement only when needed. JPG, PNG, or WebP up to 5 MB.</small></label>
+            <label class="cm-check"><input type="checkbox" name="hero_image_authorized" value="1"><span><strong>I confirm this new hero photograph is approved for website publication.</strong></span></label>
         </div>
     </section>
 
@@ -90,6 +95,11 @@
                 <label class="cm-field"><span>Role / title</span><input name="leader_role" value="{{ old('leader_role', $content['leader_role']) }}" maxlength="120" required></label>
             </div>
             <label class="cm-field"><span>Welcome message</span><textarea name="leader_message" rows="9" maxlength="5000" required>{{ old('leader_message', $content['leader_message']) }}</textarea></label>
+            @if(!empty($content['leadership_image_path']))
+                <img src="{{ Storage::disk('public')->url($content['leadership_image_path']) }}" alt="Current leadership image" class="cm-photo-preview">
+            @endif
+            <label class="cm-field"><span>Leadership image (optional)</span><input type="file" name="leadership_image" accept="image/jpeg,image/png,image/webp"><small>Upload a replacement only when school approval is confirmed.</small></label>
+            <label class="cm-check"><input type="checkbox" name="leadership_image_authorized" value="1"><span><strong>I confirm this new leadership photograph is approved for website publication.</strong></span></label>
         </div>
     </section>
 

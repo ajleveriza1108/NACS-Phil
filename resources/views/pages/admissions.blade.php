@@ -17,7 +17,11 @@
 
         <div class="admissions-hero__visual" data-admissions-reveal>
             <div class="admissions-hero__visual-frame">
-                <img src="{{ asset('assets/phase4-admissions/admissions-visual.svg') }}" alt="Abstract admissions journey illustration showing clear steps from inquiry to enrollment guidance.">
+                @if(!empty($admissionsContent['hero_image_path']))
+                    <img src="{{ Storage::disk('public')->url($admissionsContent['hero_image_path']) }}" alt="NACS-Phil families and school community gathering together.">
+                @else
+                    <img src="{{ asset('assets/phase4-admissions/admissions-visual.svg') }}" alt="Abstract admissions journey illustration showing clear steps from inquiry to enrollment guidance.">
+                @endif
                 <div class="admissions-hero__status">
                     <span aria-hidden="true"></span>
                     <div><strong>{{ $admissionsContent['status_label'] }}</strong><small>{{ $admissionsContent['status_value'] }}</small></div>

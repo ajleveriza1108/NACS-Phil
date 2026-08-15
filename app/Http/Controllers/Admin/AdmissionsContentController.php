@@ -7,6 +7,7 @@ use App\Models\SiteContent;
 use App\Support\AdmissionsContent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdmissionsContentController extends Controller
@@ -20,7 +21,7 @@ class AdmissionsContentController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'hero_badge' => ['required', 'string', 'max:80'],
             'hero_heading' => ['required', 'string', 'max:160'],
             'hero_highlight' => ['required', 'string', 'max:160'],
@@ -74,7 +75,32 @@ class AdmissionsContentController extends Controller
             'cta_text' => ['required', 'string', 'max:1500'],
             'cta_primary_button' => ['required', 'string', 'max:40'],
             'cta_secondary_button' => ['required', 'string', 'max:40'],
+
+            'hero_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+        ];
+
+        $rules['hero_image_authorized'] = $request->hasFile('hero_image')
+            ? ['required', 'accepted']
+            : ['nullable'];
+
+        $validated = $request->validate($rules, [
+            'hero_image_authorized.required' => 'Confirm that the new admissions photograph is approved for website publication.',
+            'hero_image_authorized.accepted' => 'Confirm that the new admissions photograph is approved for website publication.',
         ]);
+
+        unset($validated['hero_image'], $validated['hero_image_authorized']);
+
+        $current = SiteContent::valuesFor('admissions', AdmissionsContent::defaults());
+
+        if ($request->hasFile('hero_image')) {
+            $newPath = $request->file('hero_image')->store('site/admissions', 'public');
+            $oldPath = (string) ($current['hero_image_path'] ?? '');
+            $validated['hero_image_path'] = $newPath;
+
+            if ($oldPath !== '' && $oldPath !== $newPath && str_starts_with($oldPath, 'site/admissions/')) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
 
         SiteContent::storeValues('admissions', $validated);
 

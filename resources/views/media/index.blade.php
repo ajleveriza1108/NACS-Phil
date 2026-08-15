@@ -1,3 +1,4 @@
+@php($localPresentationPreview = app()->environment('local') && is_file(storage_path('app/.nacs-presentation-preview')))
 @extends('layouts.public', ['title' => 'Media Hub'])
 
 @section('meta_description', 'Explore approved NACS-Phil school photos, recorded Facebook videos, and public Facebook Live broadcasts from one media hub.')
@@ -8,7 +9,7 @@
         <div>
             <span class="p22-media-kicker">School Life &amp; Media</span>
             <h1>Media Hub</h1>
-            <p>See approved school photographs, recorded videos, and public livestreams in one place. Photos are managed by NACS-Phil, while Facebook videos and live broadcasts remain hosted and streamed by Facebook.</p>
+            <p>{{ $localPresentationPreview ? 'Local presentation photos are shown here for school review and still require school approval before production.' : 'See approved school photographs, recorded videos, and public livestreams in one place. Photos are managed by NACS-Phil, while Facebook videos and live broadcasts remain hosted and streamed by Facebook.' }}</p>
         </div>
         <div class="p22-media-hero__mark" aria-hidden="true">
             <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="">
@@ -26,7 +27,7 @@
         </nav>
 
         <div class="mh-stats" aria-label="Published media summary">
-            <a href="{{ route('gallery.index') }}"><span aria-hidden="true">&#9638;</span><strong>{{ $photoCount }}</strong><small>Approved Photos</small></a>
+            <a href="{{ route('gallery.index') }}"><span aria-hidden="true">&#9638;</span><strong>{{ $photoCount }}</strong><small>{{ $localPresentationPreview ? 'Preview Photos' : 'Approved Photos' }}</small></a>
             <a href="{{ route('media.index', ['type' => 'videos']) }}"><span aria-hidden="true">&#9654;</span><strong>{{ $videoCount }}</strong><small>Recorded Videos</small></a>
             <a href="{{ route('media.index', ['type' => 'live']) }}"><span aria-hidden="true">&#9679;</span><strong>{{ $liveCount }}</strong><small>Live Broadcasts</small></a>
         </div>
@@ -37,7 +38,7 @@
                     <div>
                         <span class="p22-media-kicker">Photo Gallery</span>
                         <h2 id="mh-photos-heading">Life at NACS-Phil</h2>
-                        <p>Only school-authorized photographs with confirmed publishing consent appear publicly.</p>
+                        <p>{{ $localPresentationPreview ? 'These local preview photographs are for the school-president presentation only; school approval is still required before production publication.' : 'Only school-authorized photographs with confirmed publishing consent appear publicly.' }}</p>
                     </div>
                     <a class="nacs11-button nacs11-button--primary" href="{{ route('gallery.index') }}">Open Full Gallery <span aria-hidden="true">&rarr;</span></a>
                 </div>

@@ -7,6 +7,7 @@ use App\Models\SiteContent;
 use App\Support\AboutContent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AboutContentController extends Controller
@@ -20,7 +21,7 @@ class AboutContentController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'hero_badge' => ['required', 'string', 'max:80'],
             'hero_heading' => ['required', 'string', 'max:140'],
             'hero_highlight' => ['required', 'string', 'max:140'],
@@ -65,7 +66,49 @@ class AboutContentController extends Controller
             'cta_text' => ['required', 'string', 'max:1500'],
             'cta_programs_button' => ['required', 'string', 'max:40'],
             'cta_contact_button' => ['required', 'string', 'max:40'],
+
+            'hero_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'leadership_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+        ];
+
+        foreach (['hero', 'leadership'] as $slot) {
+            $rules[$slot.'_image_authorized'] = $request->hasFile($slot.'_image')
+                ? ['required', 'accepted']
+                : ['nullable'];
+        }
+
+        $validated = $request->validate($rules, [
+            'hero_image_authorized.required' => 'Confirm that the new About page hero photograph is approved for website publication.',
+            'hero_image_authorized.accepted' => 'Confirm that the new About page hero photograph is approved for website publication.',
+            'leadership_image_authorized.required' => 'Confirm that the new leadership photograph is approved for website publication.',
+            'leadership_image_authorized.accepted' => 'Confirm that the new leadership photograph is approved for website publication.',
         ]);
+
+        unset(
+            $validated['hero_image'],
+            $validated['hero_image_authorized'],
+            $validated['leadership_image'],
+            $validated['leadership_image_authorized'],
+        );
+
+        $current = SiteContent::valuesFor('about', AboutContent::defaults());
+
+        foreach (['hero', 'leadership'] as $slot) {
+            $input = $slot.'_image';
+            $pathKey = $slot.'_image_path';
+
+            if (! $request->hasFile($input)) {
+                continue;
+            }
+
+            $newPath = $request->file($input)->store('site/about', 'public');
+            $oldPath = (string) ($current[$pathKey] ?? '');
+            $validated[$pathKey] = $newPath;
+
+            if ($oldPath !== '' && $oldPath !== $newPath && str_starts_with($oldPath, 'site/about/')) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
 
         SiteContent::storeValues('about', $validated);
 

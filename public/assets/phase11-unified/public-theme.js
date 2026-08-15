@@ -15,13 +15,20 @@
     window.addEventListener("scroll", updateHeader, { passive: true });
 
     if (button && menu) {
-        const closeMenu = () => {
+        const isMenuOpen = () => button.getAttribute("aria-expanded") === "true";
+
+        const closeMenu = (restoreFocus = false) => {
+            const wasExpanded = isMenuOpen();
             button.setAttribute("aria-expanded", "false");
             menu.hidden = true;
+
+            if (restoreFocus && wasExpanded) {
+                button.focus();
+            }
         };
 
         button.addEventListener("click", () => {
-            const expanded = button.getAttribute("aria-expanded") === "true";
+            const expanded = isMenuOpen();
             button.setAttribute("aria-expanded", expanded ? "false" : "true");
             menu.hidden = expanded;
         });
@@ -30,15 +37,22 @@
             if (event.target.closest("a")) closeMenu();
         });
 
+        document.addEventListener("pointerdown", (event) => {
+            if (!isMenuOpen()) return;
+            if (button.contains(event.target) || menu.contains(event.target)) return;
+
+            closeMenu();
+        });
+
         document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") {
-                closeMenu();
-                button.focus();
+            if (event.key === "Escape" && isMenuOpen()) {
+                event.preventDefault();
+                closeMenu(true);
             }
         });
 
         window.addEventListener("resize", () => {
-            if (window.innerWidth > 1050) closeMenu();
+            if (window.innerWidth > 1050 && isMenuOpen()) closeMenu();
         });
     }
 

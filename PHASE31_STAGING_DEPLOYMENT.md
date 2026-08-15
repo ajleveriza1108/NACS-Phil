@@ -5,7 +5,7 @@ The repository is prepared for provider-specific staging without hardcoding a ho
 ## Required staging shape
 
 - document root points to Laravel `public`
-- PHP 8.3 or newer
+- PHP 8.4.1 or newer
 - MySQL or MariaDB
 - writable Laravel storage and bootstrap cache
 - production Vite build deployed

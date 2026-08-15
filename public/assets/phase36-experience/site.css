@@ -1,0 +1,138 @@
+/* NACS-Phil Phase 36 - Homepage + Programs Visual Experience Upgrade
+   Local illustrative learning photography only. No remote hotlinks.
+   These stock images do not depict NACS-Phil students or facilities. */
+
+.nacs-home-phase1 .p18-program-card__visual{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+}
+
+.nacs-home-phase1 .p18-program-card__visual--preschool{
+  background-image:
+    linear-gradient(145deg,rgba(3,26,57,.24),rgba(3,26,57,.52)),
+    url("images/preschool-learning.webp")!important;
+  background-position:62% center!important;
+}
+
+.nacs-home-phase1 .p18-program-card__visual--elementary{
+  background-image:
+    linear-gradient(145deg,rgba(3,26,57,.18),rgba(3,26,57,.48)),
+    url("images/elementary-learning.webp")!important;
+  background-position:54% center!important;
+}
+
+.nacs-home-phase1 .p18-program-card__visual--junior{
+  background-image:
+    linear-gradient(145deg,rgba(3,26,57,.18),rgba(3,26,57,.48)),
+    url("images/junior-high-learning.webp")!important;
+  background-position:48% center!important;
+}
+
+.nacs-home-phase1 .p18-program-card__visual>span{
+  position:relative;
+  z-index:2;
+  border-color:rgba(255,255,255,.56)!important;
+  background:rgba(3,26,57,.62);
+  color:#f7d57e!important;
+  box-shadow:0 10px 30px rgba(3,26,57,.22);
+  backdrop-filter:blur(8px);
+}
+
+.nacs-home-phase1 .p18-program-card__visual::after{
+  content:"Illustrative";
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  z-index:3;
+  border:1px solid rgba(255,255,255,.36);
+  border-radius:999px;
+  background:rgba(3,26,57,.68);
+  color:#fff;
+  padding:5px 8px;
+  font-size:7px;
+  font-weight:850;
+  line-height:1;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  backdrop-filter:blur(8px);
+}
+
+.programs-phase3 .programs-program__visual{
+  isolation:isolate;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+}
+
+.programs-phase3 .programs-program--preschool .programs-program__visual{
+  background-image:
+    linear-gradient(145deg,rgba(6,29,59,.10),rgba(6,29,59,.50)),
+    url("images/preschool-learning.webp")!important;
+  background-position:62% center!important;
+}
+
+.programs-phase3 .programs-program--elementary .programs-program__visual{
+  background-image:
+    linear-gradient(145deg,rgba(6,29,59,.08),rgba(6,29,59,.48)),
+    url("images/elementary-learning.webp")!important;
+  background-position:54% center!important;
+}
+
+.programs-phase3 .programs-program--junior .programs-program__visual{
+  background-image:
+    linear-gradient(145deg,rgba(6,29,59,.12),rgba(6,29,59,.50)),
+    url("images/junior-high-learning.webp")!important;
+  background-position:48% center!important;
+}
+
+.programs-phase3 .programs-program__number,
+.programs-phase3 .programs-program__symbol,
+.programs-phase3 .programs-program__level{
+  z-index:2;
+}
+
+.programs-phase3 .programs-program__symbol{
+  background:rgba(3,23,47,.52)!important;
+  box-shadow:0 14px 36px rgba(3,23,47,.20);
+}
+
+.programs-phase3 .programs-program__visual::after{
+  content:"Illustrative learning photo";
+  position:absolute;
+  top:16px;
+  right:16px;
+  z-index:3;
+  border:1px solid rgba(255,255,255,.38);
+  border-radius:999px;
+  background:rgba(3,23,47,.70);
+  color:#fff;
+  padding:7px 10px;
+  font-size:8px;
+  font-weight:850;
+  line-height:1;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+  backdrop-filter:blur(8px);
+}
+
+@media(max-width:620px){
+  .nacs-home-phase1 .p18-program-card__visual::after{
+    right:8px;
+    bottom:8px;
+  }
+
+  .programs-phase3 .programs-program__visual::after{
+    top:12px;
+    right:12px;
+    font-size:7px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .nacs-home-phase1 .p18-program-card__visual,
+  .programs-phase3 .programs-program__visual{
+    transition:none!important;
+  }
+}

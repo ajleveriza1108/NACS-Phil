@@ -6,6 +6,7 @@ These instructions apply to the entire repository unless a more specific `AGENTS
 
 - Project: Noel Academy Christian of Sariaya Philippines, Inc. (NACS-Phil)
 - Framework: Laravel 13
+- PHP runtime baseline: 8.4.1 or newer (current locked dependency set).
 - Primary Windows project path: `D:\Web Projects\NACS-Phil`
 - Primary shell compatibility: Windows PowerShell 5.1
 - Local development database: SQLite
@@ -249,3 +250,19 @@ When preparing a presentation-ready copy for school leadership:
 - visually review Home, Programs, Admissions, Gallery, and Media Hub before declaring presentation ready
 
 A presentation-ready local/staging copy may use only content safe and authorized for that purpose. Production readiness remains a separate decision.
+
+## GitHub future-update workflow
+
+For future repository updates:
+
+- start code/design work from the latest approved `main`
+- use an `agent/*` or other approved feature branch
+- open a pull request into `main`
+- require the repository quality gate in `.github/workflows/quality-gate.yml`
+- keep production deployment sourced from `main`, never from a feature branch
+- never commit or deploy a local `.env`, SQLite database, private uploads, admissions files, presentation-only media, logs, or backups
+- preserve production `.env`, database data, uploaded files, and private storage across deployments
+
+Do not enable production auto-deployment merely because the source is on GitHub. The repository's production deployment template must remain inactive until the actual host, staging environment, authenticated deployment path, backup/rollback process, persistent storage behavior, and database migration procedure have been verified.
+
+When production auto-deployment is eventually enabled, an approved merge into `main` may trigger deployment only after the required GitHub/staging gates pass.

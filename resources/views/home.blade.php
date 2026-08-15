@@ -45,31 +45,31 @@
 
     <div class="home-shell p18-quick-links" data-reveal>
         <a href="{{ route('admissions') }}" class="p18-quick-card">
-            <span class="p18-quick-card__icon" aria-hidden="true">&#8962;</span>
+            <span class="p18-quick-card__icon" aria-hidden="true"><svg class="p43-quick-icon" viewBox="0 0 24 24" focusable="false"><path d="M4 10.5 12 4l8 6.5"/><path d="M6.5 9.5V20h11V9.5"/><path d="M9.5 20v-6h5v6"/></svg></span>
             <span><strong>Admissions</strong><small>Steps to enroll</small></span>
             <b aria-hidden="true">&rsaquo;</b>
         </a>
 
         <a href="{{ route('calendar.index') }}" class="p18-quick-card">
-            <span class="p18-quick-card__icon" aria-hidden="true">&#9638;</span>
+            <span class="p18-quick-card__icon" aria-hidden="true"><svg class="p43-quick-icon" viewBox="0 0 24 24" focusable="false"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M8 3.5v4M16 3.5v4M4 9.5h16M8 13h2M12 13h2M16 13h1M8 16.5h2M12 16.5h2M16 16.5h1"/></svg></span>
             <span><strong>Academic Calendar</strong><small>Key dates &amp; schedules</small></span>
             <b aria-hidden="true">&rsaquo;</b>
         </a>
 
         <a href="{{ route('faculty.index') }}" class="p18-quick-card">
-            <span class="p18-quick-card__icon" aria-hidden="true">&#9737;</span>
+            <span class="p18-quick-card__icon" aria-hidden="true"><svg class="p43-quick-icon" viewBox="0 0 24 24" focusable="false"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3.5 19c.7-3.6 2.6-5.5 5.5-5.5s4.8 1.9 5.5 5.5M14.5 14.2c2.8-.5 5.2 1.1 6 4.3"/></svg></span>
             <span><strong>Faculty &amp; Staff</strong><small>Our dedicated educators</small></span>
             <b aria-hidden="true">&rsaquo;</b>
         </a>
 
         <a href="{{ route('documents.index') }}" class="p18-quick-card">
-            <span class="p18-quick-card__icon" aria-hidden="true">&#9633;</span>
+            <span class="p18-quick-card__icon" aria-hidden="true"><svg class="p43-quick-icon" viewBox="0 0 24 24" focusable="false"><path d="M6 3.5h8l4 4V20.5H6z"/><path d="M14 3.5v4h4M9 12h6M9 15.5h6"/></svg></span>
             <span><strong>School Documents</strong><small>Forms &amp; policies</small></span>
             <b aria-hidden="true">&rsaquo;</b>
         </a>
 
         <a href="{{ route('contact') }}" class="p18-quick-card">
-            <span class="p18-quick-card__icon" aria-hidden="true">&#8943;</span>
+            <span class="p18-quick-card__icon" aria-hidden="true"><svg class="p43-quick-icon" viewBox="0 0 24 24" focusable="false"><path d="M4 5.5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg></span>
             <span><strong>Parent Inquiry</strong><small>We're here to help</small></span>
             <b aria-hidden="true">&rsaquo;</b>
         </a>

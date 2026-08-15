@@ -1,0 +1,83 @@
+name: NACS-Phil Quality Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nacs-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Laravel + Vite validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, sqlite3, curl, zip
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Prepare CI environment
+        shell: bash
+        run: |
+          cp .env.example .env
+          touch database/database.sqlite
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Generate CI application key
+        run: php artisan key:generate --force
+
+      - name: Prepare CI database
+        run: php artisan migrate --force
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build production frontend
+        run: npm run build
+
+      - name: Clear Laravel caches
+        run: php artisan optimize:clear
+
+      - name: Strict functional surface check
+        run: php artisan nacs:functional-check --strict
+
+      - name: Complete Laravel test suite
+        run: php artisan test --stop-on-failure
+
+      - name: Whitespace gate
+        run: git diff --check
+
+      - name: Confirm CI did not modify tracked source
+        shell: bash
+        run: |
+          if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+            echo "Tracked source changed during CI:"
+            git status --short --untracked-files=no
+            exit 1
+          fi

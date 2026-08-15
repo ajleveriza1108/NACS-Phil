@@ -1,0 +1,48 @@
+# NACS-Phil production deployment template
+#
+# SAFE BY DESIGN:
+# This file intentionally lives under .github/deployment-templates/ rather than
+# .github/workflows/, so GitHub Actions does NOT execute it.
+#
+# Do not activate production deployment until the real hosting provider,
+# staging hostname, authenticated deployment method, backup/rollback procedure,
+# persistent storage behavior, and database migration procedure are verified.
+#
+# Intended final trigger:
+#
+# name: NACS-Phil Production Deploy
+#
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#
+# permissions:
+#   contents: read
+#
+# concurrency:
+#   group: nacs-production
+#   cancel-in-progress: false
+#
+# jobs:
+#   deploy:
+#     if: ${{ vars.NACS_AUTO_DEPLOY_ENABLED == 'true' }}
+#     environment: production
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       # Add the provider-specific deployment adapter here.
+#       # Required properties:
+#       # - deploy only the tested main commit
+#       # - never replace the server .env from Git
+#       # - preserve storage/app, admissions files, logs, and database data
+#       # - require a backup/rollback point before migrations
+#       # - fail instead of force-resetting unknown server edits
+#       # - run migrations only when reviewed and approved
+#       # - rebuild caches after deployment
+#       # - run post-deploy NACS checks and browser smoke tests
+#
+# Host-specific credentials belong in GitHub Environment secrets/variables,
+# never in this repository.

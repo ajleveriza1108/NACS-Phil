@@ -52,7 +52,7 @@
                     <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
                     <a href="{{ route('calendar.index') }}">Academic Calendar</a>
                     <a href="{{ route('documents.index') }}">Documents</a>
-                    <a href="{{ route('media.index') }}">Live &amp; Videos</a>
+                    <a href="{{ route('media.index') }}">Media Hub</a>
                 </div>
             </details></nav>
 
@@ -76,7 +76,7 @@
             <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
             <a href="{{ route('calendar.index') }}">Academic Calendar</a>
             <a href="{{ route('documents.index') }}">Documents</a>
-            <a href="{{ route('media.index') }}">Live &amp; Videos</a>
+            <a href="{{ route('media.index') }}">Media Hub</a>
             <a class="nacs11-button nacs11-button--primary" href="{{ route('admissions') }}">Enroll Now <span aria-hidden="true">&rarr;</span></a>
         </div>
     </nav>

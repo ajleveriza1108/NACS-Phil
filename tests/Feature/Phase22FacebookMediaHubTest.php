@@ -166,8 +166,9 @@ class Phase22FacebookMediaHubTest extends TestCase
         $this->assertIsString($sitemap);
 
         $this->assertSame(2, substr_count($header, "route('media.index')"));
-        $this->assertSame(2, substr_count($header, 'Live &amp; Videos'));
+        $this->assertSame(2, substr_count($header, 'Media Hub'));
         $this->assertSame(1, substr_count($footer, "route('media.index')"));
+        $this->assertSame(1, substr_count($footer, 'Media Hub'));
         $this->assertSame(1, substr_count($sitemap, "route('media.index')"));
     }
 

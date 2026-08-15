@@ -263,7 +263,7 @@
                 <span class="section-kicker section-kicker--light">Life at NACS-Phil</span>
                 <h2>{{ $homeContent['life_heading'] }}</h2>
             </div>
-            <a class="button button--light button--small" href="{{ route('gallery.index') }}">View Gallery <span aria-hidden="true">&rarr;</span></a>
+            <a class="button button--light button--small" href="{{ route('media.index') }}">Explore Media <span aria-hidden="true">&rarr;</span></a>
         </div>
 
         @if($galleryItems->isNotEmpty())

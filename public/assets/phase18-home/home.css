@@ -253,3 +253,15 @@
 @media(prefers-reduced-motion:reduce){
   .p18-quick-card:hover,.p18-news-card:hover{transform:none!important}
 }
+
+/* Post-finalization hero fallback crop repair.
+   Phase 17 intentionally crops full-bleed hero photography, but the same
+   selector also reached the nested fallback school seal. */
+.nacs-home-phase1 .p18-hero__visual-frame .p18-hero__fallback img{
+  width:clamp(104px,9vw,136px)!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:136px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}

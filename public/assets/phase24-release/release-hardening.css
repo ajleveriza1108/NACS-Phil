@@ -125,3 +125,18 @@ textarea{
     scroll-behavior:auto!important;
   }
 }
+/* NACS-Phil Phase 36 - conservative whole-site accessibility refinements. */
+:target{
+  scroll-margin-top:110px;
+}
+
+:where(h1,h2,h3,h4,h5,h6,p,li,dd,dt,figcaption){
+  overflow-wrap:break-word;
+}
+
+@media(forced-colors:active){
+  :where(a,button,summary,input,select,textarea,[role="button"],[tabindex]):focus-visible{
+    outline:2px solid CanvasText!important;
+    outline-offset:3px!important;
+  }
+}

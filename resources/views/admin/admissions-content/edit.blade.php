@@ -11,7 +11,7 @@
     <a href="{{ route('admissions') }}" target="_blank" rel="noopener" class="cm-button cm-button--secondary">Preview Admissions Page &nearr;</a>
 </section>
 
-<form method="POST" action="{{ route('admin.admissions-content.update') }}" class="cm-editor" data-cm-form>
+<form method="POST" enctype="multipart/form-data" action="{{ route('admin.admissions-content.update') }}" class="cm-editor" data-cm-form>
     @csrf
     @method('PATCH')
 
@@ -24,6 +24,11 @@
                 <label class="cm-field"><span>Highlighted words</span><input name="hero_highlight" value="{{ old('hero_highlight', $content['hero_highlight']) }}" maxlength="160" required></label>
             </div>
             <label class="cm-field"><span>Introduction</span><textarea name="hero_lead" rows="4" maxlength="1000" required>{{ old('hero_lead', $content['hero_lead']) }}</textarea></label>
+            @if(!empty($content['hero_image_path']))
+                <img src="{{ Storage::disk('public')->url($content['hero_image_path']) }}" alt="Current Admissions hero" class="cm-photo-preview">
+            @endif
+            <label class="cm-field"><span>Admissions hero image (optional)</span><input type="file" name="hero_image" accept="image/jpeg,image/png,image/webp"></label>
+            <label class="cm-check"><input type="checkbox" name="hero_image_authorized" value="1"><span><strong>I confirm this new admissions photograph is approved for website publication.</strong></span></label>
             <label class="cm-field"><span>Welcome heading</span><input name="welcome_heading" value="{{ old('welcome_heading', $content['welcome_heading']) }}" maxlength="180" required></label>
             <label class="cm-field"><span>Welcome text</span><textarea name="welcome_text" rows="4" maxlength="1800" required>{{ old('welcome_text', $content['welcome_text']) }}</textarea></label>
         </div>

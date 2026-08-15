@@ -17,7 +17,11 @@
 
         <div class="programs-hero__visual" data-programs-reveal>
             <div class="programs-hero__visual-frame">
-                <img src="{{ asset('assets/phase3-programs/programs-visual.svg') }}" alt="Abstract illustration showing three connected learning stages representing Preschool, Elementary, and Junior High at NACS-Phil.">
+                @if(!empty($programsContent['hero_image_path']))
+                    <img src="{{ Storage::disk('public')->url($programsContent['hero_image_path']) }}" alt="NACS-Phil students learning together across school programs.">
+                @else
+                    <img src="{{ asset('assets/phase3-programs/programs-visual.svg') }}" alt="Abstract illustration showing three connected learning stages representing Preschool, Elementary, and Junior High at NACS-Phil.">
+                @endif
                 <div class="programs-hero__badge"><span>3</span><div><strong>Learning Stages</strong><small>One connected school journey</small></div></div>
             </div>
         </div>
@@ -46,16 +50,22 @@
 <section id="{{ $meta[0] }}" class="programs-program {{ $meta[2] }}">
     <div class="programs-shell programs-program__grid">
         <div class="programs-program__visual" data-programs-reveal>
+            @if(!empty($programsContent[$prefix.'_image_path']))
+                <img src="{{ Storage::disk('public')->url($programsContent[$prefix.'_image_path']) }}" alt="{{ $programsContent[$prefix.'_title'] }} learning at NACS-Phil." style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,23,47,.08),rgba(3,23,47,.28));"></div>
+            @endif
             <div class="programs-program__number">{{ $meta[1] }}</div>
-            <div class="programs-program__symbol" aria-hidden="true">
-                @if($prefix === 'preschool')
-                    <span>ABC</span>
-                @elseif($prefix === 'elementary')
-                    <span>123</span>
-                @else
-                    <span>&infin;</span>
-                @endif
-            </div>
+            @if(empty($programsContent[$prefix.'_image_path']))
+                <div class="programs-program__symbol" aria-hidden="true">
+                    @if($prefix === 'preschool')
+                        <span>ABC</span>
+                    @elseif($prefix === 'elementary')
+                        <span>123</span>
+                    @else
+                        <span>&infin;</span>
+                    @endif
+                </div>
+            @endif
             <div class="programs-program__level">{{ $programsContent[$prefix.'_levels'] }}</div>
         </div>
 

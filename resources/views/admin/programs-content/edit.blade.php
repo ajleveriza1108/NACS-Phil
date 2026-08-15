@@ -11,7 +11,7 @@
     <a href="{{ route('programs') }}" target="_blank" rel="noopener" class="cm-button cm-button--secondary">Preview Programs Page &nearr;</a>
 </section>
 
-<form method="POST" action="{{ route('admin.programs-content.update') }}" class="cm-editor" data-cm-form>
+<form method="POST" enctype="multipart/form-data" action="{{ route('admin.programs-content.update') }}" class="cm-editor" data-cm-form>
     @csrf
     @method('PATCH')
 
@@ -24,6 +24,11 @@
                 <label class="cm-field"><span>Highlighted words</span><input name="hero_highlight" value="{{ old('hero_highlight', $content['hero_highlight']) }}" maxlength="160" required></label>
             </div>
             <label class="cm-field"><span>Introduction</span><textarea name="hero_lead" rows="4" maxlength="900" required>{{ old('hero_lead', $content['hero_lead']) }}</textarea></label>
+            @if(!empty($content['hero_image_path']))
+                <img src="{{ Storage::disk('public')->url($content['hero_image_path']) }}" alt="Current Programs hero" class="cm-photo-preview">
+            @endif
+            <label class="cm-field"><span>Programs hero image (optional)</span><input type="file" name="hero_image" accept="image/jpeg,image/png,image/webp"></label>
+            <label class="cm-check"><input type="checkbox" name="hero_image_authorized" value="1"><span><strong>I confirm this new hero photograph is approved for website publication.</strong></span></label>
             <label class="cm-field"><span>Overview heading</span><input name="overview_heading" value="{{ old('overview_heading', $content['overview_heading']) }}" maxlength="180" required></label>
             <label class="cm-field"><span>Overview text</span><textarea name="overview_text" rows="4" maxlength="1500" required>{{ old('overview_text', $content['overview_text']) }}</textarea></label>
         </div>
@@ -43,6 +48,11 @@
                 </div>
                 <label class="cm-field"><span>Levels / grades</span><input name="{{ $prefix }}_levels" value="{{ old($prefix.'_levels', $content[$prefix.'_levels']) }}" maxlength="180" required></label>
                 <label class="cm-field"><span>Program description</span><textarea name="{{ $prefix }}_text" rows="6" maxlength="2500" required>{{ old($prefix.'_text', $content[$prefix.'_text']) }}</textarea></label>
+                @if(!empty($content[$prefix.'_image_path']))
+                    <img src="{{ Storage::disk('public')->url($content[$prefix.'_image_path']) }}" alt="Current {{ $meta[1] }} image" class="cm-photo-preview">
+                @endif
+                <label class="cm-field"><span>{{ $meta[1] }} image (optional)</span><input type="file" name="{{ $prefix }}_image" accept="image/jpeg,image/png,image/webp"></label>
+                <label class="cm-check"><input type="checkbox" name="{{ $prefix }}_image_authorized" value="1"><span><strong>I confirm this new program photograph is approved for website publication.</strong></span></label>
                 @foreach([1,2,3,4] as $number)
                     <label class="cm-field"><span>Feature {{ $number }}</span><input name="{{ $prefix }}_feature_{{ $number }}" value="{{ old($prefix.'_feature_'.$number, $content[$prefix.'_feature_'.$number]) }}" maxlength="160" required></label>
                 @endforeach

@@ -1,4 +1,5 @@
 @php($galleryContent=\App\Models\SiteContent::valuesFor('gallery',\App\Support\GalleryContent::defaults()))
+@php($localPresentationPreview=app()->environment('local') && is_file(storage_path('app/.nacs-presentation-preview')))
 @extends('layouts.gallery-phase7')
 @section('title','Gallery')
 @section('content')
@@ -7,7 +8,7 @@
 <div class="g-visual" data-g-reveal><img src="{{ asset('assets/phase7-gallery/gallery-visual.svg') }}" alt="Abstract school photo gallery illustration."></div>
 </div></section>
 <section id="photos" class="g-section"><div class="g-shell">
-<div class="g-section-head" data-g-reveal><div><span>Approved Photographs</span><h2>{{ $galleryContent['listing_heading'] }}</h2></div><p>{{ $galleryContent['listing_text'] }}</p></div>
+<div class="g-section-head" data-g-reveal><div><span>{{ $localPresentationPreview ? 'Local Presentation Preview' : 'Approved Photographs' }}</span><h2>{{ $galleryContent['listing_heading'] }}</h2></div><p>{{ $galleryContent['listing_text'] }}</p></div>
 @if($galleryCategories->isNotEmpty())
 <nav class="g-filters" aria-label="Gallery categories" data-g-reveal>
 <a href="{{ route('gallery.index') }}" @class(['active'=>$activeCategory===''])>All</a>

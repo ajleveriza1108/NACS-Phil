@@ -16,7 +16,11 @@
         </div>
         <div class="about-hero__visual" data-about-reveal>
             <div class="about-hero__visual-frame">
-                <img src="{{ asset('assets/phase2-about/about-visual.svg') }}" alt="Abstract concept illustration representing Christian education, learning, community, and growth at NACS-Phil.">
+                @if(!empty($aboutContent['hero_image_path']))
+                    <img src="{{ Storage::disk('public')->url($aboutContent['hero_image_path']) }}" alt="NACS-Phil school community and educators.">
+                @else
+                    <img src="{{ asset('assets/phase2-about/about-visual.svg') }}" alt="Abstract concept illustration representing Christian education, learning, community, and growth at NACS-Phil.">
+                @endif
                 <div class="about-hero__visual-label"><i aria-hidden="true"></i><span>Faith · Learning · Community</span></div>
             </div>
         </div>
@@ -101,7 +105,13 @@
 <section class="about-section about-section--leadership">
     <div class="about-shell about-leadership">
         <div class="about-leadership__portrait" data-about-reveal>
-            <div class="about-leadership__portrait-inner"><span aria-hidden="true">N</span><small>Approved leadership portrait can be added in a later media refinement.</small></div>
+            <div class="about-leadership__portrait-inner">
+                @if(!empty($aboutContent['leadership_image_path']))
+                    <img src="{{ Storage::disk('public')->url($aboutContent['leadership_image_path']) }}" alt="NACS-Phil educators during professional development." style="width:100%;height:100%;object-fit:cover;">
+                @else
+                    <span aria-hidden="true">N</span><small>Approved leadership portrait can be added through the About page editor.</small>
+                @endif
+            </div>
         </div>
         <div class="about-leadership__copy" data-about-reveal>
             <span class="about-kicker">{{ $aboutContent['leadership_kicker'] }}</span><h2>{{ $aboutContent['leadership_heading'] }}</h2>

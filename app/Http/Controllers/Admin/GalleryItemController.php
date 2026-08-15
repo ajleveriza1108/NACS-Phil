@@ -93,11 +93,9 @@ class GalleryItemController extends Controller
             'taken_at' => ['nullable','date'],
             'sort_order' => ['required','integer','min:0','max:9999'],
             'photographer_credit' => ['nullable','string','max:180'],
-            'consent_confirmed' => [
-                'nullable',
-                Rule::requiredIf(fn (): bool => $publishingByManager),
-                'accepted',
-            ],
+            'consent_confirmed' => $publishingByManager
+                ? ['required', 'accepted']
+                : ['sometimes', 'accepted'],
         ], [
             'consent_confirmed.required' => 'Confirm school authorization and appropriate consent before publishing this image.',
             'consent_confirmed.accepted' => 'Confirm school authorization and appropriate consent before publishing this image.',

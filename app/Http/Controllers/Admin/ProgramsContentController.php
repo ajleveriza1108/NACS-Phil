@@ -7,6 +7,7 @@ use App\Models\SiteContent;
 use App\Support\ProgramsContent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProgramsContentController extends Controller
@@ -20,7 +21,7 @@ class ProgramsContentController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'hero_badge' => ['required', 'string', 'max:80'],
             'hero_heading' => ['required', 'string', 'max:160'],
             'hero_highlight' => ['required', 'string', 'max:160'],
@@ -75,7 +76,44 @@ class ProgramsContentController extends Controller
             'cta_text' => ['required', 'string', 'max:1500'],
             'cta_admissions_button' => ['required', 'string', 'max:40'],
             'cta_contact_button' => ['required', 'string', 'max:40'],
-        ]);
+
+            'hero_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'preschool_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'elementary_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'junior_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+        ];
+
+        $slots = ['hero', 'preschool', 'elementary', 'junior'];
+        foreach ($slots as $slot) {
+            $rules[$slot.'_image_authorized'] = $request->hasFile($slot.'_image')
+                ? ['required', 'accepted']
+                : ['nullable'];
+        }
+
+        $validated = $request->validate($rules);
+
+        foreach ($slots as $slot) {
+            unset($validated[$slot.'_image'], $validated[$slot.'_image_authorized']);
+        }
+
+        $current = SiteContent::valuesFor('programs', ProgramsContent::defaults());
+
+        foreach ($slots as $slot) {
+            $input = $slot.'_image';
+            $pathKey = $slot.'_image_path';
+
+            if (! $request->hasFile($input)) {
+                continue;
+            }
+
+            $newPath = $request->file($input)->store('site/programs', 'public');
+            $oldPath = (string) ($current[$pathKey] ?? '');
+            $validated[$pathKey] = $newPath;
+
+            if ($oldPath !== '' && $oldPath !== $newPath && str_starts_with($oldPath, 'site/programs/')) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
 
         SiteContent::storeValues('programs', $validated);
 

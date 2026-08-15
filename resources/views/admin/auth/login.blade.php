@@ -2,32 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#071f3d">
+    <meta name="robots" content="noindex,nofollow">
     <title>Staff Sign In | NACS-Phil</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('assets/phase39-auth/auth.css') }}">
 </head>
-<body class="hero-pattern grid min-h-screen place-items-center px-4 py-10">
-    <main class="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
-        <div class="text-center">
-            <img src="{{ asset('images/nacs-development-mark.svg') }}" alt="" class="mx-auto h-20 w-20">
-            <p class="eyebrow mt-5">Authorized staff only</p>
-            <h1 class="section-title mt-2 text-3xl">NACS-Phil Administration</h1>
-            <p class="mt-3 text-sm leading-6 text-slate-600">Use the administrator account created through <strong>CREATE-ADMIN.bat</strong>.</p>
-        </div>
+<body class="nacs-auth-body">
+    <a href="#nacs-auth-main" class="nacs-auth-skip">Skip to sign in form</a>
 
-        @if ($errors->any())
-            <div class="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900">{{ $errors->first() }}</div>
-        @endif
+    <main id="nacs-auth-main" class="nacs-auth-shell">
+        <section class="nacs-auth-card nacs-auth-card--staff" aria-labelledby="staff-login-title">
+            <div class="nacs-auth-branding">
+                <a href="{{ route('home') }}" class="nacs-auth-brand" aria-label="Return to the NACS-Phil public website">
+                    <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="84" height="84">
+                    <span>
+                        <strong>NACS-Phil</strong>
+                        <small>School Administration</small>
+                    </span>
+                </a>
+            </div>
 
-        <form method="POST" action="{{ route('admin.login.store') }}" class="mt-7 space-y-5">
-            @csrf
-            <label class="block"><span class="text-sm font-bold">Email address</span><input type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-nacs-600 focus:outline-none focus:ring-2 focus:ring-nacs-100"></label>
-            <label class="block"><span class="text-sm font-bold">Password</span><input type="password" name="password" required autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-nacs-600 focus:outline-none focus:ring-2 focus:ring-nacs-100"></label>
-            <label class="flex items-center gap-3 text-sm"><input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-slate-300"> Keep me signed in on this private computer</label>
-            @include('partials.turnstile', ['action' => 'admin_login'])
-            <button class="w-full rounded-xl bg-nacs-700 px-5 py-3 font-bold text-white hover:bg-nacs-800">Sign in</button>
-        </form>
-        <a href="{{ route('home') }}" class="mt-6 block text-center text-sm font-semibold text-nacs-700 hover:underline">Return to public website</a>
+            <div class="nacs-auth-copy">
+                <p class="nacs-auth-kicker">Authorized staff only</p>
+                <h1 id="staff-login-title">NACS-Phil Administration</h1>
+                <p class="nacs-auth-lead">
+                    Sign in with the official administrator or school staff account created and managed by NACS-Phil.
+                </p>
+                <p class="nacs-auth-note">
+                    Initial administrator access is created through <strong>CREATE-ADMIN.bat</strong>.
+                </p>
+            </div>
+
+            @if ($errors->any())
+                <div class="nacs-auth-alert nacs-auth-alert--error" role="alert">
+                    <strong>We could not sign you in.</strong>
+                    <div>{{ $errors->first() }}</div>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('admin.login.store') }}" class="nacs-auth-form">
+                @csrf
+
+                <label class="nacs-auth-field">
+                    <span>Email address</span>
+                    <input
+                        type="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        required
+                        autofocus
+                        autocomplete="username"
+                        placeholder="name@nacsphil.example"
+                    >
+                </label>
+
+                <label class="nacs-auth-field">
+                    <span>Password</span>
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                        placeholder="Enter your password"
+                    >
+                </label>
+
+                <label class="nacs-auth-check">
+                    <input type="checkbox" name="remember" value="1">
+                    <span>Keep me signed in on this private computer</span>
+                </label>
+
+                @include('partials.turnstile', ['action' => 'admin_login'])
+
+                <button type="submit" class="nacs-auth-primary">Sign in securely</button>
+            </form>
+
+            <div class="nacs-auth-actions">
+                <a href="{{ route('home') }}" class="nacs-auth-secondary">Return to public website</a>
+            </div>
+        </section>
     </main>
 </body>
 </html>

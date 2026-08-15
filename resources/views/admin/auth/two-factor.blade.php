@@ -1,9 +1,64 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Two-Factor Authentication | NACS-Phil</title>@vite(['resources/css/app.css','resources/js/app.js'])</head>
-<body style="min-height:100vh;display:grid;place-items:center;background:#edf5fb;font-family:Inter,system-ui,sans-serif">
-<main style="width:min(440px,calc(100% - 30px));background:white;padding:32px;border-radius:20px;box-shadow:0 20px 50px rgba(5,39,75,.12)">
-<h1 style="color:#072b55">Two-Factor Authentication</h1><p>Enter the current 6-digit authenticator code or one unused recovery code.</p>
-@if($errors->any())<div style="background:#fff0f0;padding:12px;border-radius:10px;color:#8b1e24">{{ $errors->first() }}</div>@endif
-<form method="POST" action="{{ route('admin.two-factor.verify') }}" style="display:grid;gap:14px">@csrf
-<label>Authenticator Code<input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="32" required style="width:100%;padding:13px;border:1px solid #ccd9e6;border-radius:10px"></label>
-<button style="padding:13px;border:0;border-radius:10px;background:#072b55;color:white;font-weight:800">Verify &amp; Continue</button></form>
-</main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#071f3d">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Two-Factor Authentication | NACS-Phil</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('assets/phase39-auth/auth.css') }}">
+</head>
+<body class="nacs-auth-body">
+    <a href="#nacs-auth-main" class="nacs-auth-skip">Skip to verification form</a>
+
+    <main id="nacs-auth-main" class="nacs-auth-shell">
+        <section class="nacs-auth-card nacs-auth-card--staff" aria-labelledby="two-factor-title">
+            <div class="nacs-auth-branding">
+                <div class="nacs-auth-brand" aria-label="NACS-Phil School Administration">
+                    <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="84" height="84">
+                    <span>
+                        <strong>NACS-Phil</strong>
+                        <small>School Administration</small>
+                    </span>
+                </div>
+            </div>
+
+            <div class="nacs-auth-copy">
+                <p class="nacs-auth-kicker">Secure staff verification</p>
+                <h1 id="two-factor-title">Two-Factor Authentication</h1>
+                <p class="nacs-auth-lead">
+                    Enter the current 6-digit authenticator code or one unused recovery code to continue.
+                </p>
+            </div>
+
+            @if($errors->any())
+                <div class="nacs-auth-alert nacs-auth-alert--error" role="alert">
+                    <strong>Verification was not accepted.</strong>
+                    <div>{{ $errors->first() }}</div>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('admin.two-factor.verify') }}" class="nacs-auth-form">
+                @csrf
+
+                <label class="nacs-auth-field">
+                    <span>Authenticator or recovery code</span>
+                    <input
+                        name="code"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        maxlength="32"
+                        required
+                        autofocus
+                        placeholder="Enter your verification code"
+                    >
+                </label>
+
+                <button type="submit" class="nacs-auth-primary">Verify &amp; continue</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

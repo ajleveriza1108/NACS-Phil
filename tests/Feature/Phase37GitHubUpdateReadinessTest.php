@@ -19,6 +19,7 @@ class Phase37GitHubUpdateReadinessTest extends TestCase
         $this->assertStringContainsString('- main', $workflow);
         $this->assertStringContainsString('contents: read', $workflow);
         $this->assertStringContainsString("php-version: '8.4'", $workflow);
+        $this->assertStringContainsString('mkdir -p storage/framework/views', $workflow);
         $this->assertStringContainsString('php artisan nacs:functional-check --strict', $workflow);
         $this->assertStringContainsString('php artisan test --stop-on-failure', $workflow);
         $this->assertStringContainsString('npm run build', $workflow);

@@ -36,7 +36,7 @@ Both strict commands must pass before live cutover.
 
 Required:
 
-- PHP 8.3 or newer.
+- PHP 8.4.1 or newer.
 - Core PHP extensions used by the application.
 - The PDO driver matching the configured database connection.
 - `upload_max_filesize` can accept the application's requested admissions files up to 5 MB.
@@ -129,7 +129,7 @@ The Gallery and other authorized public media may use Laravel's `public` storage
 
 Do not use a host for the live school site if required blockers cannot be resolved, especially:
 
-- PHP older than 8.3.
+- PHP older than 8.4.1.
 - missing required PHP extensions.
 - no PDO driver for the production database.
 - inability to keep `.env` and private storage outside the public web root.

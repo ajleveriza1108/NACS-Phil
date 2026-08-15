@@ -6,6 +6,7 @@ These instructions apply to the entire repository unless a more specific `AGENTS
 
 - Project: Noel Academy Christian of Sariaya Philippines, Inc. (NACS-Phil)
 - Framework: Laravel 13
+- PHP runtime baseline: 8.4.1 or newer (current locked dependency set).
 - Primary Windows project path: `D:\Web Projects\NACS-Phil`
 - Primary shell compatibility: Windows PowerShell 5.1
 - Local development database: SQLite

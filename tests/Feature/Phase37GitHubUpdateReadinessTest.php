@@ -18,6 +18,7 @@ class Phase37GitHubUpdateReadinessTest extends TestCase
         $this->assertStringContainsString('workflow_dispatch:', $workflow);
         $this->assertStringContainsString('- main', $workflow);
         $this->assertStringContainsString('contents: read', $workflow);
+        $this->assertStringContainsString("php-version: '8.4'", $workflow);
         $this->assertStringContainsString('php artisan nacs:functional-check --strict', $workflow);
         $this->assertStringContainsString('php artisan test --stop-on-failure', $workflow);
         $this->assertStringContainsString('npm run build', $workflow);
@@ -52,6 +53,7 @@ class Phase37GitHubUpdateReadinessTest extends TestCase
         $this->assertStringContainsString('production `.env`', $runbook);
         $this->assertStringContainsString('private admissions files', $runbook);
         $this->assertStringContainsString('GitHub Quality Gate', $runbook);
+        $this->assertStringContainsString('PHP 8.4.1 or newer', $runbook);
     }
 
     public function test_host_update_example_is_fast_forward_only_and_migrations_default_off(): void
@@ -75,5 +77,6 @@ class Phase37GitHubUpdateReadinessTest extends TestCase
         $this->assertStringContainsString('`.github/workflows/quality-gate.yml`', $agents);
         $this->assertStringContainsString('Do not enable production auto-deployment', $agents);
         $this->assertStringContainsString('production `.env`', $agents);
+        $this->assertStringContainsString('PHP runtime baseline: 8.4.1 or newer', $agents);
     }
 }

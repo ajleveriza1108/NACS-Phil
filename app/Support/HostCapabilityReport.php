@@ -24,10 +24,10 @@ final class HostCapabilityReport
 
         $checks[] = $this->check(
             'php_version',
-            'PHP 8.3 or newer',
-            version_compare(PHP_VERSION, '8.3.0', '>='),
+            'PHP 8.4.1 or newer',
+            version_compare(PHP_VERSION, '8.4.1', '>='),
             true,
-            'Detected PHP '.PHP_VERSION.'. NACS-Phil composer.json requires PHP ^8.3.'
+            'Detected PHP '.PHP_VERSION.'. NACS-Phil composer.json requires PHP ^8.4.1.'
         );
 
         foreach (self::REQUIRED_EXTENSIONS as $extension) {

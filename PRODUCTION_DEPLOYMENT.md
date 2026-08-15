@@ -8,7 +8,7 @@ Current tested source baseline for this phase is recorded by Git history. Always
 
 Choose hosting that can run the current project requirements:
 
-- PHP 8.3 or newer.
+- PHP 8.4.1 or newer.
 - Required PHP extensions for Laravel and the selected production database.
 - MySQL/MariaDB or another database supported by the project.
 - Composer access during deployment, or a deployment workflow that uploads the production `vendor` tree built from `composer.lock`.
@@ -18,7 +18,7 @@ Choose hosting that can run the current project requirements:
 - Persistent storage for `storage/app/private` and `storage/app/public`.
 - A web document root pointed at Laravel's `public` directory, not the repository root.
 
-The current Composer project requires PHP `^8.3` and Laravel `^13.8`.
+The current Composer project requires PHP `^8.4.1` and Laravel `^13.8`.
 
 ## 2. Production environment
 

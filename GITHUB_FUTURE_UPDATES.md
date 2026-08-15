@@ -46,6 +46,10 @@ temporary CI SQLite database, builds Vite assets, runs the strict NACS functiona
 check, runs the complete Laravel test suite, checks whitespace, and verifies CI
 did not modify tracked source.
 
+The current locked PHP dependency set includes Symfony 8.1 packages that require
+PHP 8.4.1 or newer. The repository, host preflight, and GitHub Quality Gate
+therefore use PHP 8.4.1+ as the supported runtime baseline.
+
 GitHub CI is an additional release gate. It does not replace browser/device,
 staging, host, privacy, backup, or production checks.
 

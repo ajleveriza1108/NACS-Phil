@@ -3,6 +3,7 @@
 use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\VerifyTurnstile;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\EnsurePortalUser;
 use App\Http\Middleware\EnsureStaffRole;
 use App\Http\Middleware\EnsureAdmissionAccess;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
+            'portal' => EnsurePortalUser::class,
             'staff_role' => EnsureStaffRole::class,
             'admission.access' => EnsureAdmissionAccess::class,
             'turnstile' => VerifyTurnstile::class,

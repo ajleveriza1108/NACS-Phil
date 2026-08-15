@@ -177,3 +177,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('/system-health', AdminSystemHealthController::class)->name('system-health');
     });
 });
+
+require __DIR__.'/student_portal.php';

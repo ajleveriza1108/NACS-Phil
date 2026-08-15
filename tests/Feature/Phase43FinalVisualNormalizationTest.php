@@ -63,4 +63,20 @@ class Phase43FinalVisualNormalizationTest extends TestCase
             $this->assertStringContainsString($navigationContract, $header);
         }
     }
+
+public function test_start_launcher_exposes_pc_and_same_wifi_phone_preview_safely(): void
+    {
+        $launcher = file_get_contents(base_path('START-NACS-PHIL.bat'));
+
+        $this->assertIsString($launcher);
+        $this->assertStringContainsString('NACS-Phil Local Website - PC + Same-Wi-Fi Phone/Tablet', $launcher);
+        $this->assertStringContainsString('Get-NetIPConfiguration', $launcher);
+        $this->assertStringContainsString('--host=0.0.0.0', $launcher);
+        $this->assertStringContainsString('http://127.0.0.1:%NACS_PORT%', $launcher);
+        $this->assertStringContainsString('PHONE / TABLET - SAME WI-FI', $launcher);
+        $this->assertStringContainsString('clip', $launcher);
+        $this->assertStringContainsString('allow PRIVATE networks only', $launcher);
+        $this->assertStringContainsString('Do not expose this development server through router port-forwarding.', $launcher);
+        $this->assertStringNotContainsString('--host=127.0.0.1', $launcher);
+    }
 }

@@ -18,6 +18,12 @@ class Phase37GitHubUpdateReadinessTest extends TestCase
         $this->assertStringContainsString('workflow_dispatch:', $workflow);
         $this->assertStringContainsString('- main', $workflow);
         $this->assertStringContainsString('contents: read', $workflow);
+        $this->assertStringContainsString('actions/checkout@v7', $workflow);
+        $this->assertStringContainsString('actions/setup-node@v7', $workflow);
+        $this->assertStringContainsString('composer audit --locked --no-interaction --abandoned=report', $workflow);
+        $this->assertStringContainsString('npm audit --audit-level=high', $workflow);
+        $this->assertStringNotContainsString('actions/checkout@v4', $workflow);
+        $this->assertStringNotContainsString('actions/setup-node@v4', $workflow);
         $this->assertStringContainsString("php-version: '8.4'", $workflow);
         $this->assertStringContainsString('mkdir -p storage/framework/views', $workflow);
         $this->assertStringContainsString('php artisan nacs:functional-check --strict', $workflow);
@@ -40,6 +46,7 @@ class Phase37GitHubUpdateReadinessTest extends TestCase
         $this->assertStringContainsString('NACS_AUTO_DEPLOY_ENABLED', $contents);
         $this->assertStringContainsString('never replace the server .env from Git', $contents);
         $this->assertStringContainsString('backup/rollback point before migrations', $contents);
+        $this->assertStringContainsString('actions/checkout@v7', $contents);
     }
 
     public function test_future_update_runbook_protects_runtime_data(): void

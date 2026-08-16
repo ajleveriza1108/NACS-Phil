@@ -1030,3 +1030,97 @@
         transition-duration: .01ms !important;
     }
 }
+
+/* Phase 46 R2.0.4 - unified desktop admin shell */
+@media (min-width: 1101px) {
+  .p13-admin .cm-app {
+    grid-template-columns: 272px minmax(0, 1fr);
+  }
+
+  .p13-admin .cm-sidebar {
+    width: auto;
+    min-width: 0;
+    padding: 20px 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(185,211,231,.5) transparent;
+  }
+
+  .p13-admin .cm-sidebar::-webkit-scrollbar { width: 6px; }
+  .p13-admin .cm-sidebar::-webkit-scrollbar-track { background: transparent; }
+  .p13-admin .cm-sidebar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(185,211,231,.45);
+  }
+
+  .p13-admin .cm-main {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .p13-admin .cm-content,
+  .p13-admin .p13-content {
+    width: 100%;
+    max-width: 1480px;
+    margin-inline: auto;
+    padding-inline: clamp(24px, 3vw, 44px);
+  }
+
+  .p13-admin .cm-topbar,
+  .p13-admin .p13-topbar {
+    width: 100%;
+    padding-inline: clamp(24px, 3vw, 44px);
+  }
+
+  .p13-admin .cm-brand strong { font-size: 18px; }
+  .p13-admin .cm-brand small { font-size: 11px; }
+  .p13-admin .p13-role-summary strong { font-size: 12px; }
+  .p13-admin .p13-role-summary small { font-size: 10px; }
+
+  .p13-admin .cm-sidebar-label {
+    margin-top: 17px;
+    font-size: 10px;
+    letter-spacing: .11em;
+  }
+
+  .p13-admin .cm-nav a {
+    min-height: 44px;
+    padding-inline: 9px;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .p13-admin .cm-nav-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    font-size: 11px;
+  }
+
+  .p13-admin .cm-topbar__left small { font-size: 10px; }
+  .p13-admin .cm-topbar__left strong { font-size: 14px; }
+  .p13-admin .p13-role-pill,
+  .p13-admin .p13-preview-link { font-size: 11px; }
+
+  .p13-admin .p13-section-note,
+  .p13-admin .p13-quick-card small,
+  .p13-admin .p13-priority-card small,
+  .p13-admin .p13-metric-grid span {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .p13-admin .p13-quick-card strong,
+  .p13-admin .p13-priority-card b {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .p13-admin .p13-dashboard-hero p { font-size: 15px; }
+}
+
+@media (min-width: 1440px) {
+  .p13-admin .cm-app {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+}

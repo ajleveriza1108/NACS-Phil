@@ -24,10 +24,24 @@ if errorlevel 1 (
     exit /b 1
 )
 
-set "NACS_PORT=8000"
+set "NACS_PORT="
 set "NACS_LAN_IP="
 
-for /f "delims=" %%I in ('powershell.exe -NoProfile -Command "$c=Get-NetIPConfiguration ^| Where-Object {$_.IPv4DefaultGateway -and $_.IPv4Address} ^| Select-Object -First 1; if($c){$c.IPv4Address.IPAddress ^| Select-Object -First 1}" 2^>nul') do (
+rem Select the first free local port at runtime. Nothing is persisted.
+for /f "delims=" %%P in ('powershell.exe -NoProfile -Command "$chosen=$null;foreach($p in 8000..8010){$l=$null;try{$l=[System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Any,$p);$l.Start();$l.Stop();$chosen=$p;break}catch{if($l){try{$l.Stop()}catch{}}}};if($chosen){$chosen}" 2^>nul') do (
+    set "NACS_PORT=%%P"
+)
+
+if not defined NACS_PORT (
+    echo [FAIL] No free local preview port was found from 8000 through 8010.
+    echo Close another local NACS/PHP server and run this BAT again.
+    pause
+    exit /b 1
+)
+
+rem Detect the current private LAN IPv4 address at runtime.
+rem Wi-Fi is preferred; another active private-LAN adapter may be used as fallback.
+for /f "delims=" %%I in ('powershell.exe -NoProfile -Command "$wifi=$null;$fallback=$null;$cfgs=Get-NetIPConfiguration;foreach($c in $cfgs){if($c.NetAdapter.Status -eq 'Up' -and $c.IPv4DefaultGateway -and $c.IPv4Address){foreach($a in $c.IPv4Address){$ip=[string]$a.IPAddress;try{$b=([Net.IPAddress]::Parse($ip)).GetAddressBytes();$private=($b[0]-eq10)-or($b[0]-eq192-and$b[1]-eq168)-or($b[0]-eq172-and$b[1]-ge16-and$b[1]-le31);if($private){if($c.InterfaceAlias -match 'Wi-Fi|WiFi|Wireless'){$wifi=$ip}elseif(-not$fallback){$fallback=$ip}}}catch{}}}};if($wifi){$wifi}elseif($fallback){$fallback}" 2^>nul') do (
     set "NACS_LAN_IP=%%I"
 )
 
@@ -56,26 +70,32 @@ if defined NACS_LAN_IP (
     echo [PHONE / TABLET ADMIN]
     echo http://%NACS_LAN_IP%:%NACS_PORT%/admin
     echo.
-    echo The phone website URL is being copied to your Windows clipboard...
+    echo Copying the CURRENT phone URL to your Windows clipboard...
     >nul 2>&1 echo http://%NACS_LAN_IP%:%NACS_PORT%| clip
     echo.
     echo PHONE TEST:
     echo   1. Keep this CMD window open.
-    echo   2. Connect the PC and phone/tablet to the SAME trusted Wi-Fi.
-    echo   3. Open the PHONE / TABLET URL above in the phone browser.
-    echo   4. Test portrait and landscape, the menu, Home/About, forms, and scrolling.
+    echo   2. Keep the PC and phone/tablet on the SAME trusted Wi-Fi.
+    echo   3. Open the PHONE / TABLET URL printed above.
+    echo   4. Test portrait and landscape, mobile menu, Home/About, forms, and scrolling.
     echo   5. If Windows Firewall asks about PHP, allow PRIVATE networks only.
     echo.
 ) else (
     echo [PHONE / TABLET]
-    echo LAN IPv4 address was not detected automatically.
+    echo No current private LAN IPv4 address was detected automatically.
     echo The PC website will still run.
-    echo For phone testing, run ipconfig and use the active Wi-Fi IPv4 address:
-    echo   http://YOUR-PC-IP:%NACS_PORT%
+    echo.
+    echo If both devices are on the same Wi-Fi, run ipconfig and use the CURRENT
+    echo active Wi-Fi IPv4 address with the CURRENT port shown above.
+    echo Example format only: http://YOUR-CURRENT-PC-IP:%NACS_PORT%
     echo.
 )
 
 echo IMPORTANT:
+echo   - The LAN IP and port are recalculated every time this BAT starts.
+echo   - No previous LAN IP or previous port is stored or reused.
+echo   - 127.0.0.1 is only the standard local PC loopback address.
+echo   - 0.0.0.0 is only the Laravel bind address for local-network testing.
 echo   - This is a LOCAL development server, not the public internet website.
 echo   - Phone/tablet access normally works only while both devices share the same LAN/Wi-Fi.
 echo   - Do not expose this development server through router port-forwarding.
@@ -93,7 +113,6 @@ set "NACS_EXIT=%ERRORLEVEL%"
 echo.
 if not "%NACS_EXIT%"=="0" (
     echo [FAIL] Laravel server stopped with exit code %NACS_EXIT%.
-    echo If port %NACS_PORT% is already in use, close the other local server and run this BAT again.
     pause
 )
 

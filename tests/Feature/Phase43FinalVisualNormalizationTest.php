@@ -64,19 +64,22 @@ class Phase43FinalVisualNormalizationTest extends TestCase
         }
     }
 
-public function test_start_launcher_exposes_pc_and_same_wifi_phone_preview_safely(): void
+    public function test_start_launcher_dynamically_detects_lan_ip_and_free_port(): void
     {
         $launcher = file_get_contents(base_path('START-NACS-PHIL.bat'));
 
         $this->assertIsString($launcher);
         $this->assertStringContainsString('NACS-Phil Local Website - PC + Same-Wi-Fi Phone/Tablet', $launcher);
+        $this->assertStringContainsString('foreach($p in 8000..8010)', $launcher);
         $this->assertStringContainsString('Get-NetIPConfiguration', $launcher);
         $this->assertStringContainsString('--host=0.0.0.0', $launcher);
-        $this->assertStringContainsString('http://127.0.0.1:%NACS_PORT%', $launcher);
-        $this->assertStringContainsString('PHONE / TABLET - SAME WI-FI', $launcher);
-        $this->assertStringContainsString('clip', $launcher);
+        $this->assertStringContainsString('http://%NACS_LAN_IP%:%NACS_PORT%', $launcher);
+        $this->assertStringContainsString('The LAN IP and port are recalculated every time this BAT starts.', $launcher);
+        $this->assertStringContainsString('No previous LAN IP or previous port is stored or reused.', $launcher);
         $this->assertStringContainsString('allow PRIVATE networks only', $launcher);
         $this->assertStringContainsString('Do not expose this development server through router port-forwarding.', $launcher);
+        $this->assertStringNotContainsString('192.168.1.6', $launcher);
+        $this->assertStringNotContainsString('set "NACS_PORT=8000"', $launcher);
         $this->assertStringNotContainsString('--host=127.0.0.1', $launcher);
     }
 }

@@ -49,6 +49,7 @@ final class ProductionDataInventory
         'runtime_only' => [
             'migrations',
             'password_reset_tokens',
+            'registration_invitations',
             'sessions',
             'cache',
             'cache_locks',

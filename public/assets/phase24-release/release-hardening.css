@@ -929,3 +929,110 @@ textarea{
     transition:none!important;
   }
 }
+
+
+/* NACS-Phil Phase 46 - readability and secure registration */
+.nacs16-resources > summary{display:inline-flex!important;align-items:center!important;gap:8px!important;white-space:nowrap!important}
+.nacs16-resources > summary::after{position:static!important;flex:0 0 auto!important;margin:0!important}
+.nacs11-desktop-nav,.nacs11-header__cta{white-space:nowrap!important}
+.nacs45-mobile-enroll,.nacs45-mobile-enroll span{color:#082f55!important;opacity:1!important;text-shadow:none!important;font-weight:800!important}
+@media(min-width:1051px) and (max-width:1180px){.nacs11-desktop-nav,.nacs11-header__cta{display:none!important}.nacs11-menu-button{display:grid!important}}
+@media(max-width:1050px){
+  .nacs11-public main p{font-size:16px!important;line-height:1.65!important}
+  .nacs11-public main small,.nacs11-public main time,.nacs11-public main [class*="meta"],.nacs11-public main [class*="caption"]{font-size:14px!important;line-height:1.5!important}
+  .nacs11-footer p,.nacs11-footer__note,.nacs11-footer__links a,.nacs11-footer__inline,.nacs11-footer__bottom span{font-size:15px!important;line-height:1.55!important}
+  .nacs11-public main img{display:block;margin-left:auto;margin-right:auto}
+}
+@media(max-width:620px){
+  .nacs11-header__inner{position:relative!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;min-height:76px!important}
+  .nacs11-header .nacs11-brand{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important;max-width:calc(100% - 142px)!important;z-index:1}
+  .nacs11-header .nacs11-brand__copy small{display:none!important}
+  .nacs11-header .nacs11-brand__copy strong{white-space:nowrap!important}
+  .nacs11-header__actions{position:relative!important;z-index:2!important;margin-left:auto!important}
+  .nacs11-public main p{font-size:17px!important;line-height:1.68!important}
+}
+.nacs46-registration{min-height:60vh;padding:clamp(48px,7vw,92px) 0;background:linear-gradient(180deg,#f7fafc 0%,#fffdf8 100%)}
+.nacs46-registration__shell{display:flex;justify-content:center}
+.nacs46-registration__card{width:min(100%,720px);padding:clamp(24px,5vw,48px);border:1px solid rgba(8,47,85,.12);border-radius:26px;background:#fff;box-shadow:0 22px 60px rgba(8,47,85,.08)}
+.nacs46-registration__eyebrow{color:#a8750d;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.nacs46-registration h1{margin:10px 0 14px;color:#082f55;font-size:clamp(32px,5vw,48px);line-height:1.08}
+.nacs46-registration__lead,.nacs46-registration__privacy{color:#607286}
+.nacs46-registration__form{display:grid;gap:18px;margin-top:26px}
+.nacs46-registration__form label{display:grid;gap:8px;color:#082f55;font-weight:700}
+.nacs46-registration__form input{width:100%;min-height:52px;border:1px solid rgba(8,47,85,.22);border-radius:12px;padding:12px 14px;background:#fff;color:#102f4b;font-size:16px}
+.nacs46-registration__requirements{padding:16px 18px;border-radius:14px;background:#f7fafc;color:#465f74;font-size:15px}
+.nacs46-registration__otp{text-align:center;letter-spacing:.35em;font-size:24px!important;font-variant-numeric:tabular-nums}
+.nacs46-registration__resend{margin-top:16px;text-align:center}
+.nacs46-registration__resend button{border:0;background:transparent;color:#0b4d83;font-weight:750;text-decoration:underline;cursor:pointer}
+.nacs46-registration__alert,.nacs46-registration__success{margin-top:18px;padding:14px 16px;border-radius:12px}
+.nacs46-registration__alert{background:#fff6f6;color:#7e2d2d}.nacs46-registration__success{background:#f2fbf6;color:#246d4b}
+
+/* NACS-Phil Phase 46 R1.3 - history and school distinctives */
+.about-distinctives{
+  padding:clamp(54px,7vw,96px) 0;
+  background:linear-gradient(180deg,#f8fbfd 0%,#fffdf7 100%);
+}
+.about-distinctives__head{
+  max-width:760px;
+  margin:0 auto clamp(28px,4vw,42px);
+  text-align:center;
+}
+.about-distinctives__head h2{
+  margin:10px 0 12px;
+  color:#082f55;
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.08;
+}
+.about-distinctives__head p{
+  margin:0 auto;
+  max-width:64ch;
+  color:#607286;
+}
+.about-distinctives__grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.about-distinctive{
+  min-height:210px;
+  padding:24px;
+  border:1px solid rgba(8,47,85,.10);
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 14px 34px rgba(8,47,85,.06);
+}
+.about-distinctive__icon{
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  margin-bottom:18px;
+  border:1px solid rgba(193,143,30,.38);
+  border-radius:50%;
+  color:#9b6c08;
+  font-weight:800;
+}
+.about-distinctive h3{
+  margin:0 0 10px;
+  color:#082f55;
+  font-size:21px;
+}
+.about-distinctive p{
+  margin:0;
+  color:#607286;
+  line-height:1.65;
+}
+.about-distinctives__note{
+  max-width:760px;
+  margin:22px auto 0;
+  text-align:center;
+  color:#6c7883;
+  font-size:15px;
+}
+@media(max-width:900px){
+  .about-distinctives__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .about-distinctives__grid{grid-template-columns:1fr}
+  .about-distinctive{min-height:auto}
+}

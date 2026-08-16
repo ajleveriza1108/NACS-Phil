@@ -12,7 +12,7 @@ class AboutContent
             'hero_highlight' => 'truth, care, and purpose.',
             'hero_lead' => 'This page is prepared for the school-approved history, mission, vision, Christian values, leadership message, and official school identity.',
 
-            'story_kicker' => 'Our Story',
+            'story_kicker' => 'Our History',
             'story_heading' => 'Tell the NACS-Phil story faithfully.',
             'story_body' => 'Add the school-approved history here. Explain why the school was founded, whom it serves, and the milestones that shaped its ministry and educational work.',
             'story_note' => 'Official historical wording should be reviewed and approved by authorized school leadership before public launch.',
@@ -38,6 +38,19 @@ class AboutContent
             'value_4_title' => 'Service',
             'value_4_text' => 'Confirm and replace this description with the school-approved wording for service.',
 
+
+            'distinctives_kicker' => 'NACS-Phil Distinctives',
+            'distinctives_heading' => 'Faith and Filipino values practiced in everyday school life.',
+            'distinctives_intro' => 'These practices highlight how NACS-Phil connects biblical learning, Christian character, and Filipino respect in everyday student life.',
+            'distinctive_1_title' => 'Bible Memory & Recitation',
+            'distinctive_1_text' => 'Students memorize and recite Bible verses as part of building Scripture knowledge and Christian character.',
+            'distinctive_2_title' => 'Respect for Elders (Mano Po)',
+            'distinctive_2_text' => 'Students are encouraged to practice mano po and other respectful courtesies that honor parents, teachers, and elders.',
+            'distinctive_3_title' => 'Christian Character',
+            'distinctive_3_text' => 'Daily school life reinforces responsibility, discipline, humility, honesty, and care for others alongside academic learning.',
+            'distinctive_4_title' => 'Faith in Daily Learning',
+            'distinctive_4_text' => 'Biblical values are connected with learning, relationships, service, and the way students participate in the school community.',
+            'distinctives_note' => 'Authorized school staff can refine these descriptions as official school wording and practices are reviewed.',
             'leadership_kicker' => 'Leadership',
             'leadership_heading' => 'A message from school leadership.',
             'leader_name' => '',

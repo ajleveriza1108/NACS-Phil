@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Notifications\RegistrationInvitationNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class StaffRolesTest extends TestCase
@@ -25,8 +27,10 @@ class StaffRolesTest extends TestCase
             ->assertOk();
     }
 
-    public function test_super_admin_can_create_teacher_account(): void
+    public function test_super_admin_can_invite_teacher_account_without_activating_it_early(): void
     {
+        Notification::fake();
+
         $admin = User::factory()->create([
             'is_admin' => true,
             'role' => 'super_admin',
@@ -38,17 +42,25 @@ class StaffRolesTest extends TestCase
                 'name' => 'Sample Teacher',
                 'email' => 'teacher@example.test',
                 'role' => 'teacher',
-                'password' => 'StrongTeacher123',
-                'password_confirmation' => 'StrongTeacher123',
             ])
+            ->assertRedirect('/admin/staff')
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('users', [
-            'email' => 'teacher@example.test',
-            'is_admin' => true,
-            'role' => 'teacher',
-            'is_active' => true,
+        $teacher = User::query()
+            ->where('email', 'teacher@example.test')
+            ->firstOrFail();
+
+        $this->assertTrue($teacher->is_admin);
+        $this->assertSame('teacher', $teacher->role);
+        $this->assertFalse($teacher->is_active);
+        $this->assertNull($teacher->email_verified_at);
+
+        $this->assertDatabaseHas('registration_invitations', [
+            'user_id' => $teacher->id,
+            'completed_at' => null,
         ]);
+
+        Notification::assertSentTo($teacher, RegistrationInvitationNotification::class);
     }
 
     public function test_principal_can_manage_website_settings_but_not_staff_accounts(): void

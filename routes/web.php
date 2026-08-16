@@ -41,6 +41,7 @@ use App\Http\Controllers\FacebookMediaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\PublicDocumentController;
+use App\Http\Controllers\RegistrationVerificationController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
@@ -82,6 +83,21 @@ Route::middleware('admission.access')->group(function (): void {
 });
 
 Route::middleware('guest')->group(function (): void {
+    Route::get('/account-registration/{token}', [RegistrationVerificationController::class, 'showPassword'])
+        ->middleware('throttle:30,1')
+        ->name('registration.password.show');
+    Route::post('/account-registration/{token}', [RegistrationVerificationController::class, 'storePassword'])
+        ->middleware('throttle:5,10')
+        ->name('registration.password.store');
+    Route::get('/account-registration/{token}/verify', [RegistrationVerificationController::class, 'showOtp'])
+        ->middleware('throttle:30,1')
+        ->name('registration.otp.show');
+    Route::post('/account-registration/{token}/verify', [RegistrationVerificationController::class, 'verifyOtp'])
+        ->middleware('throttle:10,10')
+        ->name('registration.otp.verify');
+    Route::post('/account-registration/{token}/resend', [RegistrationVerificationController::class, 'resendOtp'])
+        ->middleware('throttle:5,60')
+        ->name('registration.otp.resend');
     Route::get('/admin/login', [AdminAuthController::class, 'create'])->name('admin.login');
     Route::post('/admin/login', [AdminAuthController::class, 'store'])->middleware(['throttle:5,1', 'turnstile:admin_login'])->name('admin.login.store');
     Route::get('/admin/two-factor', [AdminSecurityController::class, 'challenge'])->name('admin.two-factor.challenge');
@@ -173,6 +189,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::post('/staff', [AdminStaffController::class, 'store'])->name('staff.store');
         Route::get('/staff/{staff}/edit', [AdminStaffController::class, 'edit'])->name('staff.edit');
         Route::patch('/staff/{staff}', [AdminStaffController::class, 'update'])->name('staff.update');
+        Route::post('/staff/{staff}/resend-registration', [AdminStaffController::class, 'resendRegistration'])->middleware('throttle:3,60')->name('staff.resend-registration');
         Route::post('/staff/{staff}/reset-two-factor', [AdminStaffController::class, 'resetTwoFactor'])->name('staff.reset-two-factor');
         Route::get('/system-health', AdminSystemHealthController::class)->name('system-health');
     });

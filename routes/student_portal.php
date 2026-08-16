@@ -35,6 +35,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/students/{student}/edit', [AdminStudentController::class, 'edit'])->name('students.edit');
     Route::patch('/students/{student}', [AdminStudentController::class, 'update'])->name('students.update');
 
+    Route::post('/students/{student}/resend-registration', [AdminStudentController::class, 'resendPortalRegistration'])->middleware('throttle:3,60')->name('students.resend-registration');
     Route::post('/students/{student}/grades', [StudentGradeController::class, 'store'])->name('students.grades.store');
     Route::delete('/students/{student}/grades/{grade}', [StudentGradeController::class, 'destroy'])->name('students.grades.destroy');
     Route::post('/students/{student}/attendance', [StudentAttendanceController::class, 'store'])->name('students.attendance.store');

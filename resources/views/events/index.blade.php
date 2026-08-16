@@ -1,5 +1,5 @@
 @php($eventsContent = \App\Models\SiteContent::valuesFor('events', \App\Support\EventsContent::defaults()))
-@extends('layouts.events-phase6')
+@extends('layouts.site-current', ['bodyClass' => 'events-phase6 nacs-current-page nacs-current-page--events', 'mainId' => 'events-main', 'mainClass' => '', 'assetBundle' => 'events', 'useVite' => false])
 @section('title','Events')
 
 @section('content')
@@ -12,7 +12,7 @@
         <p>{{ $eventsContent['hero_lead'] }}</p>
         <div class="events-actions"><a class="events-button events-button--primary" href="#upcoming-events">View Upcoming Events &darr;</a><a class="events-button events-button--secondary" href="{{ route('contact') }}">Ask the School &rarr;</a></div>
     </div>
-    <div class="events-visual" data-events-reveal><img src="{{ asset('assets/phase6-events/events-visual.svg') }}" alt="Abstract school calendar and community event illustration."></div>
+    <div class="events-visual" data-events-reveal><img src="{{ asset('assets/current/media/6c29e6b468c7-events-visual.svg') }}" alt="Abstract school calendar and community event illustration."></div>
 </div>
 </section>
 

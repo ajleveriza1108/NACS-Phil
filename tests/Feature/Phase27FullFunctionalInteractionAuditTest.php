@@ -284,14 +284,13 @@ class Phase27FullFunctionalInteractionAuditTest extends TestCase
         $this->assertSame([], $missing, implode(PHP_EOL, $missing));
     }
 
-    public function test_mobile_menu_gallery_lightbox_and_facebook_preview_controls_have_handlers(): void
+    public function test_current_mobile_gallery_lightbox_and_facebook_preview_controls_have_handlers(): void
     {
         $header = file_get_contents(resource_path('views/partials/public-header.blade.php'));
-        $menuJs = file_get_contents(public_path('assets/phase11-unified/public-theme.js'));
-        $galleryLayout = file_get_contents(resource_path('views/layouts/gallery-phase7.blade.php'));
-        $galleryJs = file_get_contents(public_path('assets/phase7-gallery/gallery.js'));
+        $menuJs = file_get_contents(public_path('assets/current/pages/public.js'));
+        $galleryJs = file_get_contents(public_path('assets/current/pages/gallery.js'));
         $facebookForm = file_get_contents(resource_path('views/admin/facebook-media/form.blade.php'));
-        $facebookJs = file_get_contents(public_path('assets/phase22-media/media.js'));
+        $adminJs = file_get_contents(public_path('assets/current/admin.js'));
 
         $this->assertStringContainsString('data-nacs11-menu-button', $header);
         $this->assertStringContainsString('aria-expanded="false"', $header);
@@ -300,18 +299,19 @@ class Phase27FullFunctionalInteractionAuditTest extends TestCase
         $this->assertStringContainsString('event.key === "Escape"', $menuJs);
         $this->assertStringContainsString('menu.hidden = expanded', $menuJs);
 
-        $this->assertStringContainsString('data-g-lightbox', $galleryLayout);
-        $this->assertStringContainsString('data-g-close', $galleryLayout);
-        $this->assertStringContainsString('data-g-prev', $galleryLayout);
-        $this->assertStringContainsString('data-g-next', $galleryLayout);
+        $gallery = $this->get(route('gallery.index'))->assertOk();
+        $gallery->assertSee('data-g-lightbox', false);
+        $gallery->assertSee('data-g-close', false);
+        $gallery->assertSee('data-g-prev', false);
+        $gallery->assertSee('data-g-next', false);
         $this->assertStringContainsString('ops.forEach', $galleryJs);
         $this->assertStringContainsString('ArrowLeft', $galleryJs);
         $this->assertStringContainsString('ArrowRight', $galleryJs);
 
         $this->assertStringContainsString('data-facebook-url-input', $facebookForm);
         $this->assertStringContainsString('data-facebook-preview-frame', $facebookForm);
-        $this->assertStringContainsString("document.createElement('iframe')", $facebookJs);
-        $this->assertStringContainsString("input.addEventListener('paste'", $facebookJs);
+        $this->assertStringContainsString("document.createElement('iframe')", $adminJs);
+        $this->assertStringContainsString("input.addEventListener('paste'", $adminJs);
     }
 
     public function test_primary_public_forms_render_real_actions_and_csrf_tokens(): void

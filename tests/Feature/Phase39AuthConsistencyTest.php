@@ -6,7 +6,7 @@ use Tests\TestCase;
 
 class Phase39AuthConsistencyTest extends TestCase
 {
-    public function test_auth_experiences_share_the_phase_thirty_nine_consistency_layer(): void
+    public function test_auth_experiences_share_the_current_migrated_consistency_layer(): void
     {
         $adminLogin = file_get_contents(resource_path('views/admin/auth/login.blade.php'));
         $adminTwoFactor = file_get_contents(resource_path('views/admin/auth/two-factor.blade.php'));
@@ -14,9 +14,13 @@ class Phase39AuthConsistencyTest extends TestCase
         $portalLogin = file_get_contents(resource_path('views/portal/auth/login.blade.php'));
         $portalPassword = file_get_contents(resource_path('views/portal/auth/password.blade.php'));
 
-        $this->assertStringContainsString("asset('assets/phase39-auth/auth.css')", $adminLogin);
-        $this->assertStringContainsString("asset('assets/phase39-auth/auth.css')", $adminTwoFactor);
-        $this->assertStringContainsString("asset('assets/phase39-auth/auth.css')", $portalLayout);
+        foreach ([$adminLogin, $adminTwoFactor, $portalLayout] as $source) {
+            $this->assertIsString($source);
+            $this->assertStringContainsString('assets/current/media/', $source);
+            $this->assertStringContainsString('auth.css', $source);
+            $this->assertStringNotContainsString('assets/phase39-auth/', $source);
+        }
+
         $this->assertStringContainsString('nacs-auth-card', $adminLogin);
         $this->assertStringContainsString('nacs-auth-card', $adminTwoFactor);
         $this->assertStringContainsString('nacs-auth-card', $portalLogin);
@@ -50,10 +54,17 @@ class Phase39AuthConsistencyTest extends TestCase
         $this->assertStringNotContainsString("route('portal.password.store')", $portalPassword);
     }
 
-    public function test_auth_consistency_stylesheet_contains_mobile_guards(): void
+    public function test_migrated_auth_stylesheet_contains_mobile_guards(): void
     {
-        $authCss = file_get_contents(public_path('assets/phase39-auth/auth.css'));
+        $adminLogin = file_get_contents(resource_path('views/admin/auth/login.blade.php'));
+        preg_match("#assets/current/media/[^'\\\"]+-auth\\.css#", (string) $adminLogin, $matches);
 
+        $this->assertArrayHasKey(0, $matches);
+
+        $relative = $matches[0];
+        $authCss = file_get_contents(public_path($relative));
+
+        $this->assertIsString($authCss);
         $this->assertStringContainsString('.nacs-auth-body', $authCss);
         $this->assertStringContainsString('@media (max-width: 720px)', $authCss);
         $this->assertStringContainsString('@media (max-width: 360px)', $authCss);

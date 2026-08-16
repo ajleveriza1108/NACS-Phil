@@ -15,7 +15,7 @@ class ContactContentTest extends TestCase
     {
         $this->get('/contact')
             ->assertOk()
-            ->assertSee('assets/phase8-contact/contact.css')
+            ->assertSee('assets/current/')
             ->assertSee('viewport-fit=cover', false)
             ->assertSee('Contact NACS-Phil')
             ->assertSee('How may the school assist you?');

@@ -1,6 +1,5 @@
 @php($localPresentationPreview = app()->environment('local') && is_file(storage_path('app/.nacs-presentation-preview')))
-@extends('layouts.public', ['title' => 'Media Hub'])
-
+@extends('layouts.site-current', ['title' => 'Media Hub', 'bodyClass' => 'nacs11-public nacs-current-page nacs-current-page--public', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'public', 'useVite' => true])
 @section('meta_description', 'Explore approved NACS-Phil school photos, recorded Facebook videos, and public Facebook Live broadcasts from one media hub.')
 
 @section('content')

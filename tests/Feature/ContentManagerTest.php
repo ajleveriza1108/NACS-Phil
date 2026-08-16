@@ -11,15 +11,25 @@ class ContentManagerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_can_open_teacher_friendly_homepage_editor(): void
+    public function test_admin_can_open_teacher_friendly_homepage_editor_with_real_content_keys(): void
     {
         $admin = User::factory()->create(['is_admin' => true]);
 
         $this->actingAs($admin)
             ->get('/admin/website-content')
             ->assertOk()
-            ->assertSee('Edit Homepage')
-            ->assertSee('Hero / First Screen');
+            ->assertSee('Visual Homepage Editor')
+            ->assertSee('Hero / First Screen')
+            ->assertSee('name="hero_badge"', false)
+            ->assertSee('name="hero_heading"', false)
+            ->assertSee('name="hero_highlight"', false)
+            ->assertSee('name="hero_primary_button"', false)
+            ->assertSee('name="contact_email"', false)
+            ->assertSee('name="hero_image"', false)
+            ->assertSee('name="hero_image_focus_x"', false)
+            ->assertSee('name="hero_image_focus_y"', false)
+            ->assertSee('name="hero_image_zoom"', false)
+            ->assertDontSee('name="0"', false);
     }
 
     public function test_admin_can_update_homepage_text_without_changing_layout(): void

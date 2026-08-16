@@ -16,7 +16,7 @@ class AboutContentTest extends TestCase
     {
         $this->get('/about')
             ->assertOk()
-            ->assertSee('assets/phase2-about/about.css')
+            ->assertSee('assets/current/')
             ->assertSee('viewport-fit=cover', false)
             ->assertSee('About NACS-Phil')
             ->assertSee('Mission and vision presented clearly');

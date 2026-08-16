@@ -1,8 +1,7 @@
 @php($newsContent = \App\Models\SiteContent::valuesFor('news', \App\Support\NewsContent::defaults()))
 @php($announcementBody = $announcement->body ?? $announcement->content ?? $announcement->details ?? $announcement->description ?? '')
 @php($newsType = $announcement->type ?? 'Announcement')
-@extends('layouts.news-phase5')
-
+@extends('layouts.site-current', ['bodyClass' => 'news-phase5 nacs-current-page nacs-current-page--news', 'mainId' => 'news-main', 'mainClass' => '', 'assetBundle' => 'news', 'useVite' => false])
 @section('title', $announcement->title)
 @section('meta_description', $announcement->excerpt ?? 'School announcement from NACS-Phil.')
 

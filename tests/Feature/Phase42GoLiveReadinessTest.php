@@ -49,10 +49,20 @@ class Phase42GoLiveReadinessTest extends TestCase
         $layout = file_get_contents(resource_path('views/errors/layout.blade.php'));
 
         $this->assertIsString($layout);
-        $this->assertStringContainsString('/assets/phase42-launch/errors.css', $layout);
-        $this->assertStringContainsString('/assets/phase17-theme/nacs-official-logo.png', $layout);
+        $this->assertStringContainsString('/assets/current/media/', $layout);
+        $this->assertStringContainsString('-errors.css', $layout);
+        $this->assertStringContainsString('-nacs-official-logo.png', $layout);
+        $this->assertStringNotContainsString('/assets/phase', $layout);
         $this->assertStringNotContainsString('SchoolSetting::', $layout);
         $this->assertStringNotContainsString('@vite', $layout);
+
+        preg_match("#/assets/current/media/[^'\\\"]+-errors\\.css#", $layout, $cssMatch);
+        preg_match("#/assets/current/media/[^'\\\"]+-nacs-official-logo\\.png#", $layout, $logoMatch);
+
+        $this->assertArrayHasKey(0, $cssMatch);
+        $this->assertArrayHasKey(0, $logoMatch);
+        $this->assertFileExists(public_path(ltrim($cssMatch[0], '/')));
+        $this->assertFileExists(public_path(ltrim($logoMatch[0], '/')));
 
         foreach ([404, 419, 429, 500, 503] as $status) {
             $path = resource_path('views/errors/'.$status.'.blade.php');

@@ -6,10 +6,10 @@ use Tests\TestCase;
 
 class Phase45MotionInteractionSystemTest extends TestCase
 {
-    public function test_motion_assets_exist_and_use_restrained_shared_tokens(): void
+    public function test_current_bundles_keep_restrained_shared_motion_tokens(): void
     {
-        $css = file_get_contents(public_path('assets/phase45-motion/motion.css'));
-        $js = file_get_contents(public_path('assets/phase45-motion/motion.js'));
+        $css = file_get_contents(public_path('assets/current/pages/home.css'));
+        $js = file_get_contents(public_path('assets/current/pages/home.js'));
 
         $this->assertIsString($css);
         $this->assertIsString($js);
@@ -40,52 +40,36 @@ class Phase45MotionInteractionSystemTest extends TestCase
             'IntersectionObserver',
             'prefers-reduced-motion: reduce',
             'nacs-motion-public',
-            'nacs-motion-admin',
-            'nacs-motion-auth',
-            'wrapper.dataset.nacsStickyTable = "1"',
             'Math.min(index * 45, 180)',
         ] as $marker) {
             $this->assertStringContainsString($marker, $js);
         }
 
         $this->assertStringNotContainsString('setInterval(', $js);
-        $this->assertStringNotContainsString('requestAnimationFrame(count', $js);
     }
 
-    public function test_public_admin_portal_and_auth_layouts_load_shared_motion_assets(): void
+    public function test_active_layouts_do_not_load_phase_named_motion_assets(): void
     {
-        $layouts = [
-            'resources/views/layouts/public.blade.php',
-            'resources/views/layouts/home-phase1.blade.php',
-            'resources/views/layouts/about-phase2.blade.php',
-            'resources/views/layouts/programs-phase3.blade.php',
-            'resources/views/layouts/admissions-phase4.blade.php',
-            'resources/views/layouts/news-phase5.blade.php',
-            'resources/views/layouts/events-phase6.blade.php',
-            'resources/views/layouts/gallery-phase7.blade.php',
-            'resources/views/layouts/contact-phase8.blade.php',
-            'resources/views/layouts/admissions-portal-phase9c.blade.php',
+        foreach ([
+            'resources/views/layouts/site-current.blade.php',
             'resources/views/admin/layouts/app.blade.php',
             'resources/views/portal/layout.blade.php',
             'resources/views/admin/auth/login.blade.php',
             'resources/views/admin/auth/two-factor.blade.php',
-        ];
-
-        foreach ($layouts as $relative) {
+        ] as $relative) {
             $source = file_get_contents(base_path($relative));
 
             $this->assertIsString($source, $relative);
-            $this->assertSame(1, substr_count($source, "assets/phase45-motion/motion.css"), $relative);
-            $this->assertSame(1, substr_count($source, "assets/phase45-motion/motion.js"), $relative);
+            $this->assertStringNotContainsString('assets/phase', $source, $relative);
         }
     }
 
-    public function test_resilient_error_pages_remain_independent_from_motion_assets(): void
+    public function test_resilient_error_pages_use_current_asset_paths(): void
     {
         $layout = file_get_contents(resource_path('views/errors/layout.blade.php'));
 
         $this->assertIsString($layout);
-        $this->assertStringNotContainsString('phase45-motion', $layout);
-        $this->assertStringContainsString('phase42-launch/errors.css', $layout);
+        $this->assertStringNotContainsString('assets/phase', $layout);
+        $this->assertStringContainsString('assets/current/', $layout);
     }
 }

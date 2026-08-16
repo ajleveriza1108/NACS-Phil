@@ -1,5 +1,4 @@
-@extends('layouts.public', ['title' => 'Academic Calendar'])
-
+@extends('layouts.site-current', ['title' => 'Academic Calendar', 'bodyClass' => 'nacs11-public nacs-current-page nacs-current-page--public', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'public', 'useVite' => true])
 @section('content')
 <section class="nacs12-hero">
     <div class="nacs11-shell">

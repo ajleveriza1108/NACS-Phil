@@ -1,0 +1,499 @@
+:root {
+    --sis-navy: #071f3d;
+    --sis-navy-2: #0d315a;
+    --sis-gold: #b98a2e;
+    --sis-ivory: #fbf8ef;
+    --sis-ink: #142033;
+    --sis-muted: #667085;
+    --sis-line: #d9dee7;
+    --sis-white: #ffffff;
+    --sis-danger: #9f2d2d;
+    --sis-success: #1f6b4f;
+}
+
+.sis-body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--sis-ink);
+    background:
+        radial-gradient(circle at top right, rgba(185, 138, 46, .11), transparent 28rem),
+        var(--sis-ivory);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.sis-portal-header {
+    min-height: 74px;
+    padding: 12px clamp(16px, 4vw, 56px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: var(--sis-navy);
+    color: var(--sis-white);
+    border-bottom: 3px solid var(--sis-gold);
+}
+
+.sis-portal-brand,
+.sis-portal-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sis-portal-brand {
+    color: inherit;
+    text-decoration: none;
+}
+
+.sis-portal-brand img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+}
+
+.sis-portal-brand span {
+    display: grid;
+    gap: 2px;
+}
+
+.sis-portal-brand small {
+    opacity: .75;
+}
+
+.sis-portal-user form {
+    margin: 0;
+}
+
+.sis-portal-user button {
+    border: 1px solid rgba(255,255,255,.35);
+    background: transparent;
+    color: white;
+    border-radius: 999px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.sis-portal-main {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 34px 0 60px;
+}
+
+.sis-login-card {
+    width: min(520px, 100%);
+    margin: clamp(30px, 8vh, 90px) auto 0;
+    padding: clamp(24px, 5vw, 42px);
+    background: white;
+    border: 1px solid var(--sis-line);
+    border-radius: 24px;
+    box-shadow: 0 24px 70px rgba(7, 31, 61, .12);
+}
+
+.sis-page-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 0 0 24px;
+}
+
+.sis-page-head h1,
+.sis-login-card h1 {
+    margin: 4px 0 8px;
+    color: var(--sis-navy);
+    font-size: clamp(1.65rem, 3.5vw, 2.55rem);
+    line-height: 1.08;
+}
+
+.sis-page-head p,
+.sis-login-card p {
+    margin: 0;
+    color: var(--sis-muted);
+}
+
+.sis-kicker {
+    color: var(--sis-gold);
+    font-weight: 800;
+    font-size: .76rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+}
+
+.sis-back {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--sis-navy-2);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.sis-panel {
+    background: var(--sis-white);
+    border: 1px solid var(--sis-line);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 12px 34px rgba(7, 31, 61, .06);
+}
+
+.sis-summary-grid,
+.sis-card-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 24px;
+}
+
+.sis-summary-grid .sis-panel {
+    display: grid;
+    gap: 6px;
+}
+
+.sis-summary-grid small {
+    color: var(--sis-muted);
+    font-weight: 700;
+}
+
+.sis-summary-grid strong {
+    color: var(--sis-navy);
+    font-size: 1.08rem;
+    overflow-wrap: anywhere;
+}
+
+.sis-student-card {
+    display: grid;
+    gap: 8px;
+    padding: 20px;
+    border: 1px solid var(--sis-line);
+    border-radius: 18px;
+    color: var(--sis-ink);
+    background: white;
+    text-decoration: none;
+    box-shadow: 0 12px 34px rgba(7, 31, 61, .06);
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.sis-student-card:hover,
+.sis-student-card:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 42px rgba(7, 31, 61, .12);
+}
+
+.sis-student-card strong {
+    color: var(--sis-navy);
+    font-size: 1.12rem;
+}
+
+.sis-student-card small {
+    color: var(--sis-muted);
+}
+
+.sis-badge {
+    width: fit-content;
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: var(--sis-navy);
+    background: #f4e7c8;
+    font-size: .75rem;
+    font-weight: 800;
+}
+
+.sis-section {
+    margin-bottom: 20px;
+}
+
+.sis-section h2 {
+    margin: 0 0 14px;
+    color: var(--sis-navy);
+    font-size: 1.2rem;
+}
+
+.sis-form,
+.sis-inline-form {
+    display: grid;
+    gap: 16px;
+}
+
+.sis-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.sis-form label,
+.sis-inline-form label {
+    display: grid;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.sis-form input,
+.sis-form select,
+.sis-form textarea,
+.sis-inline-form input,
+.sis-inline-form select,
+.sis-inline-form textarea,
+.sis-search input {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #bfc8d6;
+    border-radius: 10px;
+    color: var(--sis-ink);
+    background: white;
+    font: inherit;
+}
+
+.sis-form textarea {
+    resize: vertical;
+}
+
+.sis-inline-form {
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.sis-inline-form button,
+.sis-search button {
+    min-height: 44px;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    background: var(--sis-navy);
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.sis-check {
+    grid-template-columns: auto 1fr !important;
+    align-items: center;
+    align-self: center;
+    gap: 8px !important;
+    font-weight: 600 !important;
+}
+
+.sis-check input {
+    width: 18px !important;
+    min-height: 18px !important;
+}
+
+.sis-primary,
+.sis-secondary {
+    width: fit-content;
+    min-height: 44px;
+    border-radius: 11px;
+    padding: 11px 16px;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.sis-primary {
+    border: 1px solid var(--sis-navy);
+    background: var(--sis-navy);
+    color: white;
+}
+
+.sis-secondary {
+    border: 1px solid var(--sis-navy);
+    background: white;
+    color: var(--sis-navy);
+}
+
+.sis-link-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.sis-fieldset {
+    margin: 4px 0;
+    padding: 18px;
+    border: 1px solid var(--sis-line);
+    border-radius: 14px;
+}
+
+.sis-fieldset legend {
+    padding: 0 7px;
+    color: var(--sis-navy);
+    font-weight: 800;
+}
+
+.sis-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.sis-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+.sis-table th,
+.sis-table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid #e5e8ee;
+    text-align: left;
+    vertical-align: top;
+}
+
+.sis-table th {
+    color: var(--sis-navy);
+    background: #f7f8fa;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.sis-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.sis-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 12px;
+    background: #f8f9fb;
+    border-radius: 10px;
+}
+
+.sis-list span {
+    color: var(--sis-muted);
+    text-align: right;
+}
+
+.sis-search {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.sis-search label {
+    margin: 0;
+}
+
+.sis-alert,
+.sis-empty,
+.sis-classification,
+.sis-help {
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.sis-alert {
+    margin-bottom: 18px;
+}
+
+.sis-alert--success {
+    color: var(--sis-success);
+    background: #eaf7f1;
+    border: 1px solid #b8dfce;
+}
+
+.sis-alert--error {
+    color: var(--sis-danger);
+    background: #fff1f1;
+    border: 1px solid #efc0c0;
+}
+
+.sis-empty {
+    grid-column: 1 / -1;
+    color: var(--sis-muted);
+    background: white;
+    border: 1px dashed #bfc8d6;
+}
+
+.sis-classification {
+    margin-top: 20px;
+    color: #5d4a20;
+    background: #fff7df;
+    border: 1px solid #ead293;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.sis-help {
+    color: var(--sis-muted);
+    background: #f7f8fa;
+}
+
+.sis-pagination {
+    margin-top: 20px;
+}
+
+.sis-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+@media (max-width: 800px) {
+    .sis-summary-grid,
+    .sis-card-grid,
+    .sis-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sis-page-head,
+    .sis-portal-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .sis-portal-user {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .sis-portal-main {
+        width: min(100% - 20px, 1180px);
+        padding-top: 20px;
+    }
+
+    .sis-login-card,
+    .sis-panel,
+    .sis-student-card {
+        border-radius: 14px;
+        padding: 16px;
+    }
+
+    .sis-search {
+        grid-template-columns: 1fr;
+    }
+
+    .sis-link-button,
+    .sis-primary,
+    .sis-secondary {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sis-student-card {
+        transition: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .sis-panel,
+    .sis-student-card,
+    .sis-login-card,
+    .sis-fieldset {
+        border: 1px solid CanvasText;
+    }
+}

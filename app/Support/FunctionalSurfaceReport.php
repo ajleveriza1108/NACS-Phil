@@ -148,7 +148,7 @@ final class FunctionalSurfaceReport
     private const REQUIRED_VIEWS = [
         'resources/views/partials/public-header.blade.php',
         'resources/views/partials/public-footer.blade.php',
-        'resources/views/layouts/public.blade.php',
+        'resources/views/layouts/site-current.blade.php',
         'resources/views/admin/layouts/app.blade.php',
         'resources/views/admissions/apply.blade.php',
         'resources/views/admissions/track.blade.php',
@@ -156,15 +156,14 @@ final class FunctionalSurfaceReport
         'resources/views/media/index.blade.php',
         'resources/views/admin/facebook-media/form.blade.php',
         'resources/views/gallery/index.blade.php',
-        'resources/views/layouts/gallery-phase7.blade.php',
     ];
 
     /** @var array<int, string> */
     private const REQUIRED_PUBLIC_ASSETS = [
-        'assets/phase11-unified/public-theme.js',
-        'assets/phase7-gallery/gallery.js',
-        'assets/phase22-media/media.js',
-        'assets/phase24-release/release-hardening.css',
+        'assets/current/pages/public.js',
+        'assets/current/pages/gallery.js',
+        'assets/current/pages/home.css',
+        'assets/current/admin.js',
         'build/manifest.json',
     ];
 

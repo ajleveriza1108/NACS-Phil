@@ -136,10 +136,10 @@ class Phase22FacebookMediaHubTest extends TestCase
         ]);
     }
 
-    public function test_admin_form_generates_facebook_preview_from_pasted_link(): void
+    public function test_admin_form_generates_facebook_preview_from_pasted_link_using_current_admin_bundle(): void
     {
         $form = file_get_contents(resource_path('views/admin/facebook-media/form.blade.php'));
-        $script = file_get_contents(public_path('assets/phase22-media/media.js'));
+        $script = file_get_contents(public_path('assets/current/admin.js'));
         $adminLayout = file_get_contents(resource_path('views/admin/layouts/app.blade.php'));
 
         $this->assertIsString($form);
@@ -152,7 +152,8 @@ class Phase22FacebookMediaHubTest extends TestCase
         $this->assertStringContainsString("document.createElement('iframe')", $script);
         $this->assertStringContainsString('new URLSearchParams', $script);
         $this->assertStringContainsString("host.endsWith('.facebook.com')", $script);
-        $this->assertStringContainsString('assets/phase22-media/media.js', $adminLayout);
+        $this->assertStringContainsString("asset('assets/current/admin.js')", $adminLayout);
+        $this->assertStringNotContainsString("asset('assets/phase", $adminLayout);
     }
 
     public function test_public_navigation_and_sitemap_include_live_and_videos_once_per_navigation_surface(): void

@@ -10,7 +10,7 @@ class GalleryContentTest extends TestCase
     use RefreshDatabase;
     public function test_gallery_uses_phase_seven_design(): void
     {
-        $this->get('/gallery')->assertOk()->assertSee('assets/phase7-gallery/gallery.css')->assertSee('viewport-fit=cover',false)->assertSee('School Gallery');
+        $this->get('/gallery')->assertOk()->assertSee('assets/current/')->assertSee('viewport-fit=cover',false)->assertSee('School Gallery');
     }
     public function test_only_consent_confirmed_photos_are_public(): void
     {

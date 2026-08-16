@@ -33,7 +33,7 @@ final class GoLiveReadiness
         $phase39 = $this->read(base_path('PHASE39_FINAL_VISUAL_STAGING_ACCEPTANCE.md'));
         $phase40 = $this->read(base_path('PHASE40_PRODUCTION_LAUNCH.md'));
         $studentPortal = $this->read(config_path('student_portal.php'));
-        $errorsCss = public_path('assets/phase42-launch/errors.css');
+        $errorsCss = public_path('assets/current/media/2d311fe3b724-errors.css');
 
         $checks = [
             $this->check(

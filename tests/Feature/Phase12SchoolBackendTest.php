@@ -22,7 +22,7 @@ class Phase12SchoolBackendTest extends TestCase
 
     public function test_public_school_resource_pages_are_available(): void
     {
-        $this->get('/faculty')->assertOk()->assertSee('Faculty &amp; Staff', false)->assertSee('assets/phase12-school/backend-public.css', false);
+        $this->get('/faculty')->assertOk()->assertSee('Faculty &amp; Staff', false)->assertSee('assets/current/', false);
         $this->get('/documents')->assertOk()->assertSee('Documents &amp; Downloads', false);
         $this->get('/calendar')->assertOk()->assertSee('Academic Calendar');
     }

@@ -1,4 +1,4 @@
-@extends('layouts.admissions-portal-phase9c')
+@extends('layouts.site-current', ['bodyClass' => 'adm9-body nacs-current-page nacs-current-page--admissions-portal', 'mainId' => 'main', 'mainClass' => 'adm9-main', 'assetBundle' => 'admissions-portal', 'useVite' => false])
 @section('title','Track Application')
 @section('content')
 <section class="adm9-hero"><div class="adm9-shell"><span>Private tracking</span><h1>View your application status.</h1><p>Enter the reference and access code from your one-time receipt.</p></div></section>

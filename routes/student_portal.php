@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AcademicRecordController;
+use App\Http\Controllers\StudentProfilePhotoController;
 use App\Http\Controllers\Admin\StudentAssignmentController;
 use App\Http\Controllers\Admin\StudentAttendanceController;
 use App\Http\Controllers\Admin\StudentController as AdminStudentController;
@@ -22,6 +24,9 @@ Route::middleware('guest')->group(function (): void {
 Route::prefix('portal')->name('portal.')->middleware('portal')->group(function (): void {
     Route::get('/', [PortalDashboardController::class, 'index'])->name('dashboard');
     Route::get('/students/{student}', [PortalDashboardController::class, 'show'])->name('students.show');
+    Route::get('/students/{student}/report-card', [AcademicRecordController::class, 'reportCard'])->name('students.report-card');
+    Route::get('/students/{student}/academic-history', [AcademicRecordController::class, 'transcript'])->name('students.transcript');
+    Route::get('/students/{student}/photo', [StudentProfilePhotoController::class, 'show'])->name('students.photo');
     Route::get('/password', [PortalPasswordController::class, 'edit'])->name('password.edit');
     Route::patch('/password', [PortalPasswordController::class, 'update'])->name('password.update');
     Route::post('/logout', [PortalAuthController::class, 'destroy'])->name('logout');
@@ -30,10 +35,16 @@ Route::prefix('portal')->name('portal.')->middleware('portal')->group(function (
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'staff_permission:students.manage'])->group(function (): void {
     Route::get('/students', [AdminStudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [AdminStudentController::class, 'create'])->name('students.create');
+    Route::post('/students/link-existing', [StudentAssignmentController::class, 'requestExisting'])->name('students.assignments.request-existing');
     Route::post('/students', [AdminStudentController::class, 'store'])->name('students.store');
     Route::get('/students/{student}', [AdminStudentController::class, 'show'])->name('students.show');
     Route::get('/students/{student}/edit', [AdminStudentController::class, 'edit'])->name('students.edit');
     Route::patch('/students/{student}', [AdminStudentController::class, 'update'])->name('students.update');
+    Route::get('/students/{student}/report-card', [AcademicRecordController::class, 'reportCard'])->name('students.report-card');
+    Route::get('/students/{student}/transcript', [AcademicRecordController::class, 'transcript'])->name('students.transcript');
+    Route::get('/students/{student}/photo', [StudentProfilePhotoController::class, 'show'])->name('students.photo');
+    Route::post('/students/{student}/photo', [StudentProfilePhotoController::class, 'store'])->name('students.photo.store');
+    Route::delete('/students/{student}/photo', [StudentProfilePhotoController::class, 'destroy'])->name('students.photo.destroy');
 
     Route::post('/students/{student}/resend-registration', [AdminStudentController::class, 'resendPortalRegistration'])->middleware('throttle:3,60')->name('students.resend-registration');
     Route::post('/students/{student}/grades', [StudentGradeController::class, 'store'])->name('students.grades.store');
@@ -41,6 +52,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'staff_perm
     Route::post('/students/{student}/attendance', [StudentAttendanceController::class, 'store'])->name('students.attendance.store');
     Route::post('/students/{student}/finance', [StudentFinanceController::class, 'store'])->name('students.finance.store');
     Route::post('/students/{student}/assignments', [StudentAssignmentController::class, 'store'])->name('students.assignments.store');
+    Route::patch('/students/{student}/assignments/{assignment}/approve', [StudentAssignmentController::class, 'approve'])->name('students.assignments.approve');
+    Route::patch('/students/{student}/assignments/{assignment}/reject', [StudentAssignmentController::class, 'reject'])->name('students.assignments.reject');
     Route::delete('/students/{student}/assignments/{assignment}', [StudentAssignmentController::class, 'destroy'])->name('students.assignments.destroy');
     Route::post('/students/{student}/guardians', [StudentGuardianController::class, 'store'])->name('students.guardians.store');
     Route::post('/students/{student}/documents', [StudentDocumentController::class, 'store'])->name('students.documents.store');

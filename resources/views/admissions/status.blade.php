@@ -1,4 +1,4 @@
-@extends('layouts.admissions-portal-phase9c')
+@extends('layouts.site-current', ['bodyClass' => 'adm9-body nacs-current-page nacs-current-page--admissions-portal', 'mainId' => 'main', 'mainClass' => 'adm9-main', 'assetBundle' => 'admissions-portal', 'useVite' => false])
 @section('title','Application Status')
 @section('content')
 <section class="adm9-section"><div class="adm9-shell">

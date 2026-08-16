@@ -3,8 +3,7 @@
         \App\Models\SiteContent::valuesFor('admissions', \App\Support\AdmissionsContent::defaults())
     );
 @endphp
-@extends('layouts.admissions-phase4')
-
+@extends('layouts.site-current', ['bodyClass' => 'admissions-phase4 nacs-current-page nacs-current-page--admissions', 'mainId' => 'admissions-main', 'mainClass' => '', 'assetBundle' => 'admissions', 'useVite' => false, 'title' => 'Admissions', 'description' => 'Review NACS-Phil admissions information, requirements, and application steps.'])
 @section('content')
 <section class="admissions-hero">
     <div class="admissions-hero__grid" aria-hidden="true"></div>
@@ -24,7 +23,7 @@
                 @if(!empty($admissionsContent['hero_image_path']))
                     <img src="{{ Storage::disk('public')->url($admissionsContent['hero_image_path']) }}" alt="NACS-Phil families and school community gathering together.">
                 @else
-                    <img src="{{ asset('assets/phase4-admissions/admissions-visual.svg') }}" alt="Abstract admissions journey illustration showing clear steps from inquiry to enrollment guidance.">
+                    <img src="{{ asset('assets/current/media/152a7db4d165-admissions-visual.svg') }}" alt="Abstract admissions journey illustration showing clear steps from inquiry to enrollment guidance.">
                 @endif
                 <div class="admissions-hero__status">
                     <span aria-hidden="true"></span>

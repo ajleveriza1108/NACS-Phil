@@ -17,6 +17,7 @@ class Student extends Model
         'public_id','user_id','student_number','first_name','middle_name','last_name','preferred_name',
         'date_of_birth','gender','phone','home_address','grade_level','section','school_year',
         'status','classification','created_by',
+        'profile_photo_disk','profile_photo_path','profile_photo_mime_type','profile_photo_size_bytes',
     ];
 
     protected function casts(): array
@@ -71,6 +72,11 @@ class Student extends Model
     public function financialEntries(): HasMany
     {
         return $this->hasMany(StudentFinancialEntry::class);
+    }
+
+    public function paymentTransactions(): HasMany
+    {
+        return $this->hasMany(StudentPaymentTransaction::class);
     }
 
     public function documents(): HasMany

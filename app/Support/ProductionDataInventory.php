@@ -41,6 +41,7 @@ final class ProductionDataInventory
             'student_guardians',
             'student_documents',
             'student_financial_entries',
+            'student_payment_transactions',
         ],
         'audit_records' => [
             'content_audits',

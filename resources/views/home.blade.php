@@ -1,5 +1,4 @@
-@extends('layouts.home-phase1')
-
+@extends('layouts.site-current', ['bodyClass' => 'nacs-home-phase1 nacs-current-page nacs-current-page--home', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'home', 'useVite' => false, 'title' => 'Home', 'description' => 'Discover NACS-Phil programs, Christian education, school announcements, events, admissions information, and campus life.'])
 @section('content')
 <section class="hero p18-hero">
     <div class="hero__mesh" aria-hidden="true"></div>
@@ -10,27 +9,32 @@
         <div class="hero__content" data-reveal>
             <span class="eyebrow-pill p18-eyebrow">
                 <span class="p18-eyebrow__line" aria-hidden="true"></span>
-                {{ $homeContent['hero_badge'] }}
+                <span data-visual-field="hero_badge">{{ $homeContent['hero_badge'] }}</span>
             </span>
 
-            <h1>{{ $homeContent['hero_heading'] }} <span>{{ $homeContent['hero_highlight'] }}</span></h1>
+            <h1><span data-visual-field="hero_heading">{{ $homeContent['hero_heading'] }}</span> <span><span data-visual-field="hero_highlight">{{ $homeContent['hero_highlight'] }}</span></span></h1>
 
-            <p class="hero__lead">{{ $homeContent['hero_lead'] }}</p>
+            <p class="hero__lead"><span data-visual-field="hero_lead">{{ $homeContent['hero_lead'] }}</span></p>
 
             <div class="hero__actions p18-hero__actions">
-                <a class="button button--primary" href="{{ route('admissions') }}">
-                    {{ $homeContent['hero_primary_button'] }} <span aria-hidden="true">&rarr;</span>
+                <a class="button button--primary" href="{{ route('programs') }}">
+                    <span data-visual-field="hero_primary_button">{{ $homeContent['hero_primary_button'] }}</span> <span aria-hidden="true">&rarr;</span>
                 </a>
-                <a class="button button--secondary" href="{{ route('contact') }}">
-                    {{ $homeContent['hero_secondary_button'] }} <span aria-hidden="true">&rarr;</span>
+                <a class="button button--secondary" href="{{ route('admissions.apply') }}">
+                    <span data-visual-field="hero_secondary_button">{{ $homeContent['hero_secondary_button'] }}</span> <span aria-hidden="true">&rarr;</span>
                 </a>
             </div>
         </div>
 
         <div class="hero__visual p18-hero__visual" data-reveal>
-            <div class="hero__visual-frame p18-hero__visual-frame">
+            <div class="hero__visual-frame p18-hero__visual-frame" style="overflow:hidden">
                 @if(!empty($homeContent['hero_image_path']))
-                    <img src="{{ Storage::url($homeContent['hero_image_path']) }}" alt="{{ $homeContent['hero_image_alt'] }}">
+                    <img
+                        src="{{ Storage::url($homeContent['hero_image_path']) }}"
+                        alt="{{ $homeContent['hero_image_alt'] }}"
+                        data-visual-image="hero_image"
+                        style="object-fit:cover;object-position:{{ (float) ($homeContent['hero_image_focus_x'] ?? 50) }}% {{ (float) ($homeContent['hero_image_focus_y'] ?? 50) }}%;transform:scale({{ (float) ($homeContent['hero_image_zoom'] ?? 1) }});transform-origin:center"
+                    >
                 @elseif($galleryItems->isNotEmpty())
                     <img src="{{ Storage::url($galleryItems->first()->image_path) }}" alt="{{ $galleryItems->first()->alt_text }}">
                 @else
@@ -94,13 +98,13 @@
         <div class="p18-about__grid">
             <article class="p18-about__copy" data-reveal>
                 <span class="section-kicker">About NACS-Phil</span>
-                <h2>{{ $homeContent['why_heading'] }}</h2>
-                <p>{{ $homeContent['why_intro'] }}</p>
+                <h2><span data-visual-field="why_heading">{{ $homeContent['why_heading'] }}</span></h2>
+                <p><span data-visual-field="why_intro">{{ $homeContent['why_intro'] }}</span></p>
 
                 <ul class="p18-about__points">
-                    <li><span aria-hidden="true">+</span><strong>{{ $homeContent['why_2_title'] }}</strong></li>
-                    <li><span aria-hidden="true">+</span><strong>{{ $homeContent['why_3_title'] }}</strong></li>
-                    <li><span aria-hidden="true">+</span><strong>{{ $homeContent['why_4_title'] }}</strong></li>
+                    <li><span aria-hidden="true">+</span><strong><span data-visual-field="why_2_title">{{ $homeContent['why_2_title'] }}</span></strong></li>
+                    <li><span aria-hidden="true">+</span><strong><span data-visual-field="why_3_title">{{ $homeContent['why_3_title'] }}</span></strong></li>
+                    <li><span aria-hidden="true">+</span><strong><span data-visual-field="why_4_title">{{ $homeContent['why_4_title'] }}</span></strong></li>
                 </ul>
 
                 <a class="button button--secondary button--small" href="{{ route('about') }}">
@@ -122,8 +126,8 @@
             <article class="p18-foundation-card" data-reveal>
                 <span class="p18-foundation-card__quote" aria-hidden="true">&ldquo;</span>
                 <span class="section-kicker">Our Foundation</span>
-                <h3>{{ $homeContent['why_1_title'] }}</h3>
-                <p>{{ $homeContent['why_1_text'] }}</p>
+                <h3><span data-visual-field="why_1_title">{{ $homeContent['why_1_title'] }}</span></h3>
+                <p><span data-visual-field="why_1_text">{{ $homeContent['why_1_text'] }}</span></p>
                 <span class="p18-foundation-card__cross" aria-hidden="true">+</span>
             </article>
         </div>
@@ -135,7 +139,7 @@
         <div class="section-heading section-heading--compact" data-reveal>
             <div>
                 <span class="section-kicker">Programs for Every Stage</span>
-                <h2>{{ $homeContent['programs_heading'] }}</h2>
+                <h2><span data-visual-field="programs_heading">{{ $homeContent['programs_heading'] }}</span></h2>
             </div>
             <a class="text-link" href="{{ route('programs') }}">View all programs <span aria-hidden="true">&rarr;</span></a>
         </div>
@@ -148,7 +152,7 @@
                 <div>
                     <small>Early Learning</small>
                     <h3>Preschool</h3>
-                    <p>{{ $homeContent['preschool_text'] }}</p>
+                    <p><span data-visual-field="preschool_text">{{ $homeContent['preschool_text'] }}</span></p>
                     <a href="{{ route('programs') }}">Learn More <span aria-hidden="true">&rarr;</span></a>
                 </div>
             </article>
@@ -160,7 +164,7 @@
                 <div>
                     <small>Grades 1-6</small>
                     <h3>Elementary</h3>
-                    <p>{{ $homeContent['elementary_text'] }}</p>
+                    <p><span data-visual-field="elementary_text">{{ $homeContent['elementary_text'] }}</span></p>
                     <a href="{{ route('programs') }}">Learn More <span aria-hidden="true">&rarr;</span></a>
                 </div>
             </article>
@@ -172,7 +176,7 @@
                 <div>
                     <small>Grades 7-10</small>
                     <h3>Junior High School</h3>
-                    <p>{{ $homeContent['junior_high_text'] }}</p>
+                    <p><span data-visual-field="junior_high_text">{{ $homeContent['junior_high_text'] }}</span></p>
                     <a href="{{ route('programs') }}">Learn More <span aria-hidden="true">&rarr;</span></a>
                 </div>
             </article>
@@ -196,7 +200,7 @@
                 <div class="p18-panel-heading">
                     <div>
                         <span class="section-kicker">Latest News</span>
-                        <h2>{{ $homeContent['updates_heading'] }}</h2>
+                        <h2><span data-visual-field="updates_heading">{{ $homeContent['updates_heading'] }}</span></h2>
                     </div>
                     <a href="{{ route('announcements.index') }}">View all news <span aria-hidden="true">&rarr;</span></a>
                 </div>
@@ -261,7 +265,7 @@
         <div class="life-heading" data-reveal>
             <div>
                 <span class="section-kicker section-kicker--light">Life at NACS-Phil</span>
-                <h2>{{ $homeContent['life_heading'] }}</h2>
+                <h2><span data-visual-field="life_heading">{{ $homeContent['life_heading'] }}</span></h2>
             </div>
             <a class="button button--light button--small" href="{{ route('media.index') }}">Explore Media <span aria-hidden="true">&rarr;</span></a>
         </div>
@@ -295,10 +299,10 @@
             <div class="admission-cta__orb admission-cta__orb--two" aria-hidden="true"></div>
             <div>
                 <span class="section-kicker section-kicker--gold">Begin the conversation</span>
-                <h2>{{ $homeContent['cta_heading'] }}</h2>
-                <p>{{ $homeContent['cta_text'] }}</p>
+                <h2><span data-visual-field="cta_heading">{{ $homeContent['cta_heading'] }}</span></h2>
+                <p><span data-visual-field="cta_text">{{ $homeContent['cta_text'] }}</span></p>
             </div>
-            <a class="button button--gold" href="{{ route('admissions') }}">{{ $homeContent['cta_button'] }} <span aria-hidden="true">&rarr;</span></a>
+            <a class="button button--gold" href="{{ route('admissions') }}"><span data-visual-field="cta_button">{{ $homeContent['cta_button'] }}</span> <span aria-hidden="true">&rarr;</span></a>
         </div>
     </div>
 </section>

@@ -39,23 +39,21 @@ class Phase18HomepageMockupFidelityTest extends TestCase
         $this->assertStringContainsString('Approved school photography', $source);
     }
 
-    public function test_home_layout_loads_phase_eighteen_after_phase_seventeen(): void
+    public function test_homepage_uses_current_home_bundle(): void
     {
-        $layout = file_get_contents(resource_path('views/layouts/home-phase1.blade.php'));
+        $view = file_get_contents(resource_path('views/home.blade.php'));
+        $layout = file_get_contents(resource_path('views/layouts/site-current.blade.php'));
 
+        $this->assertIsString($view);
         $this->assertIsString($layout);
-
-        $phase17 = strpos($layout, 'assets/phase17-theme/site.css');
-        $phase18 = strpos($layout, 'assets/phase18-home/home.css');
-
-        $this->assertNotFalse($phase17);
-        $this->assertNotFalse($phase18);
-        $this->assertGreaterThan($phase17, $phase18);
+        $this->assertStringContainsString("extends('layouts.site-current'", $view);
+        $this->assertStringContainsString("'assetBundle' => 'home'", $view);
+        $this->assertStringContainsString('assets/current/pages/', $layout);
     }
 
-    public function test_home_fidelity_css_covers_desktop_tablet_phone_and_320_width(): void
+    public function test_current_home_css_covers_desktop_tablet_phone_and_320_width(): void
     {
-        $css = file_get_contents(public_path('assets/phase18-home/home.css'));
+        $css = file_get_contents(public_path('assets/current/pages/home.css'));
 
         $this->assertIsString($css);
         $this->assertStringContainsString('@media(max-width:1180px)', $css);

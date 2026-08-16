@@ -1,6 +1,5 @@
 @php($aboutContent = \App\Models\SiteContent::valuesFor('about', \App\Support\AboutContent::defaults()))
-@extends('layouts.about-phase2')
-
+@extends('layouts.site-current', ['bodyClass' => 'about-phase2 nacs-current-page nacs-current-page--about', 'mainId' => 'about-main', 'mainClass' => '', 'assetBundle' => 'about', 'useVite' => false, 'title' => 'About', 'description' => 'Learn about NACS-Phil, its school story, mission, vision, Christian foundation, values, and leadership.'])
 @section('content')
 <section class="about-hero">
     <div class="about-hero__grid-lines" aria-hidden="true"></div>
@@ -19,7 +18,7 @@
                 @if(!empty($aboutContent['hero_image_path']))
                     <img src="{{ Storage::disk('public')->url($aboutContent['hero_image_path']) }}" alt="NACS-Phil school community and educators.">
                 @else
-                    <img src="{{ asset('assets/phase2-about/about-visual.svg') }}" alt="Abstract concept illustration representing Christian education, learning, community, and growth at NACS-Phil.">
+                    <img src="{{ asset('assets/current/media/e7fbd161a502-about-visual.svg') }}" alt="Abstract concept illustration representing Christian education, learning, community, and growth at NACS-Phil.">
                 @endif
                 <div class="about-hero__visual-label"><i aria-hidden="true"></i><span>Faith · Learning · Community</span></div>
             </div>

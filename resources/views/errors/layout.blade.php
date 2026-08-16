@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex,nofollow">
     <meta name="theme-color" content="#071f3d">
     <title>@yield('title') | NACS-Phil</title>
-    <link rel="stylesheet" href="/assets/phase42-launch/errors.css">
+    <link rel="stylesheet" href="/assets/current/media/2d311fe3b724-errors.css">
 </head>
 <body>
     <a class="nacs42-skip" href="#error-main">Skip to message</a>
@@ -14,7 +14,7 @@
     <main id="error-main" class="nacs42-shell">
         <section class="nacs42-card" aria-labelledby="error-title">
             <div class="nacs42-brand" aria-label="NACS-Phil">
-                <img src="/assets/phase17-theme/nacs-official-logo.png" alt="NACS-Phil logo" width="68" height="68">
+                <img src="/assets/current/media/698f631ea74f-nacs-official-logo.png" alt="NACS-Phil logo" width="68" height="68">
                 <div>
                     <strong>NACS-Phil</strong>
                     <span>Noel Academy Christian of Sariaya Philippines, Inc.</span>

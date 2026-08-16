@@ -15,6 +15,9 @@ class HomeContent
             'hero_secondary_button' => 'Start Admission',
             'hero_image_path' => '',
             'hero_image_alt' => 'Concept illustration of a modern NACS-Phil school campus.',
+            'hero_image_focus_x' => '50',
+            'hero_image_focus_y' => '50',
+            'hero_image_zoom' => '1',
 
             'why_heading' => 'A school experience shaped by truth, care, and purpose.',
             'why_intro' => 'Clean information for parents, meaningful learning for students, and a Christ-centered foundation for the whole school community.',

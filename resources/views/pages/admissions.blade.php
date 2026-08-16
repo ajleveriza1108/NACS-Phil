@@ -1,4 +1,8 @@
-@php($admissionsContent = \App\Models\SiteContent::valuesFor('admissions', \App\Support\AdmissionsContent::defaults()))
+@php
+    $admissionsContent = \App\Support\AdmissionsContent::normalize(
+        \App\Models\SiteContent::valuesFor('admissions', \App\Support\AdmissionsContent::defaults())
+    );
+@endphp
 @extends('layouts.admissions-phase4')
 
 @section('content')
@@ -56,7 +60,6 @@
         <div class="admissions-steps">
             @foreach([1,2,3,4] as $number)
                 <article data-admissions-reveal>
-                    <span class="admissions-steps__number">0{{ $number }}</span>
                     <div class="admissions-steps__icon" aria-hidden="true">{{ $number }}</div>
                     <h3>{{ $admissionsContent['step_'.$number.'_title'] }}</h3>
                     <p>{{ $admissionsContent['step_'.$number.'_text'] }}</p>

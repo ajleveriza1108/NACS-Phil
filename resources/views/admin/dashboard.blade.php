@@ -20,6 +20,14 @@
     </div>
 </section>
 
+@if($databaseSetupIncomplete)
+<section class="cm-alert" role="status">
+    <strong>Local database setup is incomplete.</strong>
+    {{ $missingTableCount }} authorized data area(s) are not initialized in this local SQLite database, so unavailable dashboard metrics are temporarily hidden.
+    No database migration was performed automatically.
+</section>
+@endif
+
 @if($showPriorityInbox)
 <section class="p13-section" aria-labelledby="priority-heading">
     <div class="p13-section-head">

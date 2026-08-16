@@ -14,6 +14,7 @@ use App\Models\SchoolEvent;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -27,16 +28,30 @@ class DashboardController extends Controller
         $recentApplications = new Collection();
         $upcomingEvents = new Collection();
         $upcomingAcademicDates = new Collection();
+        $missingTables = [];
 
-        if ($user?->hasStaffPermission('students.manage')) {
+        $tableReady = static function (string $modelClass) use (&$missingTables): bool {
+            $model = new $modelClass();
+            $table = $model->getTable();
+
+            if (Schema::hasTable($table)) {
+                return true;
+            }
+
+            $missingTables[] = $table;
+
+            return false;
+        };
+
+        if ($user?->hasStaffPermission('students.manage') && $tableReady(Student::class)) {
             $counts['students'] = Student::count();
         }
 
-        if ($user?->hasStaffPermission('news.manage')) {
+        if ($user?->hasStaffPermission('news.manage') && $tableReady(Announcement::class)) {
             $counts['announcements'] = Announcement::count();
         }
 
-        if ($user?->hasStaffPermission('events.manage')) {
+        if ($user?->hasStaffPermission('events.manage') && $tableReady(SchoolEvent::class)) {
             $counts['events'] = SchoolEvent::count();
 
             $upcomingEvents = SchoolEvent::query()
@@ -46,56 +61,71 @@ class DashboardController extends Controller
                 ->get();
         }
 
-        if ($user?->hasStaffPermission('media.manage')) {
+        if ($user?->hasStaffPermission('media.manage') && $tableReady(GalleryItem::class)) {
             $counts['gallery'] = GalleryItem::count();
         }
 
         if ($user?->hasStaffPermission('governance.manage')) {
-            $counts['pending_content_reviews'] =
-                Announcement::where('workflow_status', 'pending_review')->count()
-                + SchoolEvent::where('workflow_status', 'pending_review')->count()
-                + GalleryItem::where('workflow_status', 'pending_review')->count();
+            $pendingReviews = 0;
+
+            if ($tableReady(Announcement::class)) {
+                $pendingReviews += Announcement::where('workflow_status', 'pending_review')->count();
+            }
+
+            if ($tableReady(SchoolEvent::class)) {
+                $pendingReviews += SchoolEvent::where('workflow_status', 'pending_review')->count();
+            }
+
+            if ($tableReady(GalleryItem::class)) {
+                $pendingReviews += GalleryItem::where('workflow_status', 'pending_review')->count();
+            }
+
+            $counts['pending_content_reviews'] = $pendingReviews;
         }
 
         if ($user?->hasStaffPermission('admissions.manage')) {
-            $counts['new_inquiries'] = Inquiry::where('status', 'new')->count();
-            $counts['due_followups'] = Inquiry::query()
-                ->whereNotNull('follow_up_at')
-                ->where('follow_up_at', '<=', now())
-                ->whereNotIn('status', ['resolved', 'closed'])
-                ->count();
-            $counts['unassigned_inquiries'] = Inquiry::query()
-                ->whereNull('assigned_to_user_id')
-                ->whereNotIn('status', ['resolved', 'closed'])
-                ->count();
+            if ($tableReady(Inquiry::class)) {
+                $counts['new_inquiries'] = Inquiry::where('status', 'new')->count();
+                $counts['due_followups'] = Inquiry::query()
+                    ->whereNotNull('follow_up_at')
+                    ->where('follow_up_at', '<=', now())
+                    ->whereNotIn('status', ['resolved', 'closed'])
+                    ->count();
+                $counts['unassigned_inquiries'] = Inquiry::query()
+                    ->whereNull('assigned_to_user_id')
+                    ->whereNotIn('status', ['resolved', 'closed'])
+                    ->count();
 
-            $counts['admission_applications'] = AdmissionApplication::count();
-            $counts['admissions_waiting_review'] = AdmissionApplication::whereIn(
-                'status',
-                ['submitted', 'under_review']
-            )->count();
-            $counts['admissions_awaiting_documents'] = AdmissionApplication::where(
-                'status',
-                'awaiting_documents'
-            )->count();
+                $recentInquiries = Inquiry::query()
+                    ->with('assignedTo')
+                    ->latest()
+                    ->limit(5)
+                    ->get();
+            }
 
-            $recentInquiries = Inquiry::query()
-                ->with('assignedTo')
-                ->latest()
-                ->limit(5)
-                ->get();
+            if ($tableReady(AdmissionApplication::class)) {
+                $counts['admission_applications'] = AdmissionApplication::count();
+                $counts['admissions_waiting_review'] = AdmissionApplication::whereIn(
+                    'status',
+                    ['submitted', 'under_review']
+                )->count();
+                $counts['admissions_awaiting_documents'] = AdmissionApplication::where(
+                    'status',
+                    'awaiting_documents'
+                )->count();
 
-            $recentApplications = AdmissionApplication::query()
-                ->latest('submitted_at')
-                ->limit(5)
-                ->get();
+                $recentApplications = AdmissionApplication::query()
+                    ->latest('submitted_at')
+                    ->limit(5)
+                    ->get();
+            }
         }
 
-        if ($user?->hasStaffPermission('faculty.manage')) {
+        if ($user?->hasStaffPermission('faculty.manage') && $tableReady(FacultyProfile::class)) {
             $counts['faculty_published'] = FacultyProfile::where('is_published', true)->count();
         }
 
-        if ($user?->hasStaffPermission('documents.manage')) {
+        if ($user?->hasStaffPermission('documents.manage') && $tableReady(SchoolDocument::class)) {
             $counts['public_documents'] = SchoolDocument::query()
                 ->where('audience', 'public')
                 ->whereNotNull('published_at')
@@ -106,7 +136,7 @@ class DashboardController extends Controller
                 ->count();
         }
 
-        if ($user?->hasStaffPermission('calendar.manage')) {
+        if ($user?->hasStaffPermission('calendar.manage') && $tableReady(AcademicCalendarEntry::class)) {
             $upcomingAcademicDates = AcademicCalendarEntry::query()
                 ->where('is_published', true)
                 ->where('ends_at', '>=', now()->startOfDay())
@@ -116,6 +146,9 @@ class DashboardController extends Controller
         }
 
         if ($user?->hasStaffPermission('staff.manage')) {
+            // The users table is already proven available if this authenticated
+            // request reached the dashboard, so these account-readiness metrics
+            // do not need an additional schema query.
             $counts['staff'] = User::where('is_admin', true)->count();
             $counts['super_admins'] = User::query()
                 ->where('is_admin', true)
@@ -130,6 +163,8 @@ class DashboardController extends Controller
                 ->count();
         }
 
+        $missingTables = array_values(array_unique($missingTables));
+
         return view('admin.dashboard', [
             'counts' => $counts,
             'recentInquiries' => $recentInquiries,
@@ -140,6 +175,8 @@ class DashboardController extends Controller
                 'governance.manage',
                 'admissions.manage',
             ]) ?? false,
+            'databaseSetupIncomplete' => $missingTables !== [],
+            'missingTableCount' => count($missingTables),
         ]);
     }
 }

@@ -19,7 +19,7 @@
         <section class="nacs-auth-card nacs-auth-card--staff" aria-labelledby="staff-login-title">
             <div class="nacs-auth-branding">
                 <a href="{{ route('home') }}" class="nacs-auth-brand" aria-label="Return to the NACS-Phil public website">
-                    <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="84" height="84">
+                    <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="64" height="64">
                     <span>
                         <strong>NACS-Phil</strong>
                         <small>School Administration</small>

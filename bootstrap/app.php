@@ -5,6 +5,7 @@ use App\Http\Middleware\VerifyTurnstile;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsurePortalUser;
 use App\Http\Middleware\EnsureStaffRole;
+use App\Http\Middleware\EnsureStaffPermission;
 use App\Http\Middleware\EnsureAdmissionAccess;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => EnsureUserIsAdmin::class,
             'portal' => EnsurePortalUser::class,
             'staff_role' => EnsureStaffRole::class,
+            'staff_permission' => EnsureStaffPermission::class,
             'admission.access' => EnsureAdmissionAccess::class,
             'turnstile' => VerifyTurnstile::class,
         ]);

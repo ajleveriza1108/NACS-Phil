@@ -117,33 +117,50 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/security/two-factor', [AdminSecurityController::class, 'disableTwoFactor'])->name('security.two-factor.disable');
     Route::post('/security/revoke-sessions', [AdminSecurityController::class, 'revokeOtherSessions'])->name('security.revoke-sessions');
 
-    Route::resource('announcements', AdminAnnouncementController::class)->except('show');
-    Route::resource('events', AdminSchoolEventController::class)->except('show');
+    Route::resource('announcements', AdminAnnouncementController::class)
+        ->except('show')
+        ->middleware('staff_permission:news.manage');
+
+    Route::resource('events', AdminSchoolEventController::class)
+        ->except('show')
+        ->middleware('staff_permission:events.manage');
+
     Route::resource('gallery', AdminGalleryItemController::class)
         ->parameters(['gallery' => 'galleryItem'])
-        ->except('show');
+        ->except('show')
+        ->middleware('staff_permission:media.manage');
 
-    Route::get('/media', [AdminMediaAssetController::class, 'index'])->name('media.index');
-    Route::get('/media/create', [AdminMediaAssetController::class, 'create'])->name('media.create');
-    Route::post('/media', [AdminMediaAssetController::class, 'store'])->name('media.store');
-    Route::delete('/media/{medium}', [AdminMediaAssetController::class, 'destroy'])->name('media.destroy');
+    Route::middleware('staff_permission:media.manage')->group(function (): void {
+        Route::get('/media', [AdminMediaAssetController::class, 'index'])->name('media.index');
+        Route::get('/media/create', [AdminMediaAssetController::class, 'create'])->name('media.create');
+        Route::post('/media', [AdminMediaAssetController::class, 'store'])->name('media.store');
+        Route::delete('/media/{medium}', [AdminMediaAssetController::class, 'destroy'])->name('media.destroy');
+        Route::resource('facebook-media', AdminFacebookMediaController::class)->except('show');
+    });
 
-    Route::resource('facebook-media', AdminFacebookMediaController::class)->except('show');
-
-    Route::middleware('staff_role:super_admin,principal')->group(function (): void {
+    Route::middleware('staff_permission:governance.manage')->group(function (): void {
         Route::get('/trash', [AdminTrashController::class, 'index'])->name('trash.index');
         Route::patch('/trash/{type}/{id}/restore', [AdminTrashController::class, 'restore'])->name('trash.restore');
         Route::delete('/trash/{type}/{id}', [AdminTrashController::class, 'destroy'])->name('trash.destroy');
         Route::get('/audit', [AdminAuditController::class, 'index'])->name('audit.index');
-
         Route::get('/reviews', [AdminContentReviewController::class, 'index'])->name('reviews.index');
         Route::patch('/reviews/{type}/{id}', [AdminContentReviewController::class, 'decide'])->name('reviews.decide');
+    });
 
-        Route::resource('faculty', AdminFacultyProfileController::class)->except('show');
+    Route::resource('faculty', AdminFacultyProfileController::class)
+        ->except('show')
+        ->middleware('staff_permission:faculty.manage');
+
+    Route::middleware('staff_permission:documents.manage')->group(function (): void {
         Route::resource('documents', AdminSchoolDocumentController::class)->except('show');
         Route::get('/documents/{document}/download', [AdminSchoolDocumentController::class, 'download'])->name('documents.download');
-        Route::resource('calendar', AdminAcademicCalendarEntryController::class)->except('show');
+    });
 
+    Route::resource('calendar', AdminAcademicCalendarEntryController::class)
+        ->except('show')
+        ->middleware('staff_permission:calendar.manage');
+
+    Route::middleware('staff_permission:admissions.manage')->group(function (): void {
         Route::get('/admissions', [AdminAdmissionApplicationController::class, 'index'])->name('admissions.index');
         Route::get('/admissions/{application}', [AdminAdmissionApplicationController::class, 'show'])->name('admissions.show');
         Route::patch('/admissions/{application}', [AdminAdmissionApplicationController::class, 'update'])->name('admissions.update');
@@ -155,35 +172,66 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])->name('inquiries.index');
         Route::get('/inquiries/{inquiry}', [AdminInquiryController::class, 'show'])->name('inquiries.show');
         Route::patch('/inquiries/{inquiry}', [AdminInquiryController::class, 'update'])->name('inquiries.update');
+    });
 
+    Route::middleware('staff_permission:website.home')->group(function (): void {
         Route::get('/website-content', [AdminWebsiteContentController::class, 'edit'])->name('website-content.edit');
         Route::patch('/website-content', [AdminWebsiteContentController::class, 'update'])->name('website-content.update');
+    });
+
+    Route::middleware('staff_permission:website.about')->group(function (): void {
         Route::get('/about-content', [AdminAboutContentController::class, 'edit'])->name('about-content.edit');
         Route::patch('/about-content', [AdminAboutContentController::class, 'update'])->name('about-content.update');
+    });
+
+    Route::middleware('staff_permission:website.programs')->group(function (): void {
         Route::get('/programs-content', [AdminProgramsContentController::class, 'edit'])->name('programs-content.edit');
         Route::patch('/programs-content', [AdminProgramsContentController::class, 'update'])->name('programs-content.update');
+    });
+
+    Route::middleware('staff_permission:website.admissions')->group(function (): void {
         Route::get('/admissions-content', [AdminAdmissionsContentController::class, 'edit'])->name('admissions-content.edit');
         Route::patch('/admissions-content', [AdminAdmissionsContentController::class, 'update'])->name('admissions-content.update');
+    });
+
+    Route::middleware('staff_permission:website.news')->group(function (): void {
         Route::get('/news-content', [AdminNewsContentController::class, 'edit'])->name('news-content.edit');
         Route::patch('/news-content', [AdminNewsContentController::class, 'update'])->name('news-content.update');
+    });
+
+    Route::middleware('staff_permission:website.events')->group(function (): void {
         Route::get('/events-content', [AdminEventsContentController::class, 'edit'])->name('events-content.edit');
         Route::patch('/events-content', [AdminEventsContentController::class, 'update'])->name('events-content.update');
+    });
+
+    Route::middleware('staff_permission:website.gallery')->group(function (): void {
         Route::get('/gallery-content', [AdminGalleryContentController::class, 'edit'])->name('gallery-content.edit');
         Route::patch('/gallery-content', [AdminGalleryContentController::class, 'update'])->name('gallery-content.update');
+    });
+
+    Route::middleware('staff_permission:website.contact')->group(function (): void {
         Route::get('/contact-content', [AdminContactContentController::class, 'edit'])->name('contact-content.edit');
         Route::patch('/contact-content', [AdminContactContentController::class, 'update'])->name('contact-content.update');
+    });
 
+    Route::middleware('staff_permission:seo.manage')->group(function (): void {
         Route::get('/seo', [AdminSeoSettingController::class, 'edit'])->name('seo.edit');
         Route::patch('/seo', [AdminSeoSettingController::class, 'update'])->name('seo.update');
+    });
+
+    Route::middleware('staff_permission:branding.manage')->group(function (): void {
         Route::get('/branding', [AdminBrandingController::class, 'edit'])->name('branding.edit');
         Route::post('/branding/logo', [AdminBrandingController::class, 'store'])->name('branding.store');
         Route::delete('/branding/logo', [AdminBrandingController::class, 'destroy'])->name('branding.destroy');
+    });
+
+    Route::middleware('staff_permission:settings.manage')->group(function (): void {
         Route::get('/launch-readiness', AdminLaunchReadinessController::class)->name('launch-readiness');
         Route::get('/school-settings', [AdminSchoolSettingController::class, 'edit'])->name('settings.edit');
         Route::patch('/school-settings', [AdminSchoolSettingController::class, 'update'])->name('settings.update');
     });
 
-    Route::middleware('staff_role:super_admin')->group(function (): void {
+    Route::middleware('staff_permission:staff.manage')->group(function (): void {
         Route::get('/staff', [AdminStaffController::class, 'index'])->name('staff.index');
         Route::get('/staff/create', [AdminStaffController::class, 'create'])->name('staff.create');
         Route::post('/staff', [AdminStaffController::class, 'store'])->name('staff.store');
@@ -191,8 +239,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::patch('/staff/{staff}', [AdminStaffController::class, 'update'])->name('staff.update');
         Route::post('/staff/{staff}/resend-registration', [AdminStaffController::class, 'resendRegistration'])->middleware('throttle:3,60')->name('staff.resend-registration');
         Route::post('/staff/{staff}/reset-two-factor', [AdminStaffController::class, 'resetTwoFactor'])->name('staff.reset-two-factor');
-        Route::get('/system-health', AdminSystemHealthController::class)->name('system-health');
     });
+
+    Route::get('/system-health', AdminSystemHealthController::class)
+        ->middleware('staff_permission:system.manage')
+        ->name('system-health');
 });
 
 require __DIR__.'/student_portal.php';

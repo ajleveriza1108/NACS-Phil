@@ -27,7 +27,7 @@ Route::prefix('portal')->name('portal.')->middleware('portal')->group(function (
     Route::post('/logout', [PortalAuthController::class, 'destroy'])->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function (): void {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'staff_permission:students.manage'])->group(function (): void {
     Route::get('/students', [AdminStudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [AdminStudentController::class, 'create'])->name('students.create');
     Route::post('/students', [AdminStudentController::class, 'store'])->name('students.store');

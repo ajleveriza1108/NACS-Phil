@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class EnsureStaffPermission
+{
+    public function handle(Request $request, Closure $next, string ...$permissions): Response
+    {
+        $user = $request->user();
+
+        abort_unless(
+            $user?->is_admin === true
+            && $user?->is_active !== false
+            && $permissions !== []
+            && $user->hasAnyStaffPermission($permissions),
+            403
+        );
+
+        return $next($request);
+    }
+}

@@ -68,16 +68,64 @@
     </div>
 
     <nav id="nacs11-mobile-nav" class="nacs11-mobile-nav" data-nacs11-mobile-nav hidden aria-label="Mobile navigation">
-        <div class="nacs11-shell nacs11-mobile-nav__inner">
-            @foreach($nacs11Nav as $item)
-                @php($isActive = request()->routeIs($item['pattern']))
-                <a href="{{ route($item['route']) }}" class="{{ $isActive ? 'is-active' : '' }}" @if($isActive) aria-current="page" @endif>{{ $item['label'] }}</a>
-            @endforeach
-            <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
-            <a href="{{ route('calendar.index') }}">Academic Calendar</a>
-            <a href="{{ route('documents.index') }}">Documents</a>
-            <a href="{{ route('media.index') }}">Media Hub</a>
-            <a class="nacs11-button nacs11-button--primary" href="{{ route('admissions') }}">Enroll Now <span aria-hidden="true">&rarr;</span></a>
+        <div class="nacs11-shell nacs11-mobile-nav__inner nacs45-mobile-nav">
+            <a href="{{ route('home') }}" class="nacs45-mobile-direct">Home</a>
+
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/about,/faculty">
+                <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-about">
+                    <span>About</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                </button>
+                <div id="nacs45-mobile-about" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
+                    <a href="{{ route('about') }}">About NACS-Phil</a>
+                    <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
+                </div>
+            </div>
+
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/programs,/academic-calendar">
+                <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-academics">
+                    <span>Academics</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                </button>
+                <div id="nacs45-mobile-academics" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
+                    <a href="{{ route('programs') }}">Programs</a>
+                    <a href="{{ route('calendar.index') }}">Academic Calendar</a>
+                </div>
+            </div>
+
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/admissions">
+                <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-admissions">
+                    <span>Admissions</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                </button>
+                <div id="nacs45-mobile-admissions" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
+                    <a href="{{ route('admissions') }}">Admissions Information</a>
+                    <a href="{{ route('admissions.apply') }}">Start Application</a>
+                    <a href="{{ route('admissions.track') }}">Track Application</a>
+                </div>
+            </div>
+
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/announcements,/events,/gallery,/media">
+                <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-news">
+                    <span>News &amp; Media</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                </button>
+                <div id="nacs45-mobile-news" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
+                    <a href="{{ route('announcements.index') }}">News</a>
+                    <a href="{{ route('events.index') }}">Events</a>
+                    <a href="{{ route('gallery.index') }}">Gallery</a>
+                    <a href="{{ route('media.index') }}">Media Hub</a>
+                </div>
+            </div>
+
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/documents">
+                <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-resources">
+                    <span>Resources</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                </button>
+                <div id="nacs45-mobile-resources" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
+                    <a href="{{ route('documents.index') }}">School Documents</a>
+                </div>
+            </div>
+
+            <a href="{{ route('contact') }}" class="nacs45-mobile-direct">Contact</a>
+
+            <a class="nacs11-button nacs11-button--primary nacs45-mobile-enroll" href="{{ route('admissions.apply') }}">Enroll Now <span aria-hidden="true">&rarr;</span></a>
         </div>
     </nav>
 </header>

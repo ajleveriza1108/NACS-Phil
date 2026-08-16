@@ -618,3 +618,314 @@ textarea{
     padding:16px 14px!important;
   }
 }
+
+
+/* NACS-Phil Phase 45 R1.5 - final real-device mobile hierarchy and type scale.
+   Desktop navigation and desktop editorial alignment remain unchanged. */
+
+@media(max-width:1050px){
+  .nacs11-mobile-nav{
+    max-height:calc(100dvh - 76px)!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .nacs45-mobile-nav{
+    gap:4px!important;
+    padding-top:10px!important;
+    padding-bottom:max(18px,env(safe-area-inset-bottom))!important;
+  }
+
+  .nacs45-mobile-nav>.nacs45-mobile-direct,
+  .nacs45-mobile-group__toggle{
+    width:100%;
+    min-height:48px!important;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:rgba(255,255,255,.96);
+    padding:0 14px!important;
+    font:760 17px/1.25 Inter,ui-sans-serif,system-ui,sans-serif;
+    text-align:left;
+    cursor:pointer;
+  }
+
+  .nacs45-mobile-nav>.nacs45-mobile-direct:hover,
+  .nacs45-mobile-nav>.nacs45-mobile-direct:focus-visible,
+  .nacs45-mobile-group__toggle:hover,
+  .nacs45-mobile-group__toggle:focus-visible{
+    background:rgba(255,255,255,.07)!important;
+    color:#fff!important;
+  }
+
+  .nacs45-mobile-nav>.nacs45-mobile-direct.is-active,
+  .nacs45-mobile-group.is-active>.nacs45-mobile-group__toggle{
+    background:rgba(242,201,105,.10)!important;
+    color:#f2c969!important;
+    box-shadow:inset 3px 0 0 #f2c969!important;
+  }
+
+  .nacs45-mobile-group__chevron{
+    width:9px;
+    height:9px;
+    flex:0 0 9px;
+    border-right:2px solid currentColor;
+    border-bottom:2px solid currentColor;
+    transform:rotate(45deg) translateY(-2px);
+    transition:transform var(--nacs-motion-base,220ms) var(--nacs-motion-ease,ease);
+  }
+
+  .nacs45-mobile-group.is-open .nacs45-mobile-group__chevron{
+    transform:rotate(225deg) translate(-1px,-1px);
+  }
+
+  .nacs45-mobile-group__panel{
+    display:grid;
+    gap:2px;
+    margin:2px 0 6px 16px;
+    padding:4px 0 4px 10px;
+    border-left:1px solid rgba(242,201,105,.30);
+  }
+
+  .nacs45-mobile-group__panel[hidden]{
+    display:none!important;
+  }
+
+  .nacs45-mobile-group__panel:not([hidden]){
+    animation:nacs45-submenu-enter var(--nacs-motion-base,220ms) var(--nacs-motion-enter,ease) both;
+  }
+
+  .nacs45-mobile-group__panel a{
+    min-height:44px!important;
+    padding:0 12px!important;
+    border-radius:9px!important;
+    background:transparent!important;
+    color:rgba(231,240,249,.88)!important;
+    font-size:15px!important;
+    font-weight:650!important;
+  }
+
+  .nacs45-mobile-group__panel a:hover,
+  .nacs45-mobile-group__panel a:focus-visible{
+    background:rgba(255,255,255,.07)!important;
+    color:#fff!important;
+  }
+
+  .nacs45-mobile-group__panel a.is-active{
+    background:rgba(242,201,105,.08)!important;
+    color:#f2c969!important;
+    box-shadow:none!important;
+  }
+
+  .nacs45-mobile-enroll{
+    width:min(100%,260px)!important;
+    min-height:50px!important;
+    margin-top:10px!important;
+    font-size:16px!important;
+  }
+}
+
+@keyframes nacs45-submenu-enter{
+  from{opacity:0;transform:translateY(-4px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Once a public page becomes a single-column mobile/tablet composition,
+   center only the primary H1 hierarchy. Secondary card headings stay editorial. */
+@media(max-width:900px){
+  .nacs-home-phase1 main h1,
+  .about-phase2 main h1,
+  .programs-phase3 main h1,
+  .admissions-phase4 main h1,
+  .news-phase5 main h1,
+  .events-phase6 main h1,
+  .gallery-phase7 main h1,
+  .contact-phase8 main h1,
+  .nacs11-public main h1{
+    max-width:18ch!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+
+  .nacs-home-phase1 .p18-hero .hero__content,
+  .about-phase2 .about-hero__copy,
+  .programs-phase3 .programs-hero__copy,
+  .admissions-phase4 .admissions-hero__copy{
+    margin-inline:auto!important;
+    text-align:center!important;
+  }
+
+  .nacs-home-phase1 .p18-hero .p18-eyebrow{
+    justify-content:center!important;
+  }
+
+  .nacs-home-phase1 .p18-hero .hero__lead,
+  .about-phase2 .about-hero__copy>p,
+  .programs-phase3 .programs-hero__copy>p,
+  .admissions-phase4 .admissions-hero__copy>p{
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+
+  .about-phase2 .about-hero__actions,
+  .programs-phase3 .programs-hero__actions,
+  .admissions-phase4 .admissions-hero__actions{
+    justify-content:center!important;
+  }
+
+  /* Home: supporting information was too small on the real phone. */
+  .nacs-home-phase1 .p18-quick-card{
+    min-height:78px!important;
+    padding:11px 13px!important;
+  }
+  .nacs-home-phase1 .p18-quick-card strong{
+    font-size:16px!important;
+    line-height:1.3!important;
+  }
+  .nacs-home-phase1 .p18-quick-card small{
+    margin-top:3px!important;
+    font-size:14px!important;
+    line-height:1.45!important;
+    color:#607286!important;
+  }
+  .nacs-home-phase1 .p18-values-band strong{font-size:16px!important}
+  .nacs-home-phase1 .p18-values-band small{font-size:14px!important;line-height:1.45!important}
+  .nacs-home-phase1 .p18-program-card p{font-size:16px!important;line-height:1.65!important}
+  .nacs-home-phase1 .p18-program-card a,
+  .nacs-home-phase1 .p18-panel-heading a{font-size:15px!important}
+  .nacs-home-phase1 .section-kicker{font-size:13px!important}
+
+  /* About: compact the identity rows and keep supporting copy comfortably readable. */
+  .about-phase2 .about-identity-strip article{
+    min-height:92px!important;
+    padding:16px 18px!important;
+  }
+  .about-phase2 .about-identity-strip strong{font-size:17px!important;line-height:1.3!important}
+  .about-phase2 .about-identity-strip small{font-size:15px!important;line-height:1.45!important}
+  .about-phase2 .about-rich-text,
+  .about-phase2 .about-story__copy p,
+  .about-phase2 .about-section-head>p,
+  .about-phase2 .about-purpose-card p,
+  .about-phase2 .about-faith__copy>p,
+  .about-phase2 .about-community p{
+    font-size:16px!important;
+    line-height:1.68!important;
+  }
+
+  /* Programs: keep descriptions at normal mobile reading size. */
+  .programs-phase3 .programs-program__copy>p,
+  .programs-phase3 .programs-overview p,
+  .programs-phase3 .programs-section-head>p,
+  .programs-phase3 .programs-approach-grid p,
+  .programs-phase3 .programs-faith__copy>p{
+    font-size:16px!important;
+    line-height:1.65!important;
+  }
+  .programs-phase3 .programs-inline-link{font-size:15px!important}
+
+  /* Admissions: center/compact informational rows and process cards. */
+  .admissions-phase4 .admissions-hero__status{
+    text-align:center!important;
+  }
+  .admissions-phase4 .admissions-hero__status strong{font-size:15px!important;line-height:1.3!important}
+  .admissions-phase4 .admissions-hero__status small{font-size:14px!important;line-height:1.45!important}
+
+  .admissions-phase4 .admissions-info-strip article,
+  .admissions-phase4 .admissions-info-strip article:nth-child(2){
+    min-height:92px!important;
+    padding:15px 16px!important;
+    text-align:center!important;
+  }
+  .admissions-phase4 .admissions-info-strip article>div{text-align:center!important}
+  .admissions-phase4 .admissions-info-strip strong{font-size:17px!important;line-height:1.3!important}
+  .admissions-phase4 .admissions-info-strip small{font-size:15px!important;line-height:1.45!important}
+
+  .admissions-phase4 .admissions-steps article{
+    min-height:auto!important;
+    padding:22px 18px!important;
+    text-align:center!important;
+  }
+  .admissions-phase4 .admissions-steps__number{
+    display:none!important;
+  }
+  .admissions-phase4 .admissions-steps__icon{
+    margin:0 auto!important;
+  }
+  .admissions-phase4 .admissions-steps h3{
+    margin:14px auto 0!important;
+    font-size:21px!important;
+    line-height:1.3!important;
+    text-align:center!important;
+  }
+  .admissions-phase4 .admissions-steps p{
+    max-width:36rem!important;
+    margin:10px auto 0!important;
+    font-size:16px!important;
+    line-height:1.62!important;
+    text-align:center!important;
+  }
+  .admissions-phase4 .admissions-requirements h3{font-size:17px!important}
+  .admissions-phase4 .admissions-requirements p{font-size:15px!important;line-height:1.6!important}
+  .admissions-phase4 .admissions-kicker{font-size:13px!important}
+}
+
+@media(max-width:620px){
+  .nacs-home-phase1 main h1,
+  .about-phase2 main h1,
+  .programs-phase3 main h1,
+  .admissions-phase4 main h1,
+  .news-phase5 main h1,
+  .events-phase6 main h1,
+  .gallery-phase7 main h1,
+  .contact-phase8 main h1,
+  .nacs11-public main h1{
+    font-size:clamp(31px,8.4vw,37px)!important;
+    line-height:1.09!important;
+  }
+
+  .nacs-home-phase1 .p18-hero .hero__lead{
+    font-size:17px!important;
+    line-height:1.65!important;
+  }
+
+  .nacs-home-phase1 .p18-quick-card strong{font-size:17px!important}
+  .nacs-home-phase1 .p18-quick-card small{font-size:15px!important}
+  .nacs-home-phase1 .p18-values-band small{font-size:15px!important}
+
+  .about-phase2 .about-identity-strip strong{font-size:17px!important}
+  .about-phase2 .about-identity-strip small{font-size:15px!important}
+
+  .admissions-phase4 .admissions-info-strip strong{font-size:17px!important}
+  .admissions-phase4 .admissions-info-strip small{font-size:15px!important}
+  .admissions-phase4 .admissions-steps h3{font-size:20px!important}
+  .admissions-phase4 .admissions-steps p{font-size:16px!important}
+}
+
+@media(max-width:380px){
+  .nacs45-mobile-nav>.nacs45-mobile-direct,
+  .nacs45-mobile-group__toggle{
+    min-height:46px!important;
+    padding-inline:12px!important;
+    font-size:16px!important;
+  }
+
+  .nacs45-mobile-group__panel a{
+    min-height:42px!important;
+    font-size:14px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .nacs45-mobile-group__chevron,
+  .nacs45-mobile-group__panel{
+    animation:none!important;
+    transition:none!important;
+  }
+}

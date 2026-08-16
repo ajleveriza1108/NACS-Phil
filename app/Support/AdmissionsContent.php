@@ -95,6 +95,7 @@ class AdmissionsContent
             // Common UTF-8/Windows-1252 mojibake already seen in legacy admissions copy.
             'c3a2e282accb9c' => "'",
             'c3a2e282ace284a2' => "'",
+            'c383c2a2c3a2e2809ac2acc3a2e2809ec2a2' => "'",
             'c3a2e282acc593' => '"',
             'c3a2e282acc29d' => '"',
             'c3a2e282ace2809c' => '-',

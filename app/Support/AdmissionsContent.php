@@ -20,7 +20,7 @@ class AdmissionsContent
             'step_2_title' => 'Prepare Requirements',
             'step_2_text' => 'Gather only the documents and information listed in the school-approved admissions requirements.',
             'step_3_title' => 'Submit & Review',
-            'step_3_text' => 'Follow the schoolâ€™s approved submission process. If an online application workflow is enabled, it remains handled by the existing admissions system.',
+            'step_3_text' => "Follow the school's approved submission process. If an online application workflow is enabled, it remains handled by the existing admissions system.",
             'step_4_title' => 'Receive Guidance',
             'step_4_text' => 'The school will provide the next approved enrollment steps, schedules, or follow-up instructions.',
 
@@ -45,7 +45,7 @@ class AdmissionsContent
 
             'faq_heading' => 'Frequently asked questions',
             'faq_1_q' => 'What grade levels does NACS-Phil offer?',
-            'faq_1_a' => 'NACS-Phil currently presents Preschool, Elementary Grades 1â€“6, and Junior High Grades 7â€“10 on this website. Confirm current availability with the school.',
+            'faq_1_a' => 'NACS-Phil currently presents Preschool, Elementary Grades 1-6, and Junior High Grades 7-10 on this website. Confirm current availability with the school.',
             'faq_2_q' => 'How do I know which requirements apply to my child?',
             'faq_2_a' => 'Use the school-approved requirements listed on this page, then contact the school if the applicant has a special circumstance or transfer history.',
             'faq_3_q' => 'Can I ask questions before applying?',
@@ -61,5 +61,59 @@ class AdmissionsContent
             'cta_primary_button' => 'Contact Admissions',
             'cta_secondary_button' => 'Explore Programs',
         ];
+    }
+
+    /**
+     * Normalize legacy punctuation corruption in admissions copy without changing stored data.
+     *
+     * @param  array<string, mixed>  $values
+     * @return array<string, mixed>
+     */
+    public static function normalize(array $values): array
+    {
+        foreach ($values as $key => $value) {
+            if (is_string($value)) {
+                $values[$key] = self::normalizeText($value);
+            }
+        }
+
+        return $values;
+    }
+
+    private static function normalizeText(string $value): string
+    {
+        $replacements = [
+            // Correct UTF-8 typographic punctuation -> plain ASCII.
+            'e28098' => "'",
+            'e28099' => "'",
+            'e2809c' => '"',
+            'e2809d' => '"',
+            'e28093' => '-',
+            'e28094' => '-',
+            'c2a0' => ' ',
+
+            // Common UTF-8/Windows-1252 mojibake already seen in legacy admissions copy.
+            'c3a2e282accb9c' => "'",
+            'c3a2e282ace284a2' => "'",
+            'c3a2e282acc593' => '"',
+            'c3a2e282acc29d' => '"',
+            'c3a2e282ace2809c' => '-',
+            'c3a2e282ace2809d' => '-',
+            'c382c2a0' => ' ',
+        ];
+
+        uksort(
+            $replacements,
+            static fn (string $left, string $right): int => strlen($right) <=> strlen($left)
+        );
+        foreach ($replacements as $hex => $replacement) {
+            $needle = hex2bin($hex);
+
+            if (is_string($needle)) {
+                $value = str_replace($needle, $replacement, $value);
+            }
+        }
+
+        return $value;
     }
 }

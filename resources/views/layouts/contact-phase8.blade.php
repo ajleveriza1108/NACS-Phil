@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/phase18-consistency/site-consistency.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase20-admissions-contact/fidelity.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
+    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
 </head>
 <body class="contact-phase8">
 @include('partials.public-header', ['mainId' => 'contact-main'])

@@ -15,6 +15,8 @@
     <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('assets/phase23-final-polish/polish.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
+    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
 </head>
 <body class="nacs11-public">
 @include('partials.public-header', ['mainId' => 'main-content'])

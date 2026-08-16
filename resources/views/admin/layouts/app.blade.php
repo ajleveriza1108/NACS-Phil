@@ -20,6 +20,8 @@
     <script src="{{ asset('assets/phase22-media/media.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase41-sis/sis.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
+    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
 </head>
 <body class="cm-body p13-admin">
 <a href="#admin-main" class="p13-skip">Skip to administration content</a>

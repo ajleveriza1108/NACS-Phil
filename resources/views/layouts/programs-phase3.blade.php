@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('assets/phase19-about-programs/fidelity.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase24-release/release-hardening.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase36-experience/site.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
+    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
 </head>
 <body class="programs-phase3">
 @include('partials.public-header', ['mainId' => 'programs-main'])

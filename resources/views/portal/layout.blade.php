@@ -10,6 +10,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('assets/phase39-auth/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/phase41-sis/sis.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
+    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
 </head>
 <body class="nacs-auth-body nacs-auth-body--portal">
     <a href="#portal-main" class="nacs-auth-skip">Skip to portal content</a>

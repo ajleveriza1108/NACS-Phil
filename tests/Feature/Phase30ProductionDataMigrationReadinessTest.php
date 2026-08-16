@@ -47,6 +47,7 @@ class Phase30ProductionDataMigrationReadinessTest extends TestCase
         $this->assertArrayHasKey('seo_settings', $report['groups']['public_content']['tables']);
         $this->assertArrayHasKey('inquiries', $report['groups']['private_family_data']['tables']);
         $this->assertArrayHasKey('users', $report['groups']['staff_accounts']['tables']);
+        $this->assertArrayHasKey('registration_invitations', $report['groups']['runtime_only']['tables']);
     }
 
     public function test_inventory_never_marks_database_exports_safe_for_source_control(): void

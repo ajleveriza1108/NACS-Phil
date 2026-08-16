@@ -33,7 +33,7 @@
     </section>
 
     <section class="cm-editor-section">
-        <div class="cm-editor-section__title"><span>2</span><div><h2>School Story</h2><p>Use only school-approved historical information.</p></div></div>
+        <div class="cm-editor-section__title"><span>2</span><div><h2>Our History</h2><p>Use only school-approved historical information and verified milestones.</p></div></div>
         <div class="cm-fields">
             <label class="cm-field"><span>Section label</span><input name="story_kicker" value="{{ old('story_kicker', $content['story_kicker']) }}" maxlength="80" required></label>
             <label class="cm-field"><span>Heading</span><input name="story_heading" value="{{ old('story_heading', $content['story_heading']) }}" maxlength="180" required></label>
@@ -86,7 +86,24 @@
     </section>
 
     <section class="cm-editor-section">
-        <div class="cm-editor-section__title"><span>6</span><div><h2>Leadership Message</h2><p>Principal or school administrator welcome message.</p></div></div>
+        <div class="cm-editor-section__title"><span>6</span><div><h2>NACS-Phil Distinctives</h2><p>School practices that show faith, character, and Filipino respect in daily life.</p></div></div>
+        <div class="cm-fields">
+            <label class="cm-field"><span>Section label</span><input name="distinctives_kicker" value="{{ old('distinctives_kicker', $content['distinctives_kicker']) }}" maxlength="80" required></label>
+            <label class="cm-field"><span>Heading</span><input name="distinctives_heading" value="{{ old('distinctives_heading', $content['distinctives_heading']) }}" maxlength="180" required></label>
+            <label class="cm-field"><span>Introduction</span><textarea name="distinctives_intro" rows="4" maxlength="1800" required>{{ old('distinctives_intro', $content['distinctives_intro']) }}</textarea></label>
+            @foreach([1,2,3,4] as $number)
+                <div class="cm-card-fields">
+                    <strong>Distinctive {{ $number }}</strong>
+                    <label class="cm-field"><span>Title</span><input name="distinctive_{{ $number }}_title" value="{{ old('distinctive_'.$number.'_title', $content['distinctive_'.$number.'_title']) }}" maxlength="100" required></label>
+                    <label class="cm-field"><span>Description</span><textarea name="distinctive_{{ $number }}_text" rows="3" maxlength="1200" required>{{ old('distinctive_'.$number.'_text', $content['distinctive_'.$number.'_text']) }}</textarea></label>
+                </div>
+            @endforeach
+            <label class="cm-field"><span>Editorial note</span><textarea name="distinctives_note" rows="3" maxlength="1200" required>{{ old('distinctives_note', $content['distinctives_note']) }}</textarea></label>
+        </div>
+    </section>
+
+    <section class="cm-editor-section">
+        <div class="cm-editor-section__title"><span>7</span><div><h2>Leadership Message</h2><p>Principal or school administrator welcome message.</p></div></div>
         <div class="cm-fields">
             <label class="cm-field"><span>Section label</span><input name="leadership_kicker" value="{{ old('leadership_kicker', $content['leadership_kicker']) }}" maxlength="80" required></label>
             <label class="cm-field"><span>Heading</span><input name="leadership_heading" value="{{ old('leadership_heading', $content['leadership_heading']) }}" maxlength="180" required></label>
@@ -104,7 +121,7 @@
     </section>
 
     <section class="cm-editor-section">
-        <div class="cm-editor-section__title"><span>7</span><div><h2>Community & Final Links</h2><p>Short summary and calls to action.</p></div></div>
+        <div class="cm-editor-section__title"><span>8</span><div><h2>Community & Final Links</h2><p>Short summary and calls to action.</p></div></div>
         <div class="cm-fields">
             <label class="cm-field"><span>Community heading</span><input name="community_heading" value="{{ old('community_heading', $content['community_heading']) }}" maxlength="180" required></label>
             <label class="cm-field"><span>Community text</span><textarea name="community_text" rows="5" maxlength="2000" required>{{ old('community_text', $content['community_text']) }}</textarea></label>

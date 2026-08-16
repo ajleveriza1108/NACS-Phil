@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\StaffAccess;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,17 +45,43 @@ class User extends Authenticatable
             return null;
         }
 
-        return $this->role ?: 'super_admin';
+        $role = trim((string) $this->role);
+
+        // Backward compatibility for the original administrator account.
+        // New privileged accounts are always created with an explicit role.
+        if ($role === '') {
+            return 'super_admin';
+        }
+
+        return StaffAccess::isKnownRole($role) ? $role : null;
     }
 
     public function staffRoleLabel(): string
     {
-        return match ($this->staffRole()) {
-            'super_admin' => 'Super Admin',
-            'principal' => 'Principal / School Admin',
-            'teacher' => 'Teacher / Content Editor',
-            default => 'Not authorized',
-        };
+        return StaffAccess::ROLE_LABELS[$this->staffRole()] ?? 'Not authorized';
+    }
+
+    public function staffRoleDescription(): string
+    {
+        return StaffAccess::ROLE_DESCRIPTIONS[$this->staffRole()] ?? 'No privileged access is assigned.';
+    }
+
+    public function hasStaffPermission(string $permission): bool
+    {
+        return $this->is_admin === true
+            && $this->is_active !== false
+            && StaffAccess::roleHasPermission($this->staffRole(), $permission);
+    }
+
+    public function hasAnyStaffPermission(array $permissions): bool
+    {
+        foreach ($permissions as $permission) {
+            if ($this->hasStaffPermission((string) $permission)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function isSuperAdmin(): bool
@@ -72,26 +99,33 @@ class User extends Authenticatable
         return $this->staffRole() === 'teacher';
     }
 
+    public function isSpecializedEditor(): bool
+    {
+        return str_ends_with((string) $this->staffRole(), '_editor');
+    }
+
     public function canManageSchoolSettings(): bool
     {
-        return $this->is_active !== false
-            && in_array($this->staffRole(), ['super_admin', 'principal'], true);
+        return $this->hasStaffPermission('settings.manage');
     }
 
     public function canManageStaff(): bool
     {
-        return $this->is_active !== false && $this->isSuperAdmin();
+        return $this->hasStaffPermission('staff.manage');
     }
 
     public function canPostDailyContent(): bool
     {
-        return $this->is_active !== false
-            && in_array($this->staffRole(), ['super_admin', 'principal', 'teacher'], true);
+        return $this->hasAnyStaffPermission([
+            'news.manage',
+            'events.manage',
+            'media.manage',
+        ]);
     }
 
     public function requiresTwoFactorRecommendation(): bool
     {
-        return in_array($this->staffRole(), ['super_admin', 'principal'], true);
+        return $this->is_admin === true && $this->is_active !== false;
     }
 
     public function twoFactorEnabled(): bool

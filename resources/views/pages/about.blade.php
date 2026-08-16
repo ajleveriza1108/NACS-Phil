@@ -10,7 +10,7 @@
             <h1>{{ $aboutContent['hero_heading'] }} <span>{{ $aboutContent['hero_highlight'] }}</span></h1>
             <p>{{ $aboutContent['hero_lead'] }}</p>
             <div class="about-hero__actions">
-                <a class="about-button about-button--primary" href="#about-story">Our Story <span aria-hidden="true">&darr;</span></a>
+                <a class="about-button about-button--primary" href="#about-story">Our History <span aria-hidden="true">&darr;</span></a>
                 <a class="about-button about-button--secondary" href="{{ route('contact') }}">Contact the School <span aria-hidden="true">&rarr;</span></a>
             </div>
         </div>
@@ -102,6 +102,25 @@
     </div>
 </section>
 
+<section class="about-distinctives">
+    <div class="about-shell">
+        <div class="about-distinctives__head" data-about-reveal>
+            <span class="about-kicker">{{ $aboutContent['distinctives_kicker'] }}</span>
+            <h2>{{ $aboutContent['distinctives_heading'] }}</h2>
+            <p>{{ $aboutContent['distinctives_intro'] }}</p>
+        </div>
+        <div class="about-distinctives__grid">
+            @foreach([1,2,3,4] as $number)
+                <article class="about-distinctive" data-about-reveal>
+                    <span class="about-distinctive__icon" aria-hidden="true">0{{ $number }}</span>
+                    <h3>{{ $aboutContent['distinctive_'.$number.'_title'] }}</h3>
+                    <p>{{ $aboutContent['distinctive_'.$number.'_text'] }}</p>
+                </article>
+            @endforeach
+        </div>
+        <p class="about-distinctives__note">{{ $aboutContent['distinctives_note'] }}</p>
+    </div>
+</section>
 <section class="about-section about-section--leadership">
     <div class="about-shell about-leadership">
         <div class="about-leadership__portrait" data-about-reveal>

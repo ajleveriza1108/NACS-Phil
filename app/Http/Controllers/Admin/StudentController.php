@@ -7,6 +7,7 @@ use App\Models\AdmissionApplication;
 use App\Models\Student;
 use App\Models\User;
 use App\Support\StudentAccess;
+use App\Services\RegistrationInvitationService;
 use App\Support\StudentAudit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
+
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -42,7 +43,7 @@ class StudentController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, RegistrationInvitationService $registration): RedirectResponse
     {
         $actor = $request->user();
         abort_unless(StudentAccess::canCreateStudent($actor), 403);
@@ -71,10 +72,7 @@ class StudentController extends Controller
                     }
                 },
             ],
-            'temporary_password' => [
-                'required_with:student_email','nullable','confirmed',
-                Password::min(12)->letters()->mixedCase()->numbers()->symbols(),
-            ],
+
         ]);
 
         $student = DB::transaction(function () use ($actor, $data): Student {
@@ -84,13 +82,13 @@ class StudentController extends Controller
                 $studentUser = User::create([
                     'name' => trim($data['first_name'].' '.$data['last_name']),
                     'email' => Str::lower($data['student_email']),
-                    'password' => Hash::make($data['temporary_password']),
+                    'password' => Hash::make(Str::random(64)),
                     'is_admin' => false,
                     'role' => 'student',
-                    'is_active' => true,
-                    'email_verified_at' => now(),
-                    'password_changed_at' => now(),
-                    'force_password_reset' => true,
+                    'is_active' => false,
+                    'email_verified_at' => null,
+                    'password_changed_at' => null,
+                    'force_password_reset' => false,
                 ]);
             }
 
@@ -138,17 +136,58 @@ class StudentController extends Controller
             return $student;
         });
 
+        if ($student->user) {
+            try {
+                $registration->issue($student->user, $actor);
+            } catch (\Throwable $exception) {
+                report($exception);
+
+                return redirect()->route('admin.students.show', $student)
+                    ->with('warning', 'Student record was created, but the portal registration email could not be sent. Use Resend registration email after mail is configured.');
+            }
+        }
+
         return redirect()->route('admin.students.show', $student)
-            ->with('success', 'Student record created.');
+            ->with('success', $student->user
+                ? 'Student record created. The portal account stays inactive until the strong password and email OTP steps are completed.'
+                : 'Student record created.');
     }
 
+
+    public function resendPortalRegistration(
+        Request $request,
+        Student $student,
+        RegistrationInvitationService $registration
+    ): RedirectResponse {
+        abort_unless(StudentAccess::canManageProfile($request->user(), $student), 403);
+
+        $student->loadMissing('user');
+
+        if (! $student->user) {
+            return back()->withErrors(['registration' => 'This student does not have a portal email account to verify.']);
+        }
+
+        if ($student->user->email_verified_at !== null || $student->user->is_active === true) {
+            return back()->withErrors(['registration' => 'This student portal account is already verified or active.']);
+        }
+
+        try {
+            $registration->issue($student->user, $request->user());
+        } catch (\Throwable $exception) {
+            report($exception);
+
+            return back()->withErrors(['registration' => 'The registration email could not be sent. Check the school mail configuration and try again.']);
+        }
+
+        return back()->with('success', 'A fresh student portal registration invitation was sent to '.$student->user->email.'.');
+    }
     public function show(Request $request, Student $student): View
     {
         $actor = $request->user();
         abort_unless(StudentAccess::canViewStudent($actor, $student), 403);
 
         $student->load([
-            'user:id,name,email,is_active,role',
+            'user:id,name,email,is_active,role,email_verified_at',
             'assignments.teacher:id,name,email,role,is_active',
             'grades.teacher:id,name',
             'attendances.recorder:id,name',

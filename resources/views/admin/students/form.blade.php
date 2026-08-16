@@ -23,38 +23,23 @@
         <label><span>Date of birth</span><input type="date" name="date_of_birth" value="{{ old('date_of_birth', optional($student->date_of_birth)->format('Y-m-d')) }}"></label>
         <label><span>Gender</span><input name="gender" value="{{ old('gender', $student->gender) }}" maxlength="32"></label>
         <label><span>Phone</span><input name="phone" value="{{ old('phone', $student->phone) }}" maxlength="64"></label>
-        <label>
-            <span>Grade level</span>
-            <select name="grade_level" required>
-                @foreach($levels as $level)
-                    <option value="{{ $level }}" @selected(old('grade_level', $student->grade_level) === $level)>{{ $level }}</option>
-                @endforeach
-            </select>
-        </label>
+        <label><span>Grade level</span><select name="grade_level" required>@foreach($levels as $level)<option value="{{ $level }}" @selected(old('grade_level', $student->grade_level) === $level)>{{ $level }}</option>@endforeach</select></label>
         <label><span>Section</span><input name="section" value="{{ old('section', $student->section) }}" maxlength="100"></label>
         <label><span>School year</span><input name="school_year" value="{{ old('school_year', $student->school_year) }}" placeholder="2026-2027" required maxlength="32"></label>
-        <label>
-            <span>Status</span>
-            <select name="status" required>
-                @foreach(['active','inactive','graduated','withdrawn'] as $status)
-                    <option value="{{ $status }}" @selected(old('status', $student->status ?: 'active') === $status)>{{ ucfirst($status) }}</option>
-                @endforeach
-            </select>
-        </label>
+        <label><span>Status</span><select name="status" required>@foreach(['active','inactive','graduated','withdrawn'] as $status)<option value="{{ $status }}" @selected(old('status', $student->status ?: 'active') === $status)>{{ ucfirst($status) }}</option>@endforeach</select></label>
     </div>
 
     <label><span>Home address</span><textarea name="home_address" rows="3" maxlength="1000">{{ old('home_address', $student->home_address) }}</textarea></label>
 
     @unless($student->exists)
-        <fieldset class="sis-fieldset">
-            <legend>Optional student portal account</legend>
-            <p>If NACS later configures a school email domain, the email below must use that domain.</p>
-            <div class="sis-form-grid">
-                <label><span>Registered student email</span><input type="email" name="student_email" value="{{ old('student_email') }}" maxlength="150"></label>
-                <label><span>Temporary password</span><input type="password" name="temporary_password" autocomplete="new-password"></label>
-                <label><span>Confirm temporary password</span><input type="password" name="temporary_password_confirmation" autocomplete="new-password"></label>
-            </div>
-        </fieldset>
+    <fieldset class="sis-fieldset">
+        <legend>Student portal account</legend>
+        <p>When a registered student email is supplied, the portal account stays inactive until the student creates a strong password and verifies a 6-digit OTP sent to that email.</p>
+        <div class="sis-form-grid">
+            <label><span>Registered student email</span><input type="email" name="student_email" value="{{ old('student_email') }}" maxlength="150" autocomplete="email"><small>If a school email domain is configured, this address must use it.</small></label>
+        </div>
+        <p class="sis-help"><strong>Password security:</strong> 12 to 128 characters, uppercase and lowercase letters, number, symbol, confirmation, and no student name/email/student number.</p>
+    </fieldset>
     @endunless
 
     <button type="submit" class="sis-primary">{{ $student->exists ? 'Save student profile' : 'Register student' }}</button>

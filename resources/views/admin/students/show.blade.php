@@ -14,7 +14,21 @@
 </div>
 
 <div class="sis-summary-grid">
-    <article class="sis-panel"><small>Portal email</small><strong>{{ $student->user?->email ?: 'Not created' }}</strong></article>
+    <article class="sis-panel">
+        <small>Portal email</small>
+        <strong>{{ $student->user?->email ?: 'Not created' }}</strong>
+        @if($student->user && !$student->user->email_verified_at)
+            <span class="p12-badge p12-badge--warn">Registration / email OTP pending</span>
+            @if($canManageProfile)
+                <form method="POST" action="{{ route('admin.students.resend-registration', $student) }}" style="margin-top:10px">
+                    @csrf
+                    <button type="submit" class="sis-secondary">Resend registration email</button>
+                </form>
+            @endif
+        @elseif($student->user?->email_verified_at)
+            <span class="p12-badge p12-badge--good">Email verified</span>
+        @endif
+    </article>
     <article class="sis-panel"><small>Status</small><strong>{{ ucfirst($student->status) }}</strong></article>
     @if($canManageFinance)
         <article class="sis-panel"><small>Current balance</small><strong>₱{{ number_format($student->balance(), 2) }}</strong></article>

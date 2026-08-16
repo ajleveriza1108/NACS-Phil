@@ -27,7 +27,7 @@ Route::prefix('portal')->name('portal.')->middleware('portal')->group(function (
     Route::post('/logout', [PortalAuthController::class, 'destroy'])->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function (): void {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'staff_permission:students.manage'])->group(function (): void {
     Route::get('/students', [AdminStudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [AdminStudentController::class, 'create'])->name('students.create');
     Route::post('/students', [AdminStudentController::class, 'store'])->name('students.store');
@@ -35,6 +35,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/students/{student}/edit', [AdminStudentController::class, 'edit'])->name('students.edit');
     Route::patch('/students/{student}', [AdminStudentController::class, 'update'])->name('students.update');
 
+    Route::post('/students/{student}/resend-registration', [AdminStudentController::class, 'resendPortalRegistration'])->middleware('throttle:3,60')->name('students.resend-registration');
     Route::post('/students/{student}/grades', [StudentGradeController::class, 'store'])->name('students.grades.store');
     Route::delete('/students/{student}/grades/{grade}', [StudentGradeController::class, 'destroy'])->name('students.grades.destroy');
     Route::post('/students/{student}/attendance', [StudentAttendanceController::class, 'store'])->name('students.attendance.store');

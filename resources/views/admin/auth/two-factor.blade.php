@@ -9,6 +9,8 @@
     <title>Two-Factor Authentication | NACS-Phil</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('assets/phase39-auth/auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
+    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
 </head>
 <body class="nacs-auth-body">
     <a href="#nacs-auth-main" class="nacs-auth-skip">Skip to verification form</a>

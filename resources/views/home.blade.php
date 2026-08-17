@@ -7,6 +7,9 @@
 @endforeach
 </style>
 @endif
+@if(!empty($homeStyleCss))
+<style data-nacs-home-editor-styles>{!! $homeStyleCss !!}</style>
+@endif
 <section class="hero p18-hero">
     <div class="hero__mesh" aria-hidden="true"></div>
     <div class="hero__glow hero__glow--one" aria-hidden="true"></div>
@@ -109,9 +112,9 @@
                 <p><span data-visual-field="why_intro">{{ $homeContent['why_intro'] }}</span></p>
 
                 <ul class="p18-about__points">
-                    <li><span aria-hidden="true">+</span><strong><span data-visual-field="why_2_title">{{ $homeContent['why_2_title'] }}</span></strong></li>
-                    <li><span aria-hidden="true">+</span><strong><span data-visual-field="why_3_title">{{ $homeContent['why_3_title'] }}</span></strong></li>
-                    <li><span aria-hidden="true">+</span><strong><span data-visual-field="why_4_title">{{ $homeContent['why_4_title'] }}</span></strong></li>
+                    <li data-visual-frame="why_2_title"><span aria-hidden="true">+</span><strong><span data-visual-field="why_2_title" data-visual-fit="single-line">{{ $homeContent['why_2_title'] }}</span></strong></li>
+                    <li data-visual-frame="why_3_title"><span aria-hidden="true">+</span><strong><span data-visual-field="why_3_title" data-visual-fit="single-line">{{ $homeContent['why_3_title'] }}</span></strong></li>
+                    <li data-visual-frame="why_4_title"><span aria-hidden="true">+</span><strong><span data-visual-field="why_4_title" data-visual-fit="single-line">{{ $homeContent['why_4_title'] }}</span></strong></li>
                 </ul>
 
                 <a class="button button--secondary button--small" href="{{ route('about') }}">

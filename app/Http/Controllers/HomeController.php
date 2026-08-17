@@ -17,6 +17,7 @@ class HomeController extends Controller
         return view('home', [
             'homeContent' => SiteContent::valuesFor('home', HomeContent::defaults()),
             'homeHiddenFields' => HomeEditorState::hiddenFields(),
+            'homeStyleCss' => HomeEditorState::styleCss(),
             'featuredAnnouncement' => Announcement::published()
                 ->where('is_featured', true)
                 ->orderByDesc('is_pinned')

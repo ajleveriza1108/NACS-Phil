@@ -11,9 +11,9 @@
         @method('PATCH')
 
         <div class="ve-panel__head">
-            <span class="ve-lock">LOCKED DESIGN</span>
-            <h1>Visual Homepage Editor</h1>
-            <p>Click editable wording in the live page or use the fields below. Dashboard and operational school-management pages stay outside this visual editor.</p>
+            <span class="ve-lock ve59-pro-badge">LOCKED DESIGN / PRO RESPONSIVE EDITOR</span>
+            <h1>Professional Homepage Editor</h1>
+            <p>Select text directly in the live page, edit content, and use the responsive inspector to tune typography and text frames for desktop, tablet, and phone. Dashboard and operational school-management pages stay outside this editor.</p>
             <div class="ve58-bar" aria-label="Editor recovery tools">
                 <button type="button" data-ve-undo title="Ctrl+Z">Undo</button>
                 <button type="button" data-ve-redo title="Ctrl+Y">Redo</button>
@@ -36,6 +36,7 @@
         <div data-ve-hidden-host>
             @foreach($hiddenFields as $hiddenField)<input type="hidden" name="hidden_fields[]" value="{{ $hiddenField }}" data-ve-hidden-initial>@endforeach
         </div>
+        <textarea name="style_overrides" data-ve-style-overrides hidden>{{ json_encode($styleOverrides, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</textarea>
         <section class="ve58-drawer"><h2>Hidden Elements</h2><p>Hide is reversible. Nothing here is permanently deleted.</p><div data-ve-hidden-list></div><button type="button" data-ve-restore-all>Restore All Hidden Elements</button></section>
         <section class="ve58-drawer"><h2>Revision History</h2><p>Every Publish creates a recoverable server revision.</p>
             @forelse($revisions as $revision)
@@ -126,8 +127,8 @@
     <section class="ve-stage">
         <div class="ve-toolbar">
             <div>
-                <strong>Live page</strong>
-                <small class="ve-help">Click editable text directly in the page.</small>
+                <strong>Live responsive page</strong>
+                <small class="ve-help">Click editable text to select it. Fit health is measured from the real preview.</small>
             </div>
             <div class="ve-toolbar__devices" aria-label="Preview width">
                 <button type="button" class="is-active" data-ve-device="desktop">Desktop</button>
@@ -135,13 +136,119 @@
                 <button type="button" data-ve-device="phone">Phone</button>
             </div>
         </div>
-        <div class="ve-frame-wrap" data-ve-frame-wrap data-device="desktop">
-            <iframe
-                class="ve-frame"
-                src="{{ route('home', ['visual_preview' => 1]) }}"
-                title="Live homepage visual editor preview"
-                data-ve-frame
-            ></iframe>
+
+        <div class="ve59-workspace">
+            <div class="ve-frame-wrap" data-ve-frame-wrap data-device="desktop">
+                <iframe
+                    class="ve-frame"
+                    src="{{ route('home', ['visual_preview' => 1]) }}"
+                    title="Live homepage visual editor preview"
+                    data-ve-frame
+                ></iframe>
+            </div>
+
+            <aside class="ve59-inspector" data-ve-pro-inspector aria-label="Professional responsive inspector">
+                <div class="ve59-inspector__head">
+                    <span>PRO INSPECTOR</span>
+                    <strong data-ve-selected-label>Select an element</strong>
+                    <small data-ve-selected-field>Click text in the preview or focus a content field.</small>
+                </div>
+
+                <div class="ve59-fit-health" data-ve-fit-health>
+                    <span class="ve59-fit-dot" aria-hidden="true"></span>
+                    <strong>Fit health ready</strong>
+                    <small>Responsive overflow and awkward wrapping are monitored in the preview.</small>
+                </div>
+
+                <div class="ve59-smart-actions">
+                    <button type="button" data-ve-auto-fit>Smart Auto Fit</button>
+                    <button type="button" data-ve-auto-fit-all>Fit All Alerts</button>
+                    <button type="button" data-ve-reset-style>Reset Device Style</button>
+                    <button type="button" data-ve-reset-style-all>Reset All Styles</button>
+                </div>
+
+                <div class="ve59-scope" aria-label="Responsive style scope">
+                    <button type="button" class="is-active" data-ve-style-scope="base">Desktop Base</button>
+                    <button type="button" data-ve-style-scope="tablet">Tablet</button>
+                    <button type="button" data-ve-style-scope="phone">Phone</button>
+                </div>
+
+                <fieldset class="ve59-controls" data-ve-pro-controls disabled>
+                    <legend>Typography</legend>
+
+                    <label>
+                        <span>Font size <output data-ve-pro-output="font_size">Theme</output></span>
+                        <input type="range" min="10" max="72" step="0.5" value="16" data-ve-pro-control data-prop="font_size">
+                    </label>
+
+                    <label>
+                        <span>Line height <output data-ve-pro-output="line_height">Theme</output></span>
+                        <input type="range" min="0.8" max="2.2" step="0.05" value="1.2" data-ve-pro-control data-prop="line_height">
+                    </label>
+
+                    <label>
+                        <span>Letter spacing <output data-ve-pro-output="letter_spacing">Theme</output></span>
+                        <input type="range" min="-2" max="6" step="0.1" value="0" data-ve-pro-control data-prop="letter_spacing">
+                    </label>
+
+                    <label>
+                        <span>Weight</span>
+                        <select data-ve-pro-control data-prop="font_weight">
+                            <option value="">Theme default</option>
+                            <option value="400">Regular 400</option>
+                            <option value="500">Medium 500</option>
+                            <option value="600">Semi-bold 600</option>
+                            <option value="700">Bold 700</option>
+                            <option value="800">Extra-bold 800</option>
+                            <option value="900">Black 900</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Alignment</span>
+                        <select data-ve-pro-control data-prop="text_align">
+                            <option value="">Theme default</option>
+                            <option value="left">Left</option>
+                            <option value="center">Center</option>
+                            <option value="right">Right</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Text flow</span>
+                        <select data-ve-pro-control data-prop="flow">
+                            <option value="">Theme default</option>
+                            <option value="normal">Responsive wrap</option>
+                            <option value="nowrap">Keep on one line</option>
+                            <option value="balance">Balanced heading</option>
+                        </select>
+                    </label>
+
+                    <legend>Text Frame</legend>
+
+                    <label>
+                        <span>Maximum width <output data-ve-pro-output="max_width">Auto</output></span>
+                        <input type="range" min="0" max="1200" step="10" value="0" data-ve-pro-control data-prop="max_width">
+                    </label>
+
+                    <label>
+                        <span>Minimum height <output data-ve-pro-output="min_height">Auto</output></span>
+                        <input type="range" min="0" max="500" step="5" value="0" data-ve-pro-control data-prop="min_height">
+                    </label>
+
+                    <label>
+                        <span>Horizontal padding <output data-ve-pro-output="padding_x">Theme</output></span>
+                        <input type="range" min="0" max="80" step="1" value="0" data-ve-pro-control data-prop="padding_x">
+                    </label>
+
+                    <label>
+                        <span>Vertical padding <output data-ve-pro-output="padding_y">Theme</output></span>
+                        <input type="range" min="0" max="80" step="1" value="0" data-ve-pro-control data-prop="padding_y">
+                    </label>
+                </fieldset>
+
+                <p class="ve59-inspector__note">Professional controls are allowlisted and range-limited. Navigation, code, permissions, Dashboard, and operational school records cannot be edited here.</p>
+            </aside>
         </div>
     </section>
     <div class="ve58-toast" data-ve-premium-toast hidden></div>

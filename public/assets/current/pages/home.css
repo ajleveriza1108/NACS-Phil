@@ -4398,4 +4398,51 @@ html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public [data-nacs-rev
     box-shadow:none!important;
   }
 }
-
+/* Phase 59 - responsive value labels + editor-aware text fitting */
+.p18-about__points li{
+    display:grid;
+    grid-template-columns:36px minmax(0,1fr);
+    align-items:center;
+    gap:12px;
+    min-width:0;
+    font-size:inherit;
+}
+.p18-about__points li>span[aria-hidden="true"]{
+    width:36px;
+    height:36px;
+    flex:none;
+}
+.p18-about__points li strong{
+    min-width:0;
+    display:block;
+    font-size:clamp(14px,1.35vw,18px);
+    line-height:1.16;
+    letter-spacing:-.015em;
+}
+.p18-about__points [data-visual-fit="single-line"]{
+    display:inline-block;
+    max-width:100%;
+    white-space:nowrap;
+    text-wrap:nowrap;
+    overflow-wrap:normal;
+}
+@media(max-width:560px){
+    .p18-about__points{gap:10px}
+    .p18-about__points li{
+        grid-template-columns:38px minmax(0,1fr);
+        gap:11px;
+    }
+    .p18-about__points li>span[aria-hidden="true"]{
+        width:38px;
+        height:38px;
+    }
+    .p18-about__points li strong{
+        font-size:clamp(14px,4.4vw,17px);
+        line-height:1.12;
+    }
+}
+@media(max-width:360px){
+    .p18-about__points li strong{
+        font-size:clamp(13px,4.15vw,15px);
+    }
+}

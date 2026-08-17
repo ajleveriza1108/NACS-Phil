@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\LogSecurityEvents;
+use App\Http\Middleware\RequirePrivilegedTwoFactor;
 use App\Http\Middleware\VerifyTurnstile;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsurePortalUser;
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'portal' => EnsurePortalUser::class,
             'staff_role' => EnsureStaffRole::class,
             'staff_permission' => EnsureStaffPermission::class,
+            'privileged_2fa' => RequirePrivilegedTwoFactor::class,
             'admission.access' => EnsureAdmissionAccess::class,
             'turnstile' => VerifyTurnstile::class,
         ]);

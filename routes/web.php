@@ -79,7 +79,7 @@ Route::post('/admissions/track/logout', [AdmissionApplicationController::class, 
 Route::middleware('admission.access')->group(function (): void {
     Route::get('/admissions/status/{application}', [AdmissionApplicationController::class, 'show'])->name('admissions.status');
     Route::post('/admissions/status/{application}/documents', [AdmissionApplicationController::class, 'uploadDocument'])->middleware('throttle:5,60')->name('admissions.documents.store');
-    Route::delete('/admissions/status/{application}/documents/{document}', [AdmissionApplicationController::class, 'destroyDocument'])->name('admissions.documents.destroy');
+    Route::delete('/admissions/status/{application}/documents/{document}', [AdmissionApplicationController::class, 'destroyDocument'])->middleware('throttle:nacs-sensitive-write')->name('admissions.documents.destroy');
 });
 
 Route::middleware('guest')->group(function (): void {
@@ -106,7 +106,7 @@ Route::middleware('guest')->group(function (): void {
         ->name('admin.two-factor.verify');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function (): void {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'privileged_2fa'])->group(function (): void {
     Route::get('/', AdminDashboardController::class)->name('dashboard');
     Route::post('/logout', [AdminAuthController::class, 'destroy'])->name('logout');
 
@@ -133,8 +133,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::middleware('staff_permission:media.manage')->group(function (): void {
         Route::get('/media', [AdminMediaAssetController::class, 'index'])->name('media.index');
         Route::get('/media/create', [AdminMediaAssetController::class, 'create'])->name('media.create');
-        Route::post('/media', [AdminMediaAssetController::class, 'store'])->name('media.store');
-        Route::delete('/media/{medium}', [AdminMediaAssetController::class, 'destroy'])->name('media.destroy');
+        Route::post('/media', [AdminMediaAssetController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('media.store');
+        Route::delete('/media/{medium}', [AdminMediaAssetController::class, 'destroy'])->middleware('throttle:nacs-sensitive-write')->name('media.destroy');
         Route::resource('facebook-media', AdminFacebookMediaController::class)->except('show');
     });
 
@@ -221,8 +221,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::middleware('staff_permission:branding.manage')->group(function (): void {
         Route::get('/branding', [AdminBrandingController::class, 'edit'])->name('branding.edit');
-        Route::post('/branding/logo', [AdminBrandingController::class, 'store'])->name('branding.store');
-        Route::delete('/branding/logo', [AdminBrandingController::class, 'destroy'])->name('branding.destroy');
+        Route::post('/branding/logo', [AdminBrandingController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('branding.store');
+        Route::delete('/branding/logo', [AdminBrandingController::class, 'destroy'])->middleware('throttle:nacs-sensitive-write')->name('branding.destroy');
     });
 
     Route::middleware('staff_permission:settings.manage')->group(function (): void {
@@ -234,11 +234,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::middleware('staff_permission:staff.manage')->group(function (): void {
         Route::get('/staff', [AdminStaffController::class, 'index'])->name('staff.index');
         Route::get('/staff/create', [AdminStaffController::class, 'create'])->name('staff.create');
-        Route::post('/staff', [AdminStaffController::class, 'store'])->name('staff.store');
+        Route::post('/staff', [AdminStaffController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('staff.store');
         Route::get('/staff/{staff}/edit', [AdminStaffController::class, 'edit'])->name('staff.edit');
-        Route::patch('/staff/{staff}', [AdminStaffController::class, 'update'])->name('staff.update');
+        Route::patch('/staff/{staff}', [AdminStaffController::class, 'update'])->middleware('throttle:nacs-sensitive-write')->name('staff.update');
         Route::post('/staff/{staff}/resend-registration', [AdminStaffController::class, 'resendRegistration'])->middleware('throttle:3,60')->name('staff.resend-registration');
-        Route::post('/staff/{staff}/reset-two-factor', [AdminStaffController::class, 'resetTwoFactor'])->name('staff.reset-two-factor');
+        Route::post('/staff/{staff}/reset-two-factor', [AdminStaffController::class, 'resetTwoFactor'])->middleware('throttle:nacs-sensitive-write')->name('staff.reset-two-factor');
     });
 
     Route::get('/system-health', AdminSystemHealthController::class)

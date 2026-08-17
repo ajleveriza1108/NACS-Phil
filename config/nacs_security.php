@@ -33,6 +33,15 @@ return [
         ],
     ],
 
+    'privileged_2fa' => [
+        'required' => filter_var(env('NACS_PRIVILEGED_2FA_REQUIRED', false), FILTER_VALIDATE_BOOL),
+        'roles' => ['super_admin', 'principal'],
+        'activation_requires' => [
+            'tested recovery procedure',
+            'administrator training',
+            'verified authenticator enrollment',
+        ],
+    ],
     'future' => [
         'mobile_api' => [
             'status' => 'future_only',

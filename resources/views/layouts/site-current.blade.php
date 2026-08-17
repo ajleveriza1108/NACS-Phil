@@ -25,7 +25,14 @@
     @if($resolvedUseVite)
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+    @if($resolvedBundle === 'learning-tools')
+        <link rel="stylesheet" href="{{ asset('assets/current/pages/public.css') }}">
+    @endif
     <link rel="stylesheet" href="{{ asset('assets/current/pages/'.$resolvedBundle.'.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/current/phase56/visual-polish.css') }}">
+    @if($resolvedBundle === 'learning-tools')
+        <script src="{{ asset('assets/current/pages/public.js') }}" defer></script>
+    @endif
     <script src="{{ asset('assets/current/pages/'.$resolvedBundle.'.js') }}" defer></script>
     @include('partials.seo-meta')
 </head>

@@ -30,6 +30,7 @@
             <div class="nacs11-footer__links">
                 <a href="{{ route('calendar.index') }}">Academic Calendar</a>
                 <a href="{{ route('documents.index') }}">Documents</a>
+                <a href="{{ route('learning-tools.index') }}">Dictionary &amp; Grammar</a>
                 <a href="{{ route('announcements.index') }}">News</a>
                 <a href="{{ route('events.index') }}">Events</a>
                 <a href="{{ route('gallery.index') }}">Gallery</a>

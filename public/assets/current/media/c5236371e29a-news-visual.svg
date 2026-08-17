@@ -22,5 +22,5 @@
   <path d="M610 506h135M610 542h110M610 578h142" stroke="#725316" stroke-width="11" stroke-linecap="round" opacity=".6"/>
   <path d="M860 505h135M860 541h112M860 577h142" stroke="#577085" stroke-width="11" stroke-linecap="round" opacity=".55"/>
   <path d="M510 325C550 310 570 300 610 282M790 550h30" stroke="#d5a63f" stroke-width="8" stroke-linecap="round"/>
-  <g transform="translate(88 66)"><rect width="380" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL Â· NEWS + ANNOUNCEMENTS</text></g>
+  <g transform="translate(88 66)"><rect width="380" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL - NEWS + ANNOUNCEMENTS</text></g>
 </svg>

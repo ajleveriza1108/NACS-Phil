@@ -74,6 +74,12 @@ jobs:
       - name: Strict functional surface check
         run: php artisan nacs:functional-check --strict
 
+      - name: Security roadmap source gates
+        run: |
+          php artisan nacs:authorization-baseline --strict
+          php artisan nacs:input-abuse-baseline --strict
+          php artisan nacs:auth-session-baseline --strict
+          php artisan nacs:production-security-readiness --source-only --strict
       - name: Complete Laravel test suite
         run: php artisan test --stop-on-failure
 

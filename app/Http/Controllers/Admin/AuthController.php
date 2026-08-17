@@ -59,6 +59,8 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
+        // Phase 51: rotate the CSRF token after successful authentication.
+        $request->session()->regenerateToken();
         $user = $request->user();
 
         if ($user?->is_admin !== true || $user?->is_active === false) {

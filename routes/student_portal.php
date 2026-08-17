@@ -47,14 +47,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'staff_perm
     Route::delete('/students/{student}/photo', [StudentProfilePhotoController::class, 'destroy'])->middleware('throttle:10,10')->name('students.photo.destroy');
 
     Route::post('/students/{student}/resend-registration', [AdminStudentController::class, 'resendPortalRegistration'])->middleware('throttle:3,60')->name('students.resend-registration');
-    Route::post('/students/{student}/grades', [StudentGradeController::class, 'store'])->name('students.grades.store');
-    Route::delete('/students/{student}/grades/{grade}', [StudentGradeController::class, 'destroy'])->name('students.grades.destroy');
-    Route::post('/students/{student}/attendance', [StudentAttendanceController::class, 'store'])->name('students.attendance.store');
-    Route::post('/students/{student}/finance', [StudentFinanceController::class, 'store'])->name('students.finance.store');
-    Route::post('/students/{student}/assignments', [StudentAssignmentController::class, 'store'])->name('students.assignments.store');
-    Route::patch('/students/{student}/assignments/{assignment}/approve', [StudentAssignmentController::class, 'approve'])->name('students.assignments.approve');
-    Route::patch('/students/{student}/assignments/{assignment}/reject', [StudentAssignmentController::class, 'reject'])->name('students.assignments.reject');
-    Route::delete('/students/{student}/assignments/{assignment}', [StudentAssignmentController::class, 'destroy'])->name('students.assignments.destroy');
-    Route::post('/students/{student}/guardians', [StudentGuardianController::class, 'store'])->name('students.guardians.store');
-    Route::post('/students/{student}/documents', [StudentDocumentController::class, 'store'])->name('students.documents.store');
+    Route::post('/students/{student}/grades', [StudentGradeController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('students.grades.store');
+    Route::delete('/students/{student}/grades/{grade}', [StudentGradeController::class, 'destroy'])->middleware('throttle:nacs-sensitive-write')->name('students.grades.destroy');
+    Route::post('/students/{student}/attendance', [StudentAttendanceController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('students.attendance.store');
+    Route::post('/students/{student}/finance', [StudentFinanceController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('students.finance.store');
+    Route::post('/students/{student}/assignments', [StudentAssignmentController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('students.assignments.store');
+    Route::patch('/students/{student}/assignments/{assignment}/approve', [StudentAssignmentController::class, 'approve'])->middleware('throttle:nacs-sensitive-write')->name('students.assignments.approve');
+    Route::patch('/students/{student}/assignments/{assignment}/reject', [StudentAssignmentController::class, 'reject'])->middleware('throttle:nacs-sensitive-write')->name('students.assignments.reject');
+    Route::delete('/students/{student}/assignments/{assignment}', [StudentAssignmentController::class, 'destroy'])->middleware('throttle:nacs-sensitive-write')->name('students.assignments.destroy');
+    Route::post('/students/{student}/guardians', [StudentGuardianController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('students.guardians.store');
+    Route::post('/students/{student}/documents', [StudentDocumentController::class, 'store'])->middleware('throttle:nacs-sensitive-write')->name('students.documents.store');
 });

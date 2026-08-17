@@ -15,6 +15,7 @@ use Illuminate\View\View;
 
 class SecurityController extends Controller
 {
+    // Phase 51: rotate CSRF tokens after security-state transitions.
     public function index(Request $request): View
     {
         return view('admin.security.index', [
@@ -48,6 +49,7 @@ class SecurityController extends Controller
 
         $this->revokeOtherDatabaseSessions($request);
         $request->session()->regenerate();
+        $request->session()->regenerateToken();
 
         app(SecurityEventLogger::class)->record($request, 'auth.password.changed', 'notice', [
             'action' => 'admin_password_change',
@@ -97,6 +99,7 @@ class SecurityController extends Controller
 
         $request->session()->forget('two_factor_setup_secret');
         $request->session()->regenerate();
+        $request->session()->regenerateToken();
 
         app(SecurityEventLogger::class)->record($request, 'auth.2fa.enabled', 'notice');
 
@@ -144,6 +147,7 @@ class SecurityController extends Controller
         ])->save();
 
         $request->session()->regenerate();
+        $request->session()->regenerateToken();
 
         app(SecurityEventLogger::class)->record($request, 'auth.2fa.disabled', 'warning');
 
@@ -212,6 +216,7 @@ class SecurityController extends Controller
         auth()->login($user, false);
         $request->session()->forget('admin_2fa_pending_user_id');
         $request->session()->regenerate();
+        $request->session()->regenerateToken();
 
         app(SecurityEventLogger::class)->record($request, 'auth.2fa.challenge_success', 'info');
 

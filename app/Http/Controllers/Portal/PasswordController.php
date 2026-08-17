@@ -39,6 +39,8 @@ class PasswordController extends Controller
         }
 
         $request->session()->regenerate();
+        // Phase 51: rotate the CSRF token after the password transition.
+        $request->session()->regenerateToken();
 
         app(SecurityEventLogger::class)->record($request, 'auth.password.changed', 'notice', [
             'action' => 'portal_password_change',

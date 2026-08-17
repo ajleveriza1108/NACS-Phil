@@ -27,5 +27,5 @@
   </g>
   <path d="M210 670c145-95 300-103 455-35s285 55 390-42" fill="none" stroke="#d5a63f" stroke-width="9" stroke-linecap="round" opacity=".78"/>
   <circle cx="215" cy="667" r="13" fill="#061d3b"/><circle cx="664" cy="634" r="13" fill="#061d3b"/><circle cx="1050" cy="592" r="13" fill="#061d3b"/>
-  <g transform="translate(90 65)"><rect width="360" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL Â· ABOUT PAGE CONCEPT</text></g>
+  <g transform="translate(90 65)"><rect width="360" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL - ABOUT PAGE CONCEPT</text></g>
 </svg>

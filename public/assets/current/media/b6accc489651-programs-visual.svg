@@ -26,7 +26,7 @@
     <circle cx="125" cy="100" r="65" fill="#fff" fill-opacity=".16"/>
     <text x="125" y="112" text-anchor="middle" font-family="Arial,sans-serif" font-size="38" font-weight="900" fill="#fff">123</text>
     <text x="125" y="212" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="800" fill="#fff">ELEMENTARY</text>
-    <text x="125" y="242" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#e7f2f8">GRADES 1â€“6</text>
+    <text x="125" y="242" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#e7f2f8">GRADES 1-6</text>
   </g>
   <g transform="translate(780 185)">
     <rect width="250" height="375" rx="32" fill="url(#navy)"/>
@@ -34,8 +34,8 @@
     <rect x="115" y="63" width="20" height="112" rx="4" fill="#fff"/>
     <rect x="80" y="101" width="90" height="20" rx="4" fill="#fff"/>
     <text x="125" y="252" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="800" fill="#fff">JUNIOR HIGH</text>
-    <text x="125" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#cfe0ec">GRADES 7â€“10</text>
+    <text x="125" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#cfe0ec">GRADES 7-10</text>
   </g>
   <circle cx="265" cy="594" r="14" fill="#061d3b"/><circle cx="640" cy="552" r="14" fill="#061d3b"/><circle cx="990" cy="500" r="14" fill="#061d3b"/>
-  <g transform="translate(88 66)"><rect width="380" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL Â· LEARNING PATHWAYS</text></g>
+  <g transform="translate(88 66)"><rect width="380" height="44" rx="22" fill="#061d3b" fill-opacity=".82"/><circle cx="24" cy="22" r="7" fill="#e6c46b"/><text x="44" y="28" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">NACS-PHIL - LEARNING PATHWAYS</text></g>
 </svg>

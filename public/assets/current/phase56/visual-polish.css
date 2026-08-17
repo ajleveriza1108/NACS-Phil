@@ -1,0 +1,196 @@
+/*
+ * NACS-Phil Phase 56 - Visual UX & Encoding Polish
+ * Cross-page overrides intentionally load AFTER each page bundle.
+ */
+
+/* Desktop Resources menu: remove the duplicate/custom caret and native marker. */
+.nacs11-menu > summary,
+.nacs16-resources > summary {
+    list-style: none !important;
+}
+
+.nacs11-menu > summary::-webkit-details-marker,
+.nacs16-resources > summary::-webkit-details-marker {
+    display: none !important;
+}
+
+.nacs11-menu > summary::marker,
+.nacs16-resources > summary::marker {
+    content: "" !important;
+}
+
+.nacs11-menu > summary::after,
+.nacs16-resources > summary::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    transform: none !important;
+}
+
+/* Homepage About card: keep each value readable instead of squeezing words. */
+.nacs-home-phase1 .p18-about__points {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 11px !important;
+    width: 100% !important;
+    margin: 24px 0 26px !important;
+    padding: 0 !important;
+}
+
+.nacs-home-phase1 .p18-about__points li {
+    display: grid !important;
+    grid-template-columns: 32px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 17px !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+}
+
+.nacs-home-phase1 .p18-about__points li > span {
+    display: grid !important;
+    place-items: center !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 999px !important;
+    flex: none !important;
+    font-size: 15px !important;
+}
+
+.nacs-home-phase1 .p18-about__points li > strong {
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+}
+
+.nacs-home-phase1 .p18-about__copy > p:not(.p18-kicker) {
+    font-size: clamp(17px, 1.2vw, 20px) !important;
+    line-height: 1.75 !important;
+}
+
+.nacs-home-phase1 .p18-about__copy .p18-btn {
+    min-height: 52px !important;
+    padding: 14px 21px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+}
+
+/* Homepage values band: readable from normal desktop/laptop distance. */
+.nacs-home-phase1 .p18-values-band__grid {
+    gap: clamp(16px, 2vw, 30px) !important;
+}
+
+.nacs-home-phase1 .p18-value {
+    gap: 16px !important;
+    min-width: 0 !important;
+}
+
+.nacs-home-phase1 .p18-value__icon {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    font-size: 18px !important;
+}
+
+.nacs-home-phase1 .p18-values-band strong {
+    font-size: clamp(15px, 1vw, 17px) !important;
+    line-height: 1.25 !important;
+}
+
+.nacs-home-phase1 .p18-values-band small {
+    margin-top: 5px !important;
+    font-size: clamp(12px, .84vw, 14px) !important;
+    line-height: 1.4 !important;
+}
+
+/* Latest News + Upcoming Events: eliminate 7-10px display text. */
+.nacs-home-phase1 .p18-panel-heading .p18-kicker {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+}
+
+.nacs-home-phase1 .p18-panel-heading h2 {
+    font-size: clamp(26px, 2vw, 34px) !important;
+    line-height: 1.18 !important;
+}
+
+.nacs-home-phase1 .p18-panel-heading > a {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+}
+
+.nacs-home-phase1 .p18-date-badge small {
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+}
+
+.nacs-home-phase1 .p18-date-badge strong {
+    font-size: 20px !important;
+    line-height: 1 !important;
+}
+
+.nacs-home-phase1 .p18-news-card__category {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+}
+
+.nacs-home-phase1 .p18-news-card h3,
+.nacs-home-phase1 .p18-event-card h3 {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+}
+
+.nacs-home-phase1 .p18-news-card p,
+.nacs-home-phase1 .p18-event-card__meta {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+}
+
+/* Keep the two update panels comfortably readable without oversized whitespace. */
+.nacs-home-phase1 .p18-news-card,
+.nacs-home-phase1 .p18-event-card {
+    min-height: 92px !important;
+}
+
+/* Small screens: maintain readable typography and safe wrapping. */
+@media (max-width: 900px) {
+    .nacs-home-phase1 .p18-values-band strong {
+        font-size: 16px !important;
+    }
+
+    .nacs-home-phase1 .p18-values-band small {
+        font-size: 13px !important;
+    }
+
+    .nacs-home-phase1 .p18-panel-heading {
+        gap: 12px !important;
+        align-items: flex-start !important;
+    }
+}
+
+@media (max-width: 620px) {
+    .nacs-home-phase1 .p18-about__points li {
+        grid-template-columns: 30px minmax(0, 1fr) !important;
+        font-size: 16px !important;
+    }
+
+    .nacs-home-phase1 .p18-panel-heading h2 {
+        font-size: 25px !important;
+    }
+
+    .nacs-home-phase1 .p18-panel-heading > a {
+        font-size: 12px !important;
+    }
+}

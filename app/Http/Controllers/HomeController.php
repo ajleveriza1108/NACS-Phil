@@ -7,6 +7,7 @@ use App\Models\GalleryItem;
 use App\Models\SchoolEvent;
 use App\Models\SiteContent;
 use App\Support\HomeContent;
+use App\Support\HomeEditorState;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -15,6 +16,7 @@ class HomeController extends Controller
     {
         return view('home', [
             'homeContent' => SiteContent::valuesFor('home', HomeContent::defaults()),
+            'homeHiddenFields' => HomeEditorState::hiddenFields(),
             'featuredAnnouncement' => Announcement::published()
                 ->where('is_featured', true)
                 ->orderByDesc('is_pinned')

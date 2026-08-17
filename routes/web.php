@@ -182,6 +182,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'privileged
     Route::middleware('staff_permission:website.home')->group(function (): void {
         Route::get('/website-content', [AdminWebsiteContentController::class, 'edit'])->name('website-content.edit');
         Route::patch('/website-content', [AdminWebsiteContentController::class, 'update'])->name('website-content.update');
+        Route::patch('/website-content/reset-original', [AdminWebsiteContentController::class, 'resetOriginal'])->middleware('throttle:5,10')->name('website-content.reset-original');
+        Route::patch('/website-content/revisions/{revision}/restore', [AdminWebsiteContentController::class, 'restoreRevision'])->where('revision', '[A-Za-z0-9-]+')->middleware('throttle:10,10')->name('website-content.revisions.restore');
     });
 
     Route::middleware('staff_permission:website.about')->group(function (): void {

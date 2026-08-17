@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SiteContent;
 use App\Support\HomeContent;
+use App\Support\HomeEditorState;
 use App\Support\VisualEditorSchema;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +21,8 @@ class WebsiteContentController extends Controller
             'content' => SiteContent::valuesFor('home', HomeContent::defaults()),
             'schema' => VisualEditorSchema::home(),
             'imageRule' => VisualEditorSchema::homeImage(),
+            'hiddenFields' => HomeEditorState::hiddenFields(),
+            'revisions' => HomeEditorState::revisions(),
         ]);
     }
 
@@ -29,6 +33,8 @@ class WebsiteContentController extends Controller
         $rules['hero_image_focus_x'] = ['required', 'numeric', 'min:0', 'max:100'];
         $rules['hero_image_focus_y'] = ['required', 'numeric', 'min:0', 'max:100'];
         $rules['hero_image_zoom'] = ['required', 'numeric', 'min:1', 'max:2'];
+        $rules['hidden_fields'] = ['nullable', 'array', 'max:100'];
+        $rules['hidden_fields.*'] = ['string', Rule::in(HomeEditorState::hideableFields())];
         $rules['hero_image'] = [
             'nullable',
             'image',
@@ -48,7 +54,8 @@ class WebsiteContentController extends Controller
             'hero_image_authorized.accepted' => 'Confirm that the new homepage photograph is approved for website publication.',
         ]);
 
-        unset($validated['hero_image'], $validated['hero_image_authorized']);
+        $hiddenFields = is_array($validated['hidden_fields'] ?? null) ? $validated['hidden_fields'] : [];
+        unset($validated['hero_image'], $validated['hero_image_authorized'], $validated['hidden_fields']);
 
         $current = SiteContent::valuesFor('home', HomeContent::defaults());
 
@@ -66,6 +73,21 @@ class WebsiteContentController extends Controller
             SiteContent::storeValues('home', $validated);
         }
 
-        return back()->with('success', 'Homepage content saved. The layout remains locked; review the live page preview before publishing additional changes.');
+        HomeEditorState::setHiddenFields($hiddenFields);
+        HomeEditorState::recordRevision($request->user(), 'publish');
+
+        return back()->with('success', 'Homepage published. A recoverable revision was saved automatically.');
+    }
+
+    public function resetOriginal(Request $request): RedirectResponse
+    {
+        HomeEditorState::resetOriginal($request->user());
+        return back()->with('success', 'Homepage restored to the original approved defaults. The previous live state remains in Revision History.');
+    }
+
+    public function restoreRevision(Request $request, string $revision): RedirectResponse
+    {
+        abort_unless(HomeEditorState::restoreRevision($revision, $request->user()), 404);
+        return back()->with('success', 'Revision restored. The previous live state was preserved in Revision History.');
     }
 }

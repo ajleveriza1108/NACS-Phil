@@ -6,14 +6,22 @@
 @endphp
 
 <section class="ve-shell" data-ve-editor>
-    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.website-content.update') }}" class="ve-panel">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.website-content.update') }}" class="ve-panel" data-ve-form>
         @csrf
         @method('PATCH')
 
         <div class="ve-panel__head">
             <span class="ve-lock">LOCKED DESIGN</span>
             <h1>Visual Homepage Editor</h1>
-            <p>Click editable wording in the live page or use the fields below. Editors can change approved text and images, but not the layout, colors, spacing, code, or navigation structure.</p>
+            <p>Click editable wording in the live page or use the fields below. Dashboard and operational school-management pages stay outside this visual editor.</p>
+            <div class="ve58-bar" aria-label="Editor recovery tools">
+                <button type="button" data-ve-undo title="Ctrl+Z">Undo</button>
+                <button type="button" data-ve-redo title="Ctrl+Y">Redo</button>
+                <button type="button" data-ve-save-draft>Save Draft</button>
+                <details class="ve58-menu"><summary>Reset Page</summary><div class="ve58-menu-card"><button type="button" data-ve-reset-unsaved>Reset unsaved changes</button><button type="submit" form="ve58-reset-original" onclick="return confirm('Restore the original approved homepage? The current live state will be preserved first.');">Restore original page</button></div></details>
+                <span class="ve58-status" data-ve-premium-status>Saved</span>
+            </div>
+            <div class="ve58-draft" data-ve-draft-banner hidden><span><strong>Recovery draft found.</strong> Unsaved work exists on this device.</span><span><button type="button" data-ve-restore-draft>Restore Draft</button> <button type="button" data-ve-discard-draft>Discard</button></span></div>
             <div class="ve-section-nav">
                 <a href="{{ route('admin.about-content.edit') }}">About</a>
                 <a href="{{ route('admin.programs-content.edit') }}">Programs</a>
@@ -25,6 +33,16 @@
             </div>
         </div>
 
+        <div data-ve-hidden-host>
+            @foreach($hiddenFields as $hiddenField)<input type="hidden" name="hidden_fields[]" value="{{ $hiddenField }}" data-ve-hidden-initial>@endforeach
+        </div>
+        <section class="ve58-drawer"><h2>Hidden Elements</h2><p>Hide is reversible. Nothing here is permanently deleted.</p><div data-ve-hidden-list></div><button type="button" data-ve-restore-all>Restore All Hidden Elements</button></section>
+        <section class="ve58-drawer"><h2>Revision History</h2><p>Every Publish creates a recoverable server revision.</p>
+            @forelse($revisions as $revision)
+                <div class="ve58-revision-row"><span><strong>{{ ucfirst(str_replace('_', ' ', $revision['reason'])) }}</strong><small>{{ $revision['actor'] }} - {{ $revision['saved_at'] }}</small></span><span class="ve58-revision-actions"><button type="button" data-ve-preview-revision data-revision-key="{{ $revision['key'] }}">Preview</button><button type="submit" form="ve58-revision-{{ $loop->index }}" onclick="return confirm('Restore this revision? The current live state will be preserved first.');">Restore</button></span></div>
+            @empty<p>No revisions yet. The first Publish will create one.</p>@endforelse
+        </section>
+
         @foreach($groups as $groupName => $fields)
         <details class="ve-group" @if($loop->first) open @endif>
             <summary>{{ $groupName }}</summary>
@@ -32,8 +50,8 @@
                 @foreach($fields as $name => $field)
                 <label class="ve-field">
                     <span class="ve-field__top">
-                        <span>{{ $field['label'] }}</span>
-                        <small class="ve-count" data-ve-count></small>
+                        <span data-ve-field-label>{{ $field['label'] }}</span>
+                        <span class="ve58-field-tools"><small class="ve-count" data-ve-count></small><button type="button" class="ve58-hide" data-ve-hide data-field="{{ $name }}">Hide</button></span>
                     </span>
 
                     @if($field['type'] === 'textarea')
@@ -100,8 +118,8 @@
         @endforeach
 
         <div class="ve-save">
-            <button type="submit">Save Homepage Content</button>
-            <p class="ve-help">Saving changes content only. The visual template remains locked.</p>
+            <button type="submit">Publish Changes</button>
+            <p class="ve-help">Publishing creates a server revision. The visual template remains locked.</p>
         </div>
     </form>
 
@@ -126,5 +144,9 @@
             ></iframe>
         </div>
     </section>
+    <div class="ve58-toast" data-ve-premium-toast hidden></div>
+    <script type="application/json" data-ve-revisions-data>@json($revisions)</script>
 </section>
+<form id="ve58-reset-original" method="POST" action="{{ route('admin.website-content.reset-original') }}" hidden>@csrf @method('PATCH')</form>
+@foreach($revisions as $revision)<form id="ve58-revision-{{ $loop->index }}" method="POST" action="{{ route('admin.website-content.revisions.restore', $revision['key']) }}" hidden>@csrf @method('PATCH')</form>@endforeach
 @endsection

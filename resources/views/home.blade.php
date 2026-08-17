@@ -1,5 +1,12 @@
 @extends('layouts.site-current', ['bodyClass' => 'nacs-home-phase1 nacs-current-page nacs-current-page--home', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'home', 'useVite' => false, 'title' => 'Home', 'description' => 'Discover NACS-Phil programs, Christian education, school announcements, events, admissions information, and campus life.'])
 @section('content')
+@if(!empty($homeHiddenFields))
+<style data-nacs-hidden-home-fields>
+@foreach($homeHiddenFields as $hiddenField)
+[data-visual-field="{{ $hiddenField }}"]{display:none!important}
+@endforeach
+</style>
+@endif
 <section class="hero p18-hero">
     <div class="hero__mesh" aria-hidden="true"></div>
     <div class="hero__glow hero__glow--one" aria-hidden="true"></div>

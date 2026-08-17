@@ -85,7 +85,7 @@
             @if($staffUser->hasAnyStaffPermission([
                 'website.home','website.about','website.programs','website.admissions',
                 'website.news','website.events','website.gallery','website.contact',
-                'branding.manage','seo.manage','settings.manage','governance.manage'
+                'branding.manage','header.manage','seo.manage','settings.manage','governance.manage'
             ]))
                 <p class="cm-sidebar-label" data-p13-nav-heading>Website</p>
                 <nav class="cm-nav" aria-label="Website management">
@@ -97,6 +97,7 @@
                     @if($staffUser->hasStaffPermission('website.events'))<a href="{{ route('admin.events-content.edit') }}" @class(['is-active' => request()->routeIs('admin.events-content.*')])><span class="cm-nav-icon">E</span><span>Events Page</span></a>@endif
                     @if($staffUser->hasStaffPermission('website.gallery'))<a href="{{ route('admin.gallery-content.edit') }}" @class(['is-active' => request()->routeIs('admin.gallery-content.*')])><span class="cm-nav-icon">G</span><span>Gallery Page</span></a>@endif
                     @if($staffUser->hasStaffPermission('website.contact'))<a href="{{ route('admin.contact-content.edit') }}" @class(['is-active' => request()->routeIs('admin.contact-content.*')])><span class="cm-nav-icon">C</span><span>Contact Page</span></a>@endif
+                    @if($staffUser->hasStaffPermission('header.manage'))<a href="{{ route('admin.header.edit') }}" @class(['is-active' => request()->routeIs('admin.header.*')])><span class="cm-nav-icon">H</span><span>Header &amp; Navigation</span></a>@endif
                     @if($staffUser->hasStaffPermission('branding.manage'))<a href="{{ route('admin.branding.edit') }}" @class(['is-active' => request()->routeIs('admin.branding.*')])><span class="cm-nav-icon">B</span><span>Brand & Logo</span></a>@endif
                     @if($staffUser->hasStaffPermission('seo.manage'))<a href="{{ route('admin.seo.edit') }}" @class(['is-active' => request()->routeIs('admin.seo.*')])><span class="cm-nav-icon">O</span><span>Search & Sharing</span></a>@endif
                     @if($staffUser->hasStaffPermission('settings.manage'))

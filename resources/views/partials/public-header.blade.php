@@ -1,15 +1,21 @@
 @php
     $nacs11Nav = [
-        ['route' => 'home', 'pattern' => 'home', 'label' => 'Home'],
-        ['route' => 'about', 'pattern' => 'about', 'label' => 'About'],
-        ['route' => 'programs', 'pattern' => 'programs', 'label' => 'Programs'],
-        ['route' => 'admissions', 'pattern' => 'admissions*', 'label' => 'Admissions'],
-        ['route' => 'announcements.index', 'pattern' => 'announcements.*', 'label' => 'News'],
-        ['route' => 'events.index', 'pattern' => 'events.*', 'label' => 'Events'],
-        ['route' => 'gallery.index', 'pattern' => 'gallery.*', 'label' => 'Gallery'],
-        ['route' => 'contact', 'pattern' => 'contact', 'label' => 'Contact'],
+        ['route' => 'home', 'pattern' => 'home', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_home', 'Home')],
+        ['route' => 'about', 'pattern' => 'about', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_about', 'About')],
+        ['route' => 'programs', 'pattern' => 'programs', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_programs', 'Programs')],
+        ['route' => 'admissions', 'pattern' => 'admissions*', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_admissions', 'Admissions')],
+        ['route' => 'announcements.index', 'pattern' => 'announcements.*', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_news', 'News')],
+        ['route' => 'events.index', 'pattern' => 'events.*', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_events', 'Events')],
+        ['route' => 'gallery.index', 'pattern' => 'gallery.*', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_gallery', 'Gallery')],
+        ['route' => 'contact', 'pattern' => 'contact', 'label' => \App\Models\SchoolSetting::valueFor('header_nav_contact', 'Contact')],
     ];
     $nacsEmergency = \App\Models\SchoolSetting::valueFor('emergency_banner');
+    $nacsHeaderShortName = \App\Models\SchoolSetting::valueFor('header_short_name', \App\Models\SchoolSetting::valueFor('short_name', config('nacs.short_name')));
+    $nacsHeaderSchoolName = \App\Models\SchoolSetting::valueFor('header_school_name', \App\Models\SchoolSetting::valueFor('school_name', 'Noel Academy Christian of Sariaya Philippines, Inc.'));
+    $nacsResourcesLabel = \App\Models\SchoolSetting::valueFor('header_resources_label', 'Resources');
+    $nacsAcademicsLabel = \App\Models\SchoolSetting::valueFor('header_mobile_academics_label', 'Academics');
+    $nacsMediaGroupLabel = \App\Models\SchoolSetting::valueFor('header_mobile_media_label', 'News & Media');
+    $nacsEnrollLabel = \App\Models\SchoolSetting::valueFor('header_enroll_label', 'Enroll Now');
 @endphp
 
 <a class="nacs11-skip" href="#{{ $mainId ?? 'main-content' }}">Skip to content</a>
@@ -36,8 +42,8 @@
                 <img src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="{{ \App\Models\SchoolSetting::logoAlt() }}" width="46" height="46">
             </span>
             <span class="nacs11-brand__copy">
-                <strong>{{ \App\Models\SchoolSetting::valueFor('short_name', config('nacs.short_name')) }}</strong>
-                <small>Noel Academy Christian of Sariaya Philippines, Inc.</small>
+                <strong>{{ $nacsHeaderShortName }}</strong>
+                <small>{{ $nacsHeaderSchoolName }}</small>
             </span>
         </a>
 
@@ -46,19 +52,20 @@
                 @php($isActive = request()->routeIs($item['pattern']))
                 <a href="{{ route($item['route']) }}" class="{{ $isActive ? 'is-active' : '' }}" @if($isActive) aria-current="page" @endif>{{ $item['label'] }}</a>
             @endforeach
-                    <details class="nacs16-resources {{ request()->routeIs('faculty.*', 'calendar.*', 'documents.*', 'media.*') ? 'is-active' : '' }}">
-                <summary>Resources</summary>
+                    <details class="nacs16-resources {{ request()->routeIs('faculty.*', 'calendar.*', 'documents.*', 'media.*', 'learning-tools.*') ? 'is-active' : '' }}">
+                <summary>{{ $nacsResourcesLabel }}</summary>
                 <div class="nacs16-resources__menu">
                     <a href="{{ route('faculty.index') }}">Faculty &amp; Staff</a>
                     <a href="{{ route('calendar.index') }}">Academic Calendar</a>
                     <a href="{{ route('documents.index') }}">Documents</a>
+                    <a href="{{ route('learning-tools.index') }}">Dictionary &amp; Grammar</a>
                     <a href="{{ route('media.index') }}">Media Hub</a>
                 </div>
             </details></nav>
 
         <div class="nacs11-header__actions">
             <a class="nacs11-button nacs11-button--primary nacs11-header__cta" href="{{ route('admissions.apply') }}">
-                Enroll Now <span aria-hidden="true">&rarr;</span>
+                {{ $nacsEnrollLabel }} <span aria-hidden="true">&rarr;</span>
             </a>
             <button class="nacs11-menu-button" type="button" data-nacs11-menu-button aria-expanded="false" aria-controls="nacs11-mobile-nav">
                 <span class="nacs11-sr-only">Open navigation</span>
@@ -83,7 +90,7 @@
 
             <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/programs,/calendar">
                 <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-academics">
-                    <span>Academics</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                    <span>{{ $nacsAcademicsLabel }}</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
                 </button>
                 <div id="nacs45-mobile-academics" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
                     <a href="{{ route('programs') }}">Programs</a>
@@ -104,7 +111,7 @@
 
             <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/announcements,/events,/gallery,/media">
                 <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-news">
-                    <span>News &amp; Media</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                    <span>{{ $nacsMediaGroupLabel }}</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
                 </button>
                 <div id="nacs45-mobile-news" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
                     <a href="{{ route('announcements.index') }}">News</a>
@@ -114,18 +121,19 @@
                 </div>
             </div>
 
-            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/documents">
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/documents,/learning-tools">
                 <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-resources">
-                    <span>Resources</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
+                    <span>{{ $nacsResourcesLabel }}</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
                 </button>
                 <div id="nacs45-mobile-resources" class="nacs45-mobile-group__panel" data-nacs45-mobile-group-panel hidden>
                     <a href="{{ route('documents.index') }}">School Documents</a>
+                    <a href="{{ route('learning-tools.index') }}">Dictionary &amp; Grammar</a>
                 </div>
             </div>
 
-            <a href="{{ route('contact') }}" class="nacs45-mobile-direct">Contact</a>
+            <a href="{{ route('contact') }}" class="nacs45-mobile-direct">{{ \App\Models\SchoolSetting::valueFor('header_nav_contact', 'Contact') }}</a>
 
-            <a class="nacs11-button nacs11-button--primary nacs45-mobile-enroll" href="{{ route('admissions.apply') }}">Enroll Now <span aria-hidden="true">&rarr;</span></a>
+            <a class="nacs11-button nacs11-button--primary nacs45-mobile-enroll" href="{{ route('admissions.apply') }}">{{ $nacsEnrollLabel }} <span aria-hidden="true">&rarr;</span></a>
         </div>
     </nav>
 </header>

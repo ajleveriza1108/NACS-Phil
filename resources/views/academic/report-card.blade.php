@@ -18,16 +18,21 @@ body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#eef2f6;color:#1
 table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #d8dee7;padding:8px;text-align:center}th{background:#102a4c;color:#fff}td:first-child{text-align:left;font-weight:700}
 .attendance{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.attendance div{border:1px solid #e1e5eb;border-radius:9px;padding:10px;text-align:center}.attendance strong{display:block;font-size:18px}
 .signatures{display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:54px}.line{border-top:1px solid #333;text-align:center;padding-top:6px;font-size:11px}
-.note{margin-top:20px;font-size:11px;color:#667085}.actions{max-width:900px;margin:18px auto;display:flex;gap:10px}.actions button{padding:10px 15px;border:0;border-radius:9px;background:#102a4c;color:#fff;font-weight:700;cursor:pointer}
+.note{margin-top:20px;font-size:11px;color:#667085}.actions{max-width:900px;margin:18px auto;display:flex;gap:10px;flex-wrap:wrap}.actions button,.actions a{padding:10px 15px;border:0;border-radius:9px;background:#102a4c;color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.actions a{background:#8a6925}
 @media print{body{background:#fff}.sheet{margin:0;box-shadow:none;border:0;border-radius:0;padding:0}.actions{display:none}}
 </style>
 </head>
 <body>
-<div class="actions"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
+@php($pdfRoute = request()->routeIs('admin.*') ? 'admin.students.report-card.pdf' : 'portal.students.report-card.pdf')
+<div class="actions">
+<a href="{{ route($pdfRoute, $student) }}">Download A4 PDF</a>
+<button type="button" onclick="window.print()">Print View</button>
+</div>
 <main class="sheet">
 <header class="head">
 <img class="logo" src="{{ \App\Models\SchoolSetting::logoUrl() }}" alt="">
-<div class="school"><h1>Noel Academy Christian of Sariaya Philippines, Inc.</h1><p>Student Report Card · {{ $student->school_year }}</p></div>
+<div class="school"><h1>{{ $branding['school_name'] }}</h1><p>Student Report Card · {{ $student->school_year }}</p></div>
 <span class="badge">ACADEMIC RECORD</span>
 </header>
 <section class="student">
@@ -58,7 +63,7 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid 
 <div><small>Excused</small><strong>{{ $record['attendance']['excused'] }}</strong></div>
 </section>
 <div class="signatures"><div class="line">Class Adviser / Teacher</div><div class="line">Principal / Authorized School Official</div></div>
-<p class="note">Generated from the NACS-Phil student information system by {{ $generatedBy->name }} on {{ now()->format('M j, Y g:i A') }}. Final school-issued copies remain subject to school verification and authorized signatures.</p>
+<p class="note">Generated from the NACS-Phil student information system by {{ $generatedBy->name }} on {{ now()->format('M j, Y g:i A') }}. Use “Download A4 PDF” for the static, watermarked school export.</p>
 </main>
 </body>
 </html>

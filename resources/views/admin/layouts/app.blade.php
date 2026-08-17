@@ -9,6 +9,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('assets/current/admin.css') }}">
     <script src="{{ asset('assets/current/admin.js') }}" defer></script>
+    @if(request()->routeIs('admin.website-content.*'))
+        <link rel="stylesheet" href="{{ asset('assets/current/editor.css') }}">
+        <script src="{{ asset('assets/current/editor.js') }}" defer></script>
+    @endif
 </head>
 @php($staffUser = auth()->user())
 <body class="cm-body p13-admin">

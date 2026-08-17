@@ -11,7 +11,7 @@
         @method('PATCH')
 
         <div class="ve-panel__head">
-            <span class="ve-lock ve59-pro-badge">PRO RESPONSIVE EDITOR</span>
+            <span class="ve-lock ve59-pro-badge">LOCKED DESIGN / PRO RESPONSIVE EDITOR</span>
             <h1>Professional Homepage Editor</h1>
             <p>Select text directly in the live page, edit content, and use the responsive inspector to tune typography and text frames for desktop, tablet, and phone. Dashboard and operational school-management pages stay outside this editor.</p>
             <div class="ve58-bar" aria-label="Editor recovery tools">

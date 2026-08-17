@@ -33,7 +33,12 @@ class Phase56VisualUxPolishTest extends TestCase
         foreach ([
             '.nacs11-menu > summary::after',
             '.nacs16-resources > summary::after',
+            '.nacs11-menu > summary::before',
+            '.nacs16-resources > summary::before',
             'content: none !important',
+            '.lt-hero h1',
+            'color: #fff !important',
+            '-webkit-text-fill-color: #fff !important',
             '.nacs-home-phase1 .p18-about__points li',
             'font-size: 17px !important',
             '.nacs-home-phase1 .p18-values-band strong',

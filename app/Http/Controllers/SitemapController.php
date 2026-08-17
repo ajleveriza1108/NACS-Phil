@@ -18,6 +18,7 @@ class SitemapController extends Controller
             route('faculty.index'),
             route('documents.index'),
             route('calendar.index'),
+            route('learning-tools.index'),
             route('announcements.index'),
             route('events.index'),
             route('gallery.index'),

@@ -39,8 +39,8 @@ class Phase45MobileUxPolishTest extends TestCase
             'data-nacs45-prefixes="/programs,/calendar"',
             'data-nacs45-prefixes="/admissions"',
             'data-nacs45-prefixes="/announcements,/events,/gallery,/media"',
-            'data-nacs45-prefixes="/documents"',
-            '<span>News &amp; Media</span>',
+            'data-nacs45-prefixes="/documents,/learning-tools"',
+            '<span>{{ $nacsMediaGroupLabel }}</span>',
             "route('admissions.apply')",
             "route('admissions.track')",
         ] as $marker) {
@@ -52,7 +52,7 @@ class Phase45MobileUxPolishTest extends TestCase
         $this->assertStringNotContainsString('@if', $mobile);
         $this->assertStringNotContainsString('data-nacs45-active=', $mobile);
         $this->assertSame(1, substr_count($mobile, '>Home</a>'));
-        $this->assertSame(1, substr_count($mobile, '>Contact</a>'));
+        $this->assertSame(1, substr_count($mobile, "route('contact')"));
 
         foreach ([
             'NACS-Phil Phase 45 R1.6 - accessible grouped mobile navigation',

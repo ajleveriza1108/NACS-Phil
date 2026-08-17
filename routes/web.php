@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\EventsContentController as AdminEventsContentCont
 use App\Http\Controllers\Admin\FacultyProfileController as AdminFacultyProfileController;
 use App\Http\Controllers\Admin\GalleryContentController as AdminGalleryContentController;
 use App\Http\Controllers\Admin\GalleryItemController as AdminGalleryItemController;
+use App\Http\Controllers\Admin\HeaderContentController as AdminHeaderContentController;
 use App\Http\Controllers\Admin\FacebookMediaController as AdminFacebookMediaController;
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
 use App\Http\Controllers\Admin\LaunchReadinessController as AdminLaunchReadinessController;
@@ -40,6 +41,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FacebookMediaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\LearningToolsController;
 use App\Http\Controllers\PublicDocumentController;
 use App\Http\Controllers\RegistrationVerificationController;
 use App\Http\Controllers\SitemapController;
@@ -67,6 +69,9 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event:slug}', [EventController::class, 'show'])->name('events.show');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/media', [FacebookMediaController::class, 'index'])->name('media.index');
+Route::get('/learning-tools', [LearningToolsController::class, 'index'])->name('learning-tools.index');
+Route::post('/learning-tools/dictionary', [LearningToolsController::class, 'dictionary'])->middleware('throttle:10,1')->name('learning-tools.dictionary');
+Route::post('/learning-tools/grammar', [LearningToolsController::class, 'grammar'])->middleware('throttle:5,1')->name('learning-tools.grammar');
 Route::post('/inquiries', [InquiryController::class, 'store'])->middleware(['throttle:5,10', 'turnstile:inquiry'])->name('inquiries.store');
 
 Route::get('/admissions/apply', [AdmissionApplicationController::class, 'create'])->name('admissions.apply');
@@ -212,6 +217,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'privileged
     Route::middleware('staff_permission:website.contact')->group(function (): void {
         Route::get('/contact-content', [AdminContactContentController::class, 'edit'])->name('contact-content.edit');
         Route::patch('/contact-content', [AdminContactContentController::class, 'update'])->name('contact-content.update');
+    });
+
+    Route::middleware('staff_permission:header.manage')->group(function (): void {
+        Route::get('/header-content', [AdminHeaderContentController::class, 'edit'])->name('header.edit');
+        Route::patch('/header-content', [AdminHeaderContentController::class, 'update'])->middleware('throttle:nacs-sensitive-write')->name('header.update');
     });
 
     Route::middleware('staff_permission:seo.manage')->group(function (): void {

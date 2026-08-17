@@ -25,7 +25,9 @@ Route::prefix('portal')->name('portal.')->middleware('portal')->group(function (
     Route::get('/', [PortalDashboardController::class, 'index'])->name('dashboard');
     Route::get('/students/{student}', [PortalDashboardController::class, 'show'])->name('students.show');
     Route::get('/students/{student}/report-card', [AcademicRecordController::class, 'reportCard'])->middleware('throttle:30,1')->name('students.report-card');
+    Route::get('/students/{student}/report-card.pdf', [AcademicRecordController::class, 'reportCardPdf'])->middleware('throttle:10,1')->name('students.report-card.pdf');
     Route::get('/students/{student}/academic-history', [AcademicRecordController::class, 'transcript'])->middleware('throttle:30,1')->name('students.transcript');
+    Route::get('/students/{student}/academic-history.pdf', [AcademicRecordController::class, 'transcriptPdf'])->middleware('throttle:10,1')->name('students.transcript.pdf');
     Route::get('/students/{student}/photo', [StudentProfilePhotoController::class, 'show'])->middleware('throttle:60,1')->name('students.photo');
     Route::get('/password', [PortalPasswordController::class, 'edit'])->name('password.edit');
     Route::patch('/password', [PortalPasswordController::class, 'update'])->middleware('throttle:5,10')->name('password.update');
@@ -41,7 +43,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'staff_perm
     Route::get('/students/{student}/edit', [AdminStudentController::class, 'edit'])->name('students.edit');
     Route::patch('/students/{student}', [AdminStudentController::class, 'update'])->name('students.update');
     Route::get('/students/{student}/report-card', [AcademicRecordController::class, 'reportCard'])->middleware('throttle:30,1')->name('students.report-card');
+    Route::get('/students/{student}/report-card.pdf', [AcademicRecordController::class, 'reportCardPdf'])->middleware('throttle:10,1')->name('students.report-card.pdf');
     Route::get('/students/{student}/transcript', [AcademicRecordController::class, 'transcript'])->middleware('throttle:30,1')->name('students.transcript');
+    Route::get('/students/{student}/transcript.pdf', [AcademicRecordController::class, 'transcriptPdf'])->middleware('throttle:10,1')->name('students.transcript.pdf');
     Route::get('/students/{student}/photo', [StudentProfilePhotoController::class, 'show'])->middleware('throttle:60,1')->name('students.photo');
     Route::post('/students/{student}/photo', [StudentProfilePhotoController::class, 'store'])->middleware('throttle:10,10')->name('students.photo.store');
     Route::delete('/students/{student}/photo', [StudentProfilePhotoController::class, 'destroy'])->middleware('throttle:10,10')->name('students.photo.destroy');

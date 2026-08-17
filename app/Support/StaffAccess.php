@@ -51,6 +51,7 @@ final class StaffAccess
         'website.gallery',
         'website.contact',
         'branding.manage',
+        'header.manage',
         'seo.manage',
         'settings.manage',
     ];
@@ -74,6 +75,7 @@ final class StaffAccess
             'website.gallery',
             'website.contact',
             'branding.manage',
+            'header.manage',
             'seo.manage',
         ],
         'text_editor' => [
@@ -86,6 +88,7 @@ final class StaffAccess
             'website.events',
             'website.gallery',
             'website.contact',
+            'header.manage',
         ],
         'news_editor' => [
             'news.manage',

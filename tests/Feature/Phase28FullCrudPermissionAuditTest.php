@@ -545,15 +545,15 @@ class Phase28FullCrudPermissionAuditTest extends TestCase
 
         $this->patch(route('admin.security.password'), [
             'current_password' => 'password',
-            'password' => 'StrongAdmin456',
-            'password_confirmation' => 'StrongAdmin456',
+            'password' => 'StrongAdmin456!',
+            'password_confirmation' => 'StrongAdmin456!',
         ])->assertSessionHasNoErrors();
 
         $super->refresh();
-        $this->assertTrue(Hash::check('StrongAdmin456', $super->password));
+        $this->assertTrue(Hash::check('StrongAdmin456!', $super->password));
 
         $this->post(route('admin.security.two-factor.setup'), [
-            'current_password' => 'StrongAdmin456',
+            'current_password' => 'StrongAdmin456!',
         ])->assertSessionHasNoErrors();
 
         $secret = (string) session('two_factor_setup_secret');
@@ -573,7 +573,7 @@ class Phase28FullCrudPermissionAuditTest extends TestCase
         $this->assertCount(8, $recoveryCodes);
 
         $this->delete(route('admin.security.two-factor.disable'), [
-            'current_password' => 'StrongAdmin456',
+            'current_password' => 'StrongAdmin456!',
             'code' => $recoveryCodes[0],
         ])->assertSessionHasNoErrors();
 
@@ -581,7 +581,7 @@ class Phase28FullCrudPermissionAuditTest extends TestCase
         $this->assertFalse($super->twoFactorEnabled());
 
         $this->post(route('admin.security.revoke-sessions'), [
-            'current_password' => 'StrongAdmin456',
+            'current_password' => 'StrongAdmin456!',
         ])->assertSessionHasNoErrors();
     }
 

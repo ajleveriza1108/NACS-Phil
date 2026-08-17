@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\LogSecurityEvents;
 use App\Http\Middleware\VerifyTurnstile;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsurePortalUser;
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'turnstile' => VerifyTurnstile::class,
         ]);
 
+        $middleware->append(LogSecurityEvents::class);
         $middleware->append(AddSecurityHeaders::class);
 
         $middleware->redirectGuestsTo(fn (): string => route('admin.login'));

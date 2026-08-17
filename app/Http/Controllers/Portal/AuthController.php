@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\SecurityEventLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +27,14 @@ class AuthController extends Controller
 
         $email = Str::lower($credentials['email']);
         $user = User::query()->where('email', $email)->first();
+        $security = app(SecurityEventLogger::class);
 
         if ($user?->isTemporarilyLocked()) {
+            $security->record($request, 'auth.portal.locked', 'warning', [
+                'reason' => 'temporary_lock',
+                'account_present' => true,
+            ]);
+
             return back()->withErrors([
                 'email' => 'This portal account is temporarily locked. Please try again later.',
             ])->onlyInput('email');
@@ -41,6 +48,11 @@ class AuthController extends Controller
                     'locked_until' => $failures >= 5 ? now()->addMinutes(15) : null,
                 ])->save();
             }
+
+            $security->record($request, 'auth.portal.failed', 'warning', [
+                'reason' => 'invalid_credentials',
+                'account_present' => (bool) $user,
+            ]);
 
             return back()->withErrors([
                 'email' => 'The email address or password is incorrect.',
@@ -56,6 +68,11 @@ class AuthController extends Controller
             || $user->is_active === false
             || ! in_array($user->role, ['student', 'parent'], true)
         ) {
+            $security->record($request, 'auth.portal.denied', 'warning', [
+                'reason' => 'wrong_role_or_inactive',
+                'account_present' => (bool) $user,
+            ]);
+
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
@@ -67,10 +84,12 @@ class AuthController extends Controller
 
         $user->forceFill([
             'last_login_at' => now(),
-            'last_login_ip_hash' => hash('sha256', (string) $request->ip()),
+            'last_login_ip_hash' => $security->fingerprint((string) $request->ip()),
             'failed_login_count' => 0,
             'locked_until' => null,
         ])->save();
+
+        $security->record($request, 'auth.portal.success');
 
         return $user->force_password_reset
             ? redirect()->route('portal.password.edit')
@@ -79,6 +98,8 @@ class AuthController extends Controller
 
     public function destroy(Request $request): RedirectResponse
     {
+        app(SecurityEventLogger::class)->record($request, 'auth.portal.logout');
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

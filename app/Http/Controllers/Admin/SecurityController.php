@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\SecurityEventLogger;
 use App\Support\Totp;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class SecurityController extends Controller
@@ -31,7 +33,11 @@ class SecurityController extends Controller
     {
         $data = $request->validate([
             'current_password' => ['required','current_password'],
-            'password' => ['required','confirmed','min:12','regex:/[A-Z]/','regex:/[a-z]/','regex:/[0-9]/'],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(12)->letters()->mixedCase()->numbers()->symbols(),
+            ],
         ]);
 
         $request->user()->forceFill([
@@ -40,7 +46,14 @@ class SecurityController extends Controller
             'force_password_reset' => false,
         ])->save();
 
-        return back()->with('success', 'Password updated.');
+        $this->revokeOtherDatabaseSessions($request);
+        $request->session()->regenerate();
+
+        app(SecurityEventLogger::class)->record($request, 'auth.password.changed', 'notice', [
+            'action' => 'admin_password_change',
+        ]);
+
+        return back()->with('success', 'Password updated. Other database-backed sessions were revoked.');
     }
 
     public function beginTwoFactor(Request $request): RedirectResponse
@@ -48,6 +61,8 @@ class SecurityController extends Controller
         $request->validate(['current_password' => ['required','current_password']]);
 
         $request->session()->put('two_factor_setup_secret', Totp::generateSecret());
+
+        app(SecurityEventLogger::class)->record($request, 'auth.2fa.setup_started', 'notice');
 
         return back()->with('success', 'Two-factor setup started. Add the secret to your authenticator, then confirm a code.');
     }
@@ -58,6 +73,10 @@ class SecurityController extends Controller
         $secret = (string) $request->session()->get('two_factor_setup_secret');
 
         if ($secret === '' || ! Totp::verify($secret, $data['code'])) {
+            app(SecurityEventLogger::class)->record($request, 'auth.2fa.confirm_failed', 'warning', [
+                'reason' => 'invalid_code',
+            ]);
+
             return back()->withErrors(['code' => 'The authenticator code is not valid.']);
         }
 
@@ -77,6 +96,9 @@ class SecurityController extends Controller
         ])->save();
 
         $request->session()->forget('two_factor_setup_secret');
+        $request->session()->regenerate();
+
+        app(SecurityEventLogger::class)->record($request, 'auth.2fa.enabled', 'notice');
 
         return back()
             ->with('success', 'Two-factor authentication enabled. Save the recovery codes now.')
@@ -108,6 +130,10 @@ class SecurityController extends Controller
         }
 
         if (! $verified) {
+            app(SecurityEventLogger::class)->record($request, 'auth.2fa.disable_failed', 'warning', [
+                'reason' => 'invalid_code',
+            ]);
+
             return back()->withErrors(['code' => 'The authenticator or recovery code is not valid.']);
         }
 
@@ -117,6 +143,10 @@ class SecurityController extends Controller
             'two_factor_recovery_codes' => null,
         ])->save();
 
+        $request->session()->regenerate();
+
+        app(SecurityEventLogger::class)->record($request, 'auth.2fa.disabled', 'warning');
+
         return back()->with('success', 'Two-factor authentication disabled.');
     }
 
@@ -124,19 +154,18 @@ class SecurityController extends Controller
     {
         $request->validate(['current_password' => ['required','current_password']]);
 
-        if (config('session.driver') === 'database') {
-            DB::table('sessions')
-                ->where('user_id', $request->user()->id)
-                ->where('id', '!=', $request->session()->getId())
-                ->delete();
-        }
+        $count = $this->revokeOtherDatabaseSessions($request);
+
+        app(SecurityEventLogger::class)->record($request, 'auth.sessions.revoked', 'notice', [
+            'count' => $count,
+        ]);
 
         return back()->with('success', 'Other database-backed sessions were revoked.');
     }
 
-    public function challenge(): View
+    public function challenge(Request $request): View
     {
-        abort_unless(session()->has('admin_2fa_pending_user_id'), 403);
+        abort_unless($request->session()->has('admin_2fa_pending_user_id'), 403);
 
         return view('admin.auth.two-factor');
     }
@@ -147,6 +176,11 @@ class SecurityController extends Controller
         $user = User::query()->find($request->session()->get('admin_2fa_pending_user_id'));
 
         if (! $user || ! $user->twoFactorEnabled()) {
+            app(SecurityEventLogger::class)->record($request, 'auth.2fa.challenge_failed', 'warning', [
+                'reason' => 'pending_account_invalid',
+                'account_present' => (bool) $user,
+            ]);
+
             return back()->withErrors(['code' => 'The authentication code is not valid.']);
         }
 
@@ -167,6 +201,11 @@ class SecurityController extends Controller
         }
 
         if (! $verified) {
+            app(SecurityEventLogger::class)->record($request, 'auth.2fa.challenge_failed', 'warning', [
+                'reason' => 'invalid_code',
+                'account_present' => true,
+            ]);
+
             return back()->withErrors(['code' => 'The authenticator or recovery code is not valid.']);
         }
 
@@ -174,6 +213,20 @@ class SecurityController extends Controller
         $request->session()->forget('admin_2fa_pending_user_id');
         $request->session()->regenerate();
 
+        app(SecurityEventLogger::class)->record($request, 'auth.2fa.challenge_success', 'info');
+
         return redirect()->route('admin.dashboard');
+    }
+
+    private function revokeOtherDatabaseSessions(Request $request): int
+    {
+        if (config('session.driver') !== 'database') {
+            return 0;
+        }
+
+        return DB::table('sessions')
+            ->where('user_id', $request->user()->id)
+            ->where('id', '!=', $request->session()->getId())
+            ->delete();
     }
 }

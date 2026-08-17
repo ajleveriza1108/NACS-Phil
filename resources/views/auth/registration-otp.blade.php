@@ -1,5 +1,4 @@
-@extends('layouts.public', ['title' => 'Verify Registration Email'])
-
+@extends('layouts.site-current', ['title' => 'Verify Registration Email', 'bodyClass' => 'nacs11-public nacs-current-page nacs-current-page--public', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'public', 'useVite' => true])
 @section('content')
 <section class="nacs46-registration">
     <div class="nacs11-shell nacs46-registration__shell">

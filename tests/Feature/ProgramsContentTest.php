@@ -16,7 +16,7 @@ class ProgramsContentTest extends TestCase
     {
         $this->get('/programs')
             ->assertOk()
-            ->assertSee('assets/phase3-programs/programs.css')
+            ->assertSee('assets/current/')
             ->assertSee('viewport-fit=cover', false)
             ->assertSee('Academic Programs')
             ->assertSee('A continuous learning journey for every stage.');

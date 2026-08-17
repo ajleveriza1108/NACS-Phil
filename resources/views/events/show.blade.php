@@ -1,5 +1,5 @@
 @php($eventsContent = \App\Models\SiteContent::valuesFor('events', \App\Support\EventsContent::defaults()))
-@extends('layouts.events-phase6')
+@extends('layouts.site-current', ['bodyClass' => 'events-phase6 nacs-current-page nacs-current-page--events', 'mainId' => 'events-main', 'mainClass' => '', 'assetBundle' => 'events', 'useVite' => false])
 @section('title',$event->title)
 @section('meta_description',\Illuminate\Support\Str::limit($event->description,155))
 

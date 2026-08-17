@@ -48,7 +48,9 @@ class StudentAccess
 
         if (self::isTeacher($user)) {
             return $query->whereHas('assignments', fn (Builder $assignment): Builder =>
-                $assignment->where('teacher_id', $user->id)
+                $assignment
+                    ->where('teacher_id', $user->id)
+                    ->where('status', 'active')
             );
         }
 
@@ -72,7 +74,10 @@ class StudentAccess
         }
 
         if (self::isTeacher($user)) {
-            return $student->assignments()->where('teacher_id', $user->id)->exists();
+            return $student->assignments()
+                ->where('teacher_id', $user->id)
+                ->where('status', 'active')
+                ->exists();
         }
 
         if (self::isPortalStudent($user)) {
@@ -91,6 +96,11 @@ class StudentAccess
         return self::isLeadership($user) || self::isTeacher($user);
     }
 
+    public static function canRequestExistingStudent(User $user): bool
+    {
+        return self::isTeacher($user);
+    }
+
     public static function canManageProfile(User $user, Student $student): bool
     {
         if (self::isLeadership($user)) {
@@ -100,6 +110,7 @@ class StudentAccess
         return self::isTeacher($user)
             && $student->assignments()
                 ->where('teacher_id', $user->id)
+                ->where('status', 'active')
                 ->where('can_manage_profile', true)
                 ->exists();
     }
@@ -113,6 +124,7 @@ class StudentAccess
         return self::isTeacher($user)
             && $student->assignments()
                 ->where('teacher_id', $user->id)
+                ->where('status', 'active')
                 ->where('can_manage_grades', true)
                 ->exists();
     }
@@ -131,6 +143,7 @@ class StudentAccess
 
         return $student->assignments()
             ->where('teacher_id', $user->id)
+            ->where('status', 'active')
             ->where('can_manage_grades', true)
             ->where(function (Builder $query) use ($subject): void {
                 $query->whereNull('subject')
@@ -148,6 +161,7 @@ class StudentAccess
         return self::isTeacher($user)
             && $student->assignments()
                 ->where('teacher_id', $user->id)
+                ->where('status', 'active')
                 ->where('can_manage_attendance', true)
                 ->exists();
     }
@@ -198,6 +212,9 @@ class StudentAccess
             return null;
         }
 
-        return $student->assignments()->where('teacher_id', $teacher->id)->first();
+        return $student->assignments()
+            ->where('teacher_id', $teacher->id)
+            ->where('status', 'active')
+            ->first();
     }
 }

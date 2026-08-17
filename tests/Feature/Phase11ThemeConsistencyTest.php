@@ -10,7 +10,7 @@ class Phase11ThemeConsistencyTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_public_pages_share_one_phase_eleven_shell(): void
+    public function test_public_pages_share_the_current_semantic_shell(): void
     {
         foreach ([
             '/',
@@ -29,8 +29,8 @@ class Phase11ThemeConsistencyTest extends TestCase
                 ->assertOk()
                 ->assertSee('data-nacs11-header', false)
                 ->assertSee('data-nacs11-footer', false)
-                ->assertSee('assets/phase11-unified/public-theme.css', false)
-                ->assertSee('assets/phase11-unified/public-theme.js', false);
+                ->assertSee('assets/current/', false)
+                ->assertDontSee('/assets/phase', false);
         }
     }
 

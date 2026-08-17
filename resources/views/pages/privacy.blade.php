@@ -1,5 +1,4 @@
-@extends('layouts.public', ['title' => 'Privacy and Child Protection'])
-
+@extends('layouts.site-current', ['title' => 'Privacy and Child Protection', 'bodyClass' => 'nacs11-public nacs-current-page nacs-current-page--public', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'public', 'useVite' => true])
 @section('content')
 <section class="nacs11-privacy-hero">
     <div class="nacs11-shell nacs11-privacy-hero__inner">

@@ -6,26 +6,24 @@ use Tests\TestCase;
 
 class Phase23ResourcesPrivacyAdmissionsPolishTest extends TestCase
 {
-    public function test_public_and_admissions_portal_layouts_load_phase_twenty_three_last(): void
+    public function test_public_and_admissions_portal_use_current_semantic_polish_bundles(): void
     {
-        $public = file_get_contents(resource_path('views/layouts/public.blade.php'));
-        $portal = file_get_contents(resource_path('views/layouts/admissions-portal-phase9c.blade.php'));
+        $public = file_get_contents(public_path('assets/current/pages/public.css'));
+        $portal = file_get_contents(public_path('assets/current/pages/admissions-portal.css'));
 
         $this->assertIsString($public);
         $this->assertIsString($portal);
 
-        $this->assertStringContainsString('assets/phase23-final-polish/polish.css', $public);
-        $this->assertStringContainsString('assets/phase23-final-polish/polish.css', $portal);
+        $this->assertStringContainsString('.nacs11-public .nacs12-hero h1', $public);
+        $this->assertStringContainsString('.adm9-body .adm9-hero h1', $portal);
 
-        $this->assertGreaterThan(
-            strpos($public, 'assets/phase22-media/media.css'),
-            strpos($public, 'assets/phase23-final-polish/polish.css')
-        );
-
-        $this->assertGreaterThan(
-            strpos($portal, 'assets/phase18-consistency/site-consistency.css'),
-            strpos($portal, 'assets/phase23-final-polish/polish.css')
-        );
+        foreach ([$public, $portal] as $css) {
+            $this->assertStringContainsString('color:#fff!important', $css);
+            $this->assertStringContainsString('@media(max-width:760px)', $css);
+            $this->assertStringContainsString('@media(max-width:520px)', $css);
+            $this->assertStringContainsString('@media(max-width:380px)', $css);
+            $this->assertStringContainsString('prefers-reduced-motion', $css);
+        }
     }
 
     public function test_faculty_calendar_and_documents_keep_working_data_contracts(): void

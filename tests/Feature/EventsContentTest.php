@@ -16,7 +16,7 @@ class EventsContentTest extends TestCase
     {
         $this->get('/events')
             ->assertOk()
-            ->assertSee('assets/phase6-events/events.css')
+            ->assertSee('assets/current/')
             ->assertSee('viewport-fit=cover', false)
             ->assertSee('School Events')
             ->assertSee('Upcoming events');

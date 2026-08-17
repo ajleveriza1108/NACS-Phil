@@ -1,5 +1,4 @@
-@extends('layouts.public', ['title' => 'School Documents'])
-
+@extends('layouts.site-current', ['title' => 'School Documents', 'bodyClass' => 'nacs11-public nacs-current-page nacs-current-page--public', 'mainId' => 'main-content', 'mainClass' => '', 'assetBundle' => 'public', 'useVite' => true])
 @section('content')
 <section class="nacs12-hero">
     <div class="nacs11-shell">

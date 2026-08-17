@@ -19,7 +19,33 @@
 </div>
 
 <section class="sis-panel sis-section">
+    <h2>My Teachers</h2>
+    <ul class="sis-list">
+        @forelse($student->assignments as $assignment)
+            <li>
+                <strong>{{ $assignment->teacher?->name ?: 'School teacher' }}</strong>
+                <span>{{ $assignment->subject ?: 'Class / adviser assignment' }}{{ $assignment->is_adviser ? ' · Adviser' : '' }}</span>
+            </li>
+        @empty
+            <li>No active teacher assignments are displayed yet.</li>
+        @endforelse
+    </ul>
+</section>
+
+<section class="sis-panel sis-section">
+    <h2>Academic Documents</h2>
+    <div class="sis-inline-form">
+        <a href="{{ route('portal.students.report-card', $student) }}" target="_blank" rel="noopener" class="sis-primary sis-link-button">View Report Card</a>
+        <a href="{{ route('portal.students.transcript', $student) }}" target="_blank" rel="noopener" class="sis-secondary sis-link-button">View Academic History</a>
+    </div>
+    <p class="sis-help">The academic-history view is not an official externally issued TOR. Official transcripts require authorized school approval.</p>
+</section>
+
+<section class="sis-panel sis-section">
     <h2>Student Profile</h2>
+    @if($student->profile_photo_path)
+        <img src="{{ route('portal.students.photo', $student) }}" alt="{{ $student->fullName() }} profile photo" style="width:120px;height:120px;object-fit:cover;border-radius:16px;border:1px solid #d9dee7;margin-bottom:14px">
+    @endif
     <div class="sis-summary-grid">
         <article><small>Date of birth</small><strong>{{ optional($student->date_of_birth)->format('M j, Y') ?: 'Not recorded' }}</strong></article>
         <article><small>Phone</small><strong>{{ $student->phone ?: 'Not recorded' }}</strong></article>

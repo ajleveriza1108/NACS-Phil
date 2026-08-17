@@ -57,7 +57,7 @@
             </details></nav>
 
         <div class="nacs11-header__actions">
-            <a class="nacs11-button nacs11-button--primary nacs11-header__cta" href="{{ route('admissions') }}">
+            <a class="nacs11-button nacs11-button--primary nacs11-header__cta" href="{{ route('admissions.apply') }}">
                 Enroll Now <span aria-hidden="true">&rarr;</span>
             </a>
             <button class="nacs11-menu-button" type="button" data-nacs11-menu-button aria-expanded="false" aria-controls="nacs11-mobile-nav">
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/programs,/academic-calendar">
+            <div class="nacs45-mobile-group" data-nacs45-mobile-group data-nacs45-prefixes="/programs,/calendar">
                 <button type="button" class="nacs45-mobile-group__toggle" data-nacs45-mobile-group-toggle aria-expanded="false" aria-controls="nacs45-mobile-academics">
                     <span>Academics</span><span class="nacs45-mobile-group__chevron" aria-hidden="true"></span>
                 </button>

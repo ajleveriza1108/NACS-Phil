@@ -25,8 +25,16 @@ class DashboardController extends Controller
         abort_unless(StudentAccess::canViewStudent($request->user(), $student), 403);
 
         $student->load([
-            'grades' => fn ($query) => $query->latest('assessment_date')->latest('id'),
+            'grades' => fn ($query) => $query
+                ->with('teacher:id,name')
+                ->latest('assessment_date')
+                ->latest('id'),
             'attendances' => fn ($query) => $query->latest('attendance_date'),
+            'assignments' => fn ($query) => $query
+                ->where('status', 'active')
+                ->with('teacher:id,name,email')
+                ->orderByDesc('is_adviser')
+                ->orderBy('subject'),
         ]);
 
         $canViewFinance = StudentAccess::canViewFinance($request->user(), $student);

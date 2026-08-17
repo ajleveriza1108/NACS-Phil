@@ -1,11 +1,11 @@
 @php($galleryContent=\App\Models\SiteContent::valuesFor('gallery',\App\Support\GalleryContent::defaults()))
 @php($localPresentationPreview=app()->environment('local') && is_file(storage_path('app/.nacs-presentation-preview')))
-@extends('layouts.gallery-phase7')
+@extends('layouts.site-current', ['bodyClass' => 'gallery-phase7 nacs-current-page nacs-current-page--gallery', 'mainId' => 'gallery-main', 'mainClass' => '', 'assetBundle' => 'gallery', 'useVite' => false])
 @section('title','Gallery')
 @section('content')
 <section class="g-hero"><div class="g-shell g-hero-inner">
 <div data-g-reveal><span class="g-pill">{{ $galleryContent['hero_badge'] }}</span><h1>{{ $galleryContent['hero_heading'] }} <em>{{ $galleryContent['hero_highlight'] }}</em></h1><p>{{ $galleryContent['hero_lead'] }}</p><div class="g-actions"><a class="g-btn primary" href="#photos">Explore Gallery &darr;</a><a class="g-btn secondary" href="{{ route('privacy') }}">Photo Privacy &rarr;</a></div></div>
-<div class="g-visual" data-g-reveal><img src="{{ asset('assets/phase7-gallery/gallery-visual.svg') }}" alt="Abstract school photo gallery illustration."></div>
+<div class="g-visual" data-g-reveal><img src="{{ asset('assets/current/media/a8419cebd598-gallery-visual.svg') }}" alt="Abstract school photo gallery illustration."></div>
 </div></section>
 <section id="photos" class="g-section"><div class="g-shell">
 <div class="g-section-head" data-g-reveal><div><span>{{ $localPresentationPreview ? 'Local Presentation Preview' : 'Approved Photographs' }}</span><h2>{{ $galleryContent['listing_heading'] }}</h2></div><p>{{ $galleryContent['listing_text'] }}</p></div>

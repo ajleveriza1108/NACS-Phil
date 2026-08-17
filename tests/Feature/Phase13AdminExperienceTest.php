@@ -33,8 +33,8 @@ class Phase13AdminExperienceTest extends TestCase
             ->assertSee('NACS-Phil School Manager')
             ->assertSee('Find a tool...')
             ->assertSee('What needs attention')
-            ->assertSee('assets/phase13-admin/admin.css', false)
-            ->assertSee('assets/phase13-admin/admin.js', false);
+            ->assertSee('assets/current/', false)
+            ->assertSee('assets/current/', false);
     }
 
     public function test_teacher_dashboard_keeps_sensitive_school_office_tools_hidden(): void

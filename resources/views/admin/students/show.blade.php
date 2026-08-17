@@ -13,6 +13,14 @@
     @endif
 </div>
 
+<div class="sis-inline-form" style="margin-bottom:18px">
+    <a href="{{ route('admin.students.report-card', $student) }}" target="_blank" rel="noopener" class="sis-secondary sis-link-button">Report Card</a>
+    <a href="{{ route('admin.students.transcript', $student) }}" target="_blank" rel="noopener" class="sis-secondary sis-link-button">Transcript / TOR Draft</a>
+    @if(\App\Support\StudentAccess::isLeadership(auth()->user()))
+        <a href="{{ route('admin.students.transcript', [$student, 'official' => 1]) }}" target="_blank" rel="noopener" class="sis-primary sis-link-button">Official TOR Print View</a>
+    @endif
+</div>
+
 <div class="sis-summary-grid">
     <article class="sis-panel">
         <small>Portal email</small>
@@ -39,6 +47,34 @@
 
 <section class="sis-panel sis-section">
     <h2>Student Profile</h2>
+
+    <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px">
+        <div style="width:128px">
+            @if($student->profile_photo_path)
+                <img src="{{ route('admin.students.photo', $student) }}" alt="{{ $student->fullName() }} profile photo" style="width:128px;height:128px;object-fit:cover;border-radius:16px;border:1px solid #d9dee7">
+            @else
+                <div style="width:128px;height:128px;border-radius:16px;border:1px dashed #b8c1cf;display:grid;place-items:center;text-align:center;padding:10px;color:#687386">No private profile photo</div>
+            @endif
+        </div>
+
+        @if($canManageProfile)
+            <div style="flex:1;min-width:240px">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.students.photo.store', $student) }}" class="sis-inline-form">
+                    @csrf
+                    <input type="file" name="profile_photo" accept="image/jpeg,image/png,image/webp" required>
+                    <button type="submit">Upload private profile photo</button>
+                </form>
+                <p class="sis-help">JPG/PNG/WebP · maximum 1 MB · minimum 400 x 400 px. Stored outside public web storage and served only after authorization.</p>
+                @if($student->profile_photo_path)
+                    <form method="POST" action="{{ route('admin.students.photo.destroy', $student) }}">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="sis-secondary">Remove profile photo</button>
+                    </form>
+                @endif
+            </div>
+        @endif
+    </div>
+
     <div class="sis-summary-grid">
         <article><small>Date of birth</small><strong>{{ optional($student->date_of_birth)->format('M j, Y') ?: 'Not recorded' }}</strong></article>
         <article><small>Gender</small><strong>{{ $student->gender ?: 'Not recorded' }}</strong></article>
@@ -149,7 +185,23 @@
         @forelse($student->assignments as $assignment)
             <li>
                 <strong>{{ $assignment->teacher?->name ?: 'Removed teacher' }}</strong>
-                <span>{{ $assignment->subject ?: 'All assigned subjects' }}{{ $assignment->is_adviser ? ' · Adviser' : '' }}</span>
+                <span>
+                    {{ $assignment->subject ?: 'All assigned subjects' }}
+                    {{ $assignment->is_adviser ? ' · Adviser' : '' }}
+                    · {{ ucfirst($assignment->status ?? 'active') }}
+                </span>
+                @if(($assignment->status ?? 'active') === 'pending')
+                    <div class="sis-inline-form" style="margin-top:8px">
+                        <form method="POST" action="{{ route('admin.students.assignments.approve', [$student, $assignment]) }}">
+                            @csrf @method('PATCH')
+                            <button type="submit">Approve</button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.students.assignments.reject', [$student, $assignment]) }}">
+                            @csrf @method('PATCH')
+                            <button type="submit" class="sis-secondary">Reject</button>
+                        </form>
+                    </div>
+                @endif
             </li>
         @empty
             <li>No teacher assignments yet.</li>

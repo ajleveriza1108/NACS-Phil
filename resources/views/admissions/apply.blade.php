@@ -1,4 +1,4 @@
-@extends('layouts.admissions-portal-phase9c')
+@extends('layouts.site-current', ['bodyClass' => 'adm9-body nacs-current-page nacs-current-page--admissions-portal', 'mainId' => 'main', 'mainClass' => 'adm9-main', 'assetBundle' => 'admissions-portal', 'useVite' => false])
 @section('title','Preliminary Application')
 @section('content')
 <section class="adm9-hero"><div class="adm9-shell"><span>Preliminary application</span><h1>Start an admissions application.</h1><p>This is an initial application only. Final requirements, assessment, acceptance, and enrollment remain subject to official school review.</p></div></section>

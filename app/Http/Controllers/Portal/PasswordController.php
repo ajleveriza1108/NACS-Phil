@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Support\SecurityEventLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -29,6 +31,19 @@ class PasswordController extends Controller
             'force_password_reset' => false,
         ])->save();
 
-        return redirect()->route('portal.dashboard')->with('success', 'Password updated.');
+        if (config('session.driver') === 'database') {
+            DB::table('sessions')
+                ->where('user_id', $request->user()->id)
+                ->where('id', '!=', $request->session()->getId())
+                ->delete();
+        }
+
+        $request->session()->regenerate();
+
+        app(SecurityEventLogger::class)->record($request, 'auth.password.changed', 'notice', [
+            'action' => 'portal_password_change',
+        ]);
+
+        return redirect()->route('portal.dashboard')->with('success', 'Password updated. Other database-backed sessions were revoked.');
     }
 }

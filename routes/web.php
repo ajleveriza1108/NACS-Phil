@@ -111,11 +111,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/logout', [AdminAuthController::class, 'destroy'])->name('logout');
 
     Route::get('/security', [AdminSecurityController::class, 'index'])->name('security.index');
-    Route::patch('/security/password', [AdminSecurityController::class, 'updatePassword'])->name('security.password');
-    Route::post('/security/two-factor/setup', [AdminSecurityController::class, 'beginTwoFactor'])->name('security.two-factor.setup');
-    Route::post('/security/two-factor/confirm', [AdminSecurityController::class, 'confirmTwoFactor'])->name('security.two-factor.confirm');
-    Route::delete('/security/two-factor', [AdminSecurityController::class, 'disableTwoFactor'])->name('security.two-factor.disable');
-    Route::post('/security/revoke-sessions', [AdminSecurityController::class, 'revokeOtherSessions'])->name('security.revoke-sessions');
+    Route::patch('/security/password', [AdminSecurityController::class, 'updatePassword'])->middleware('throttle:5,10')->name('security.password');
+    Route::post('/security/two-factor/setup', [AdminSecurityController::class, 'beginTwoFactor'])->middleware('throttle:5,10')->name('security.two-factor.setup');
+    Route::post('/security/two-factor/confirm', [AdminSecurityController::class, 'confirmTwoFactor'])->middleware('throttle:10,10')->name('security.two-factor.confirm');
+    Route::delete('/security/two-factor', [AdminSecurityController::class, 'disableTwoFactor'])->middleware('throttle:5,10')->name('security.two-factor.disable');
+    Route::post('/security/revoke-sessions', [AdminSecurityController::class, 'revokeOtherSessions'])->middleware('throttle:5,10')->name('security.revoke-sessions');
 
     Route::resource('announcements', AdminAnnouncementController::class)
         ->except('show')

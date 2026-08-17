@@ -10,6 +10,20 @@
     </div>
 </div>
 
+@if(!$student->exists && \App\Support\StudentAccess::canRequestExistingStudent(auth()->user()))
+<section class="sis-panel sis-section">
+    <h2>Already registered by another teacher?</h2>
+    <p class="sis-help">Do not create a duplicate student. Verify the existing student's number and date of birth, choose the subject you teach, and request access. The student stays hidden until Principal / Super Administrator approval.</p>
+    <form method="POST" action="{{ route('admin.students.assignments.request-existing') }}" class="sis-inline-form">
+        @csrf
+        <input name="student_number" value="{{ old('student_number') }}" placeholder="Existing student number" required maxlength="64">
+        <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
+        <input name="subject" value="{{ old('subject') }}" placeholder="Your subject" required maxlength="100">
+        <button type="submit">Verify &amp; request assignment</button>
+    </form>
+</section>
+@endif
+
 <form method="POST" action="{{ $student->exists ? route('admin.students.update', $student) : route('admin.students.store') }}" class="sis-panel sis-form">
     @csrf
     @if($student->exists) @method('PATCH') @endif

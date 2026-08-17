@@ -6,19 +6,18 @@ use Tests\TestCase;
 
 class Phase21NewsEventsGalleryFidelityTest extends TestCase
 {
-    public function test_news_events_and_gallery_load_phase_twenty_one_after_consistency_layer(): void
+    public function test_news_events_and_gallery_use_current_semantic_bundles(): void
     {
-        foreach (['news-phase5.blade.php', 'events-phase6.blade.php', 'gallery-phase7.blade.php'] as $layout) {
-            $source = file_get_contents(resource_path('views/layouts/'.$layout));
-
-            $this->assertIsString($source, $layout);
-
-            $phase18 = strpos($source, 'assets/phase18-consistency/site-consistency.css');
-            $phase21 = strpos($source, 'assets/phase21-news-events-gallery/fidelity.css');
-
-            $this->assertNotFalse($phase18, $layout);
-            $this->assertNotFalse($phase21, $layout);
-            $this->assertGreaterThan($phase18, $phase21, $layout);
+        foreach ([
+            'announcements/index.blade.php' => 'news',
+            'events/index.blade.php' => 'events',
+            'gallery/index.blade.php' => 'gallery',
+        ] as $view => $bundle) {
+            $source = file_get_contents(resource_path('views/'.$view));
+            $this->assertIsString($source, $view);
+            $this->assertStringContainsString("extends('layouts.site-current'", $source, $view);
+            $this->assertStringContainsString("'assetBundle' => '".$bundle."'", $source, $view);
+            $this->assertFileExists(public_path('assets/current/pages/'.$bundle.'.css'));
         }
     }
 
@@ -29,7 +28,6 @@ class Phase21NewsEventsGalleryFidelityTest extends TestCase
 
         $this->assertIsString($index);
         $this->assertIsString($show);
-
         $this->assertStringContainsString("SiteContent::valuesFor('news'", $index);
         $this->assertStringContainsString('is_featured', $index);
         $this->assertStringContainsString('$announcements->links()', $index);
@@ -45,7 +43,6 @@ class Phase21NewsEventsGalleryFidelityTest extends TestCase
 
         $this->assertIsString($index);
         $this->assertIsString($show);
-
         $this->assertStringContainsString("SiteContent::valuesFor('events'", $index);
         $this->assertStringContainsString('$event->starts_at', $index);
         $this->assertStringContainsString('$event->venue', $index);
@@ -76,34 +73,21 @@ class Phase21NewsEventsGalleryFidelityTest extends TestCase
     {
         foreach (['events/index.blade.php', 'events/show.blade.php'] as $view) {
             $source = file_get_contents(resource_path('views/'.$view));
-
             $this->assertIsString($source, $view);
             $this->assertStringNotContainsString('â', $source, $view);
             $this->assertStringNotContainsString('Â', $source, $view);
         }
     }
 
-    public function test_phase_twenty_one_css_protects_dark_detail_and_privacy_contrast(): void
+    public function test_current_news_events_gallery_bundles_keep_dark_contrast_and_responsive_rules(): void
     {
-        $css = file_get_contents(public_path('assets/phase21-news-events-gallery/fidelity.css'));
-
-        $this->assertIsString($css);
-        $this->assertStringContainsString('.news-phase5 .news-detail-hero h1', $css);
-        $this->assertStringContainsString('.events-phase6 .event-detail-hero h1', $css);
-        $this->assertStringContainsString('.gallery-phase7 .g-privacy h2', $css);
-        $this->assertStringContainsString('color:#fff!important', $css);
-    }
-
-    public function test_phase_twenty_one_css_covers_desktop_tablet_phone_narrow_and_reduced_motion(): void
-    {
-        $css = file_get_contents(public_path('assets/phase21-news-events-gallery/fidelity.css'));
-
-        $this->assertIsString($css);
-        $this->assertStringContainsString('@media(max-width:1180px)', $css);
-        $this->assertStringContainsString('@media(max-width:960px)', $css);
-        $this->assertStringContainsString('@media(max-width:760px)', $css);
-        $this->assertStringContainsString('@media(max-width:480px)', $css);
-        $this->assertStringContainsString('@media(max-width:380px)', $css);
-        $this->assertStringContainsString('prefers-reduced-motion', $css);
+        foreach (['news', 'events', 'gallery'] as $bundle) {
+            $css = file_get_contents(public_path('assets/current/pages/'.$bundle.'.css'));
+            $this->assertIsString($css);
+            $this->assertStringContainsString('color:#fff!important', $css);
+            $this->assertStringContainsString('@media(max-width:760px)', $css);
+            $this->assertStringContainsString('@media(max-width:380px)', $css);
+            $this->assertStringContainsString('prefers-reduced-motion', $css);
+        }
     }
 }

@@ -16,7 +16,7 @@ class NewsContentTest extends TestCase
     {
         $this->get('/announcements')
             ->assertOk()
-            ->assertSee('assets/phase5-news/news.css')
+            ->assertSee('assets/current/')
             ->assertSee('viewport-fit=cover', false)
             ->assertSee('School News &amp; Announcements', false)
             ->assertSee('Latest from the school community');

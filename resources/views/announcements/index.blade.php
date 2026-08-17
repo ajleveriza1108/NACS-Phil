@@ -1,6 +1,5 @@
 @php($newsContent = \App\Models\SiteContent::valuesFor('news', \App\Support\NewsContent::defaults()))
-@extends('layouts.news-phase5')
-
+@extends('layouts.site-current', ['bodyClass' => 'news-phase5 nacs-current-page nacs-current-page--news', 'mainId' => 'news-main', 'mainClass' => '', 'assetBundle' => 'news', 'useVite' => false])
 @section('title', 'News & Announcements')
 
 @section('content')
@@ -18,7 +17,7 @@
         </div>
         <div class="news-hero__visual" data-news-reveal>
             <div class="news-hero__visual-frame">
-                <img src="{{ asset('assets/phase5-news/news-visual.svg') }}" alt="Abstract illustration of school announcements, news cards, and community updates.">
+                <img src="{{ asset('assets/current/media/c5236371e29a-news-visual.svg') }}" alt="Abstract illustration of school announcements, news cards, and community updates.">
                 <div class="news-hero__visual-badge"><span aria-hidden="true"></span><div><strong>School Updates</strong><small>Published by authorized staff</small></div></div>
             </div>
         </div>

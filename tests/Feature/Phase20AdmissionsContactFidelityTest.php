@@ -6,19 +6,17 @@ use Tests\TestCase;
 
 class Phase20AdmissionsContactFidelityTest extends TestCase
 {
-    public function test_admissions_and_contact_load_phase_twenty_after_consistency_layer(): void
+    public function test_admissions_and_contact_use_current_semantic_bundles(): void
     {
-        foreach (['admissions-phase4.blade.php', 'contact-phase8.blade.php'] as $layout) {
-            $source = file_get_contents(resource_path('views/layouts/'.$layout));
-
-            $this->assertIsString($source, $layout);
-
-            $phase18 = strpos($source, 'assets/phase18-consistency/site-consistency.css');
-            $phase20 = strpos($source, 'assets/phase20-admissions-contact/fidelity.css');
-
-            $this->assertNotFalse($phase18, $layout);
-            $this->assertNotFalse($phase20, $layout);
-            $this->assertGreaterThan($phase18, $phase20, $layout);
+        foreach ([
+            'pages/admissions.blade.php' => 'admissions',
+            'pages/contact.blade.php' => 'contact',
+        ] as $view => $bundle) {
+            $source = file_get_contents(resource_path('views/'.$view));
+            $this->assertIsString($source, $view);
+            $this->assertStringContainsString("extends('layouts.site-current'", $source, $view);
+            $this->assertStringContainsString("'assetBundle' => '".$bundle."'", $source, $view);
+            $this->assertFileExists(public_path('assets/current/pages/'.$bundle.'.css'));
         }
     }
 
@@ -29,9 +27,9 @@ class Phase20AdmissionsContactFidelityTest extends TestCase
         $this->assertIsString($source);
         $this->assertStringContainsString("SiteContent::valuesFor('admissions'", $source);
         $this->assertStringContainsString('@foreach([1,2,3,4] as $number)', $source);
-        $this->assertStringContainsString('[\'step_\'.$number.\'_title\']', $source);
-        $this->assertStringContainsString('[\'requirement_\'.$number.\'_title\']', $source);
-        $this->assertStringContainsString('[\'faq_\'.$number.\'_q\']', $source);
+        $this->assertStringContainsString("['step_'.\$number.'_title']", $source);
+        $this->assertStringContainsString("['requirement_'.\$number.'_title']", $source);
+        $this->assertStringContainsString("['faq_'.\$number.'_q']", $source);
         $this->assertStringContainsString("route('privacy')", $source);
         $this->assertStringContainsString("route('admissions.apply')", $source);
         $this->assertStringContainsString("route('admissions.track')", $source);
@@ -53,21 +51,19 @@ class Phase20AdmissionsContactFidelityTest extends TestCase
         $this->assertStringNotContainsString('Senior High', $source);
     }
 
-    public function test_dark_admissions_and_contact_surfaces_have_explicit_light_text_contracts(): void
+    public function test_current_admissions_and_contact_bundles_keep_dark_surface_contrast(): void
     {
-        $css = file_get_contents(public_path('assets/phase20-admissions-contact/fidelity.css'));
-
-        $this->assertIsString($css);
-        $this->assertStringContainsString('.admissions-phase4 .admissions-dates h1', $css);
-        $this->assertStringContainsString('.admissions-phase4 .admissions-final-cta h1', $css);
-        $this->assertStringContainsString('.contact-phase8 .contact-privacy-card h3', $css);
-        $this->assertStringContainsString('color:#fff!important', $css);
-        $this->assertStringContainsString('color:#d2e1ec!important', $css);
+        foreach (['admissions', 'contact'] as $bundle) {
+            $css = file_get_contents(public_path('assets/current/pages/'.$bundle.'.css'));
+            $this->assertIsString($css);
+            $this->assertStringContainsString('color:#fff!important', $css);
+            $this->assertStringContainsString('color:#d2e1ec!important', $css);
+        }
     }
 
-    public function test_phase_twenty_css_covers_desktop_tablet_phone_narrow_and_reduced_motion(): void
+    public function test_current_bundles_cover_desktop_tablet_phone_narrow_and_reduced_motion(): void
     {
-        $css = file_get_contents(public_path('assets/phase20-admissions-contact/fidelity.css'));
+        $css = file_get_contents(public_path('assets/current/pages/admissions.css'));
 
         $this->assertIsString($css);
         $this->assertStringContainsString('@media(max-width:1180px)', $css);

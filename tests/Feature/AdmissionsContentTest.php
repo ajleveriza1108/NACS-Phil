@@ -16,7 +16,7 @@ class AdmissionsContentTest extends TestCase
     {
         $this->get('/admissions')
             ->assertOk()
-            ->assertSee('assets/phase4-admissions/admissions.css')
+            ->assertSee('assets/current/')
             ->assertSee('viewport-fit=cover', false)
             ->assertSee('Admissions')
             ->assertSee('Four steps families can follow with confidence.');

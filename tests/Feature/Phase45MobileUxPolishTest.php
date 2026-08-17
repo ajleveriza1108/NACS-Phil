@@ -36,7 +36,7 @@ class Phase45MobileUxPolishTest extends TestCase
             'aria-controls="nacs45-mobile-news"',
             'aria-controls="nacs45-mobile-resources"',
             'data-nacs45-prefixes="/about,/faculty"',
-            'data-nacs45-prefixes="/programs,/academic-calendar"',
+            'data-nacs45-prefixes="/programs,/calendar"',
             'data-nacs45-prefixes="/admissions"',
             'data-nacs45-prefixes="/announcements,/events,/gallery,/media"',
             'data-nacs45-prefixes="/documents"',

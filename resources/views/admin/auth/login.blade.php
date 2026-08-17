@@ -8,9 +8,9 @@
     <meta name="robots" content="noindex,nofollow">
     <title>Staff Sign In | NACS-Phil</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('assets/phase39-auth/auth.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/phase45-motion/motion.css') }}">
-    <script src="{{ asset('assets/phase45-motion/motion.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('assets/current/media/2c79c4f7f972-auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/current/media/dcd597a81645-motion.css') }}">
+    <script src="{{ asset('assets/current/media/b806be84babf-motion.js') }}" defer></script>
 </head>
 <body class="nacs-auth-body">
     <a href="#nacs-auth-main" class="nacs-auth-skip">Skip to sign in form</a>

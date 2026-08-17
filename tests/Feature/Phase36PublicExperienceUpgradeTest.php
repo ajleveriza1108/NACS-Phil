@@ -26,22 +26,28 @@ class Phase36PublicExperienceUpgradeTest extends TestCase
         }
     }
 
-    public function test_home_and_programs_load_phase_thirty_six_after_release_hardening(): void
+    public function test_home_and_programs_use_current_semantic_bundles(): void
     {
+        $home = file_get_contents(resource_path('views/home.blade.php'));
+        $programs = file_get_contents(resource_path('views/pages/programs.blade.php'));
+
+        $this->assertIsString($home);
+        $this->assertIsString($programs);
+        $this->assertStringContainsString("extends('layouts.site-current'", $home);
+        $this->assertStringContainsString("'assetBundle' => 'home'", $home);
+        $this->assertStringContainsString("extends('layouts.site-current'", $programs);
+        $this->assertStringContainsString("'assetBundle' => 'programs'", $programs);
+
         foreach ([
-            resource_path('views/layouts/home-phase1.blade.php'),
-            resource_path('views/layouts/programs-phase3.blade.php'),
-        ] as $layoutPath) {
-            $layout = file_get_contents($layoutPath);
-
-            $this->assertIsString($layout);
-
-            $release = strpos($layout, 'assets/phase24-release/release-hardening.css');
-            $phase36 = strpos($layout, 'assets/phase36-experience/site.css');
-
-            $this->assertNotFalse($release);
-            $this->assertNotFalse($phase36);
-            $this->assertGreaterThan($release, $phase36);
+            public_path('assets/current/pages/home.css'),
+            public_path('assets/current/pages/programs.css'),
+        ] as $bundle) {
+            $css = file_get_contents($bundle);
+            $this->assertIsString($css);
+            $this->assertStringContainsString('preschool-learning.webp', $css);
+            $this->assertStringContainsString('elementary-learning.webp', $css);
+            $this->assertStringContainsString('junior-high-learning.webp', $css);
+            $this->assertStringNotContainsString('/assets/phase', $css);
         }
     }
 

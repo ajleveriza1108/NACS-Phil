@@ -1,5 +1,5 @@
 @php($contactContent = \App\Models\SiteContent::valuesFor('contact', \App\Support\ContactContent::defaults()))
-@extends('layouts.contact-phase8')
+@extends('layouts.site-current', ['bodyClass' => 'contact-phase8 nacs-current-page nacs-current-page--contact', 'mainId' => 'contact-main', 'mainClass' => '', 'assetBundle' => 'contact', 'useVite' => false, 'title' => 'Contact', 'description' => 'Contact NACS-Phil and send an inquiry to the school office.'])
 @section('title','Contact')
 
 @section('content')
@@ -12,7 +12,7 @@
         <p>{{ $contactContent['hero_lead'] }}</p>
         <div class="contact-actions"><a class="contact-button contact-button--primary" href="#inquiry">Send an Inquiry &darr;</a><a class="contact-button contact-button--secondary" href="#school-info">School Information &rarr;</a></div>
     </div>
-    <div class="contact-visual" data-contact-reveal><img src="{{ asset('assets/phase8-contact/contact-visual.svg') }}" alt="Abstract illustration of a school office message and contact card."></div>
+    <div class="contact-visual" data-contact-reveal><img src="{{ asset('assets/current/media/027aa4b93b06-contact-visual.svg') }}" alt="Abstract illustration of a school office message and contact card."></div>
 </div>
 </section>
 

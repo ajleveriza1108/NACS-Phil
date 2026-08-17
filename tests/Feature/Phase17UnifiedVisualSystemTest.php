@@ -2,57 +2,47 @@
 
 namespace Tests\Feature;
 
-use App\Models\SchoolSetting;
 use Tests\TestCase;
 
 class Phase17UnifiedVisualSystemTest extends TestCase
 {
-    public function test_all_public_layouts_load_phase_seventeen_theme_last(): void
+    public function test_public_layout_uses_only_semantic_current_bundle_loader(): void
     {
-        $layouts = [
-            'home-phase1.blade.php',
-            'about-phase2.blade.php',
-            'programs-phase3.blade.php',
-            'admissions-phase4.blade.php',
-            'news-phase5.blade.php',
-            'events-phase6.blade.php',
-            'gallery-phase7.blade.php',
-            'contact-phase8.blade.php',
-            'admissions-portal-phase9c.blade.php',
-            'public.blade.php',
-        ];
+        $layout = file_get_contents(resource_path('views/layouts/site-current.blade.php'));
 
-        foreach ($layouts as $layout) {
-            $source = file_get_contents(resource_path('views/layouts/'.$layout));
-
-            $this->assertIsString($source);
-            $this->assertStringContainsString('assets/phase17-theme/site.css', $source, $layout);
-        }
+        $this->assertIsString($layout);
+        $this->assertStringContainsString('assets/current/pages/', $layout);
+        $this->assertStringNotContainsString('assets/phase', $layout);
     }
 
-    public function test_admin_layout_loads_phase_seventeen_admin_visual_system(): void
+    public function test_admin_layout_uses_current_admin_visual_bundle(): void
     {
         $source = file_get_contents(resource_path('views/admin/layouts/app.blade.php'));
 
         $this->assertIsString($source);
-        $this->assertStringContainsString('assets/phase17-theme/admin.css', $source);
+        $this->assertStringContainsString('assets/current/admin.css', $source);
+        $this->assertStringContainsString('assets/current/admin.js', $source);
+        $this->assertStringNotContainsString("asset('assets/phase", $source);
     }
 
-    public function test_official_bundled_school_logo_is_the_safe_fallback(): void
+    public function test_official_bundled_school_logo_is_a_current_media_fallback(): void
     {
-        $this->assertFileExists(public_path('assets/phase17-theme/nacs-official-logo.png'));
-
         $model = file_get_contents(app_path('Models/SchoolSetting.php'));
 
         $this->assertIsString($model);
-        $this->assertStringContainsString('assets/phase17-theme/nacs-official-logo.png', $model);
+        $this->assertStringContainsString('assets/current/media/', $model);
+        $this->assertStringContainsString('nacs-official-logo.png', $model);
         $this->assertStringContainsString('officialBrandingApproved', $model);
         $this->assertStringContainsString('return filled($path)', $model);
+
+        preg_match("/asset\('([^']*nacs-official-logo\.png)'\)/", $model, $matches);
+        $this->assertArrayHasKey(1, $matches);
+        $this->assertFileExists(public_path($matches[1]));
     }
 
-    public function test_visual_system_contains_required_mockup_tokens_and_breakpoints(): void
+    public function test_current_home_bundle_contains_visual_tokens_and_breakpoints(): void
     {
-        $css = file_get_contents(public_path('assets/phase17-theme/site.css'));
+        $css = file_get_contents(public_path('assets/current/pages/home.css'));
 
         $this->assertIsString($css);
         $this->assertStringContainsString('--n17-navy-950:#031a39', $css);

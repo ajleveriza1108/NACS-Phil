@@ -1,0 +1,323 @@
+/* NACS-Phil Phase 45 - restrained motion and interaction system.
+   Public pages are slightly richer; Admin/SIS/Portal remain deliberately quiet. */
+
+:root{
+  --nacs-motion-fast:150ms;
+  --nacs-motion-base:220ms;
+  --nacs-motion-slow:380ms;
+  --nacs-motion-reveal:420ms;
+  --nacs-motion-ease:cubic-bezier(.2,.7,.2,1);
+  --nacs-motion-enter:cubic-bezier(.16,1,.3,1);
+  --nacs-motion-lift:-3px;
+  --nacs-motion-lift-admin:-1px;
+  --nacs-motion-focus:rgba(185,138,46,.34);
+  --nacs-motion-focus-strong:#b98a2e;
+}
+
+html.nacs-motion-js{
+  scroll-behavior:smooth;
+}
+
+/* ---------- shared controls ---------- */
+[data-nacs-button]{
+  transition:
+    transform var(--nacs-motion-base) var(--nacs-motion-ease),
+    box-shadow var(--nacs-motion-base) var(--nacs-motion-ease),
+    background-color var(--nacs-motion-fast) ease,
+    border-color var(--nacs-motion-fast) ease,
+    color var(--nacs-motion-fast) ease,
+    filter var(--nacs-motion-fast) ease;
+  will-change:transform;
+}
+
+[data-nacs-button] span[aria-hidden="true"],
+[data-nacs-button] svg{
+  transition:transform var(--nacs-motion-fast) var(--nacs-motion-ease);
+}
+
+@media (hover:hover) and (pointer:fine){
+  .nacs-motion-public [data-nacs-button]:hover{
+    transform:translateY(-2px);
+  }
+
+  .nacs-motion-public [data-nacs-button]:hover span[aria-hidden="true"],
+  .nacs-motion-public [data-nacs-button]:hover svg{
+    transform:translateX(3px);
+  }
+
+  .nacs-motion-admin [data-nacs-button]:hover,
+  .nacs-motion-auth [data-nacs-button]:hover{
+    transform:translateY(var(--nacs-motion-lift-admin));
+  }
+}
+
+[data-nacs-button]:active{
+  transform:translateY(0)!important;
+}
+
+.nacs-motion :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea){
+  transition:
+    border-color var(--nacs-motion-fast) ease,
+    box-shadow var(--nacs-motion-fast) ease,
+    background-color var(--nacs-motion-fast) ease;
+}
+
+.nacs-motion :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea):focus-visible{
+  outline:0;
+  border-color:var(--nacs-motion-focus-strong);
+  box-shadow:0 0 0 3px var(--nacs-motion-focus);
+}
+
+/* ---------- public cards / images ---------- */
+.nacs-motion-public [data-nacs-card]{
+  transition:
+    transform var(--nacs-motion-base) var(--nacs-motion-ease),
+    box-shadow var(--nacs-motion-base) var(--nacs-motion-ease),
+    border-color var(--nacs-motion-base) var(--nacs-motion-ease);
+}
+
+.nacs-motion-public [data-nacs-card] img{
+  transition:transform 450ms var(--nacs-motion-ease);
+}
+
+@media (hover:hover) and (pointer:fine){
+  .nacs-motion-public [data-nacs-card]:hover{
+    transform:translateY(var(--nacs-motion-lift));
+  }
+
+  .nacs-motion-public [data-nacs-card]:hover img{
+    transform:scale(1.025);
+  }
+}
+
+/* ---------- desktop primary navigation ---------- */
+.nacs-motion-public .nacs11-desktop-nav>a{
+  position:relative;
+}
+
+.nacs-motion-public .nacs11-desktop-nav>a::after{
+  content:"";
+  position:absolute;
+  left:14%;
+  right:14%;
+  bottom:4px;
+  height:2px;
+  border-radius:999px;
+  background:#b98a2e;
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform var(--nacs-motion-base) var(--nacs-motion-ease);
+  pointer-events:none;
+}
+
+.nacs-motion-public .nacs11-desktop-nav>a:hover::after,
+.nacs-motion-public .nacs11-desktop-nav>a:focus-visible::after,
+.nacs-motion-public .nacs11-desktop-nav>a.is-active::after{
+  transform:scaleX(1);
+}
+
+/* ---------- mobile navigation ---------- */
+.nacs-motion-public .nacs11-mobile-nav:not([hidden]) .nacs11-mobile-nav__inner{
+  animation:nacs-mobile-menu-enter var(--nacs-motion-base) var(--nacs-motion-enter) both;
+}
+
+@keyframes nacs-mobile-menu-enter{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ---------- hero load ---------- */
+html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public [data-nacs-hero-item]{
+  opacity:0;
+  transform:translateY(8px);
+}
+
+html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public.nacs-motion-entered [data-nacs-hero-item]{
+  animation:nacs-hero-enter 360ms var(--nacs-motion-enter) forwards;
+  animation-delay:var(--nacs-motion-delay,0ms);
+}
+
+@keyframes nacs-hero-enter{
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ---------- section reveal / tiny stagger ---------- */
+html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public [data-nacs-reveal]{
+  opacity:0;
+  transform:translateY(12px);
+  transition:
+    opacity var(--nacs-motion-reveal) var(--nacs-motion-enter),
+    transform var(--nacs-motion-reveal) var(--nacs-motion-enter);
+}
+
+html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public [data-nacs-reveal].is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public [data-nacs-reveal] [data-nacs-stagger]{
+  opacity:0;
+  transform:translateY(8px);
+  transition:
+    opacity 330ms var(--nacs-motion-enter),
+    transform 330ms var(--nacs-motion-enter);
+  transition-delay:var(--nacs-motion-delay,0ms);
+}
+
+html.nacs-motion-js:not(.nacs-motion-reduced) .nacs-motion-public [data-nacs-reveal].is-visible [data-nacs-stagger]{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ---------- accordions ---------- */
+.nacs-motion-public details>summary{
+  cursor:pointer;
+}
+
+.nacs-motion-public details[open]>*:not(summary){
+  animation:nacs-details-enter var(--nacs-motion-base) var(--nacs-motion-enter) both;
+}
+
+@keyframes nacs-details-enter{
+  from{opacity:0;transform:translateY(-4px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ---------- gallery lightbox ---------- */
+.nacs-motion-public [data-g-lightbox]:not([hidden]){
+  animation:nacs-lightbox-backdrop var(--nacs-motion-base) ease-out both;
+}
+
+.nacs-motion-public [data-g-lightbox]:not([hidden]) [data-g-image]{
+  animation:nacs-lightbox-image var(--nacs-motion-base) var(--nacs-motion-enter) both;
+}
+
+@keyframes nacs-lightbox-backdrop{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes nacs-lightbox-image{
+  from{opacity:0;transform:scale(.985)}
+  to{opacity:1;transform:scale(1)}
+}
+
+/* ---------- alerts / validation ---------- */
+.nacs-motion-entered :is(
+  .cm-alert,
+  .sis-alert,
+  .nacs-auth-alert,
+  .flash-message,
+  [role="status"],
+  [role="alert"]
+){
+  animation:nacs-alert-enter 240ms var(--nacs-motion-enter) both;
+}
+
+@keyframes nacs-alert-enter{
+  from{opacity:0;transform:translateY(-4px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ---------- Admin / SIS: quiet feedback only ---------- */
+.nacs-motion-admin :is(.p13-priority-card,.p13-quick-card,.sis-student-card,.sis-panel){
+  transition:
+    transform var(--nacs-motion-fast) var(--nacs-motion-ease),
+    box-shadow var(--nacs-motion-fast) var(--nacs-motion-ease),
+    border-color var(--nacs-motion-fast) ease,
+    background-color var(--nacs-motion-fast) ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .nacs-motion-admin :is(.p13-priority-card,.p13-quick-card,.sis-student-card):hover{
+    transform:translateY(var(--nacs-motion-lift-admin));
+  }
+
+  .nacs-motion-admin .sis-table tbody tr:hover{
+    background:#fbfcfe;
+  }
+}
+
+.nacs-motion-admin .sis-table tbody tr{
+  transition:background-color var(--nacs-motion-fast) ease;
+}
+
+.nacs-motion-admin [data-nacs-sticky-table]{
+  max-height:min(68vh,720px);
+  overflow:auto;
+}
+
+.nacs-motion-admin [data-nacs-sticky-table] .sis-table thead th{
+  position:sticky;
+  top:0;
+  z-index:2;
+  box-shadow:0 1px 0 #e5e8ee;
+}
+
+.nacs-motion-admin :is(.sis-badge,.p13-role-chip,.p13-role-pill,[class*="status"]){
+  transition:
+    background-color var(--nacs-motion-fast) ease,
+    color var(--nacs-motion-fast) ease,
+    border-color var(--nacs-motion-fast) ease;
+}
+
+/* ---------- Portal/auth ---------- */
+.nacs-motion-auth :is(.nacs-auth-card,.sis-login-card,.sis-panel){
+  transition:
+    box-shadow var(--nacs-motion-base) var(--nacs-motion-ease),
+    border-color var(--nacs-motion-base) ease;
+}
+
+/* ---------- optional skeleton utility ---------- */
+.nacs-skeleton{
+  position:relative;
+  overflow:hidden;
+  color:transparent!important;
+  background:#eef1f4!important;
+  border-color:transparent!important;
+  user-select:none;
+}
+
+.nacs-skeleton::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.62),transparent);
+  animation:nacs-skeleton-sweep 1.25s ease-in-out infinite;
+}
+
+@keyframes nacs-skeleton-sweep{
+  to{transform:translateX(100%)}
+}
+
+/* ---------- accessibility ---------- */
+@media (prefers-reduced-motion:reduce){
+  html.nacs-motion-js{
+    scroll-behavior:auto!important;
+  }
+
+  html.nacs-motion-js *,
+  html.nacs-motion-js *::before,
+  html.nacs-motion-js *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+
+  html.nacs-motion-js [data-nacs-reveal],
+  html.nacs-motion-js [data-nacs-reveal] [data-nacs-stagger],
+  html.nacs-motion-js [data-nacs-hero-item]{
+    opacity:1!important;
+    transform:none!important;
+  }
+}
+
+@media (forced-colors:active){
+  .nacs-motion :focus-visible{
+    outline:2px solid CanvasText!important;
+    outline-offset:2px!important;
+    box-shadow:none!important;
+  }
+}

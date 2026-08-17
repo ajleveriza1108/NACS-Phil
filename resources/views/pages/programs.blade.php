@@ -1,6 +1,5 @@
 @php($programsContent = \App\Models\SiteContent::valuesFor('programs', \App\Support\ProgramsContent::defaults()))
-@extends('layouts.programs-phase3')
-
+@extends('layouts.site-current', ['bodyClass' => 'programs-phase3 nacs-current-page nacs-current-page--programs', 'mainId' => 'programs-main', 'mainClass' => '', 'assetBundle' => 'programs', 'useVite' => false, 'title' => 'Programs', 'description' => 'Explore Preschool, Elementary, and Junior High programs at NACS-Phil.'])
 @section('content')
 <section class="programs-hero">
     <div class="programs-hero__grid" aria-hidden="true"></div>
@@ -20,7 +19,7 @@
                 @if(!empty($programsContent['hero_image_path']))
                     <img src="{{ Storage::disk('public')->url($programsContent['hero_image_path']) }}" alt="NACS-Phil students learning together across school programs.">
                 @else
-                    <img src="{{ asset('assets/phase3-programs/programs-visual.svg') }}" alt="Abstract illustration showing three connected learning stages representing Preschool, Elementary, and Junior High at NACS-Phil.">
+                    <img src="{{ asset('assets/current/media/b6accc489651-programs-visual.svg') }}" alt="Abstract illustration showing three connected learning stages representing Preschool, Elementary, and Junior High at NACS-Phil.">
                 @endif
                 <div class="programs-hero__badge"><span>3</span><div><strong>Learning Stages</strong><small>One connected school journey</small></div></div>
             </div>
